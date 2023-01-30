@@ -1,38 +1,15 @@
-<a id="logout" href="<?= base_url('auth/logout')?>" >logout</a>
-<!-- 
-<script>
-  $("#logout").off("click");
-  $(document).on("click", "#logout", function (e) {
-    e.preventDefault();
-    console.log('oke');
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
 
-    // var data = $("#f_login").serialize();
-    $.ajax({
-      method: "post",
-      url: "<?= base_url()?>auth/logout",
-    //   data: data,
-      cache: false,
-      dataType: "json",
-      success: function (data) {
-        // console.log(data);
-        var message = data.message;
-        
-          Swal.fire({
-            // position: 'top-end',
-            icon: message.icon,
-            title: message.title,
-            text: message.text,
-            showConfirmButton: false,
-            timer: 3000,
-          }); 
-          if(data.success){
-            setTimeout(function () {
-              
-              window.location = '<?= base_url('auth')?>';
-            }, 3000);  
-          }
-        
-      },
-    });
-  });
-</script> -->
+  <div class="navbar navbar-main navbar-expand-lg px-0 mx-0  shadow-none" id="navbarBlur" navbar-scroll="true" style="flex-direction:column; align-items:flex-start; ">
+    <a id="edit-profile" type='submit' href="<?= base_url('user/profile') ?>">
+      <img src="<?= base_url() ?>assets/assets/vector/cog.svg" style="margin-right: 3px;">
+      <h6 class="" style="margin-top:4px;color:white;">Edit Profil</h6>
+    </a>
+    <div id="profile" style="position:absolute; display:flex;align-items:center">
+      <img src="<?= base_url() ?>assets/assets/img/index/default.png" class="img-circle" style="margin-left:25px">
+      <div style="margin-left: 21px;">
+        <h3 style="color:white;"><?= $user['name'] ?></h3>
+        <h6><?= $user['email'] ?></h6>
+      </div>
+    </div>
+  </div>

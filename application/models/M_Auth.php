@@ -51,9 +51,18 @@ class M_Auth extends CI_Model
         return !$this->session->has_userdata('id_user');
     }
 
-    public function login($email){
+    public function login($email)
+    {
         $this->db->where('email', $email);
         return $this->db->get('users');
+    }
+
+    public function cekEmail($email)
+    {
+        $this->db->select('email, id')
+            ->from($this->_table)
+            ->where(['email' => $email]);
+        return $this->db->get()->num_rows();
     }
 
     public function cekTelp($no_hp)
@@ -63,11 +72,12 @@ class M_Auth extends CI_Model
             ->where(['phone' => $no_hp]);
         return $this->db->get()->num_rows();
     }
-   
-    public function getIdUserReferral($referral_code){
+
+    public function getIdUserReferral($referral_code)
+    {
         $this->db->select('referral_code, id')
-        ->from($this->_table)
-        ->where(['referral_code' => $referral_code]);
+            ->from($this->_table)
+            ->where(['referral_code' => $referral_code]);
         return $this->db->get();
     }
 }

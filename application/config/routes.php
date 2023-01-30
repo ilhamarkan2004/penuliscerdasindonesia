@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -52,3 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'pci';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['form'] = 'pci/form';
+$route['terbit'] = 'pci/terbit';

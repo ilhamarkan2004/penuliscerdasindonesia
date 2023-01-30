@@ -1,4 +1,3 @@
-<script src="https://cdn.tailwindcss.com"></script>
 <button type="button" class="" style="position: fixed; right: 40px; bottom: 20px; display: none;" id="btn-back-to-top">
     <img src="<?= base_url() ?>assets/logo/top.svg" width="56px" alt="">
 </button>
@@ -7,9 +6,9 @@
 </button>
 <div class="mt-[72px] text-center">
     <p class="text-4xl font-bold relative w-fit mx-auto">
-        <span class="block h-4 bg-primary-300 w-full absolute top-1/2"></span>
-        <span class="relative md:text-4xl text-2xl">
-            Improve your Digital Skill with us
+        <!-- <span class="block h-4 bg-primary-300 w-full absolute top-1/2"></span> -->
+        <span class="relative md:text-4xl text-2xl text-primary-500">
+        Explore and publish your knowledge.
         </span>
     </p>
     <p class="title mt-8 md:text-base text-lg">
@@ -18,7 +17,7 @@
 
     <div class="my-container mt-12">
         <div class="relative">
-            <img class="w-full bg-contain" src="<?= base_url() ?>assets/assets/img/index/home-banner.svg" />
+            <img class="w-full bg-contain" src="<?= base_url() ?>assets/assets/image/jumbo_home.png" />
             <div class="learn absolute top-0 right-0 shadow-md bg-white rounded-lg lg:px-8 lg:py-4 p-2 lg:text-base text-xxs font-medium text-primary-400">
                 Learn what you love
             </div>

@@ -16,76 +16,21 @@ function viewAdmin($c_name, $content, $data)
     $c_name->load->view('admin/templates/footer', $data);
 }
 
-function rulesForm()
+
+function multi_unique_array($arr, $key)
 {
-    return [
-        [
-            'field' => 'instansi',
-            'label' => 'instansi',
-            'rules' => 'required|max_length[100]'
-        ],
-        [
-            'field' => 'nama',
-            'label' => 'Nama',
-            'rules' => 'required|max_length[100]|min_length[3]'
-        ],
-        [
-            'field' => 'email',
-            'label' => 'Email',
-            'rules' => 'required|valid_email|max_length[100]'
-        ],
-        [
-            'field' => 'alamat',
-            'label' => 'Alamat',
-            'rules' => 'required|max_length[255]'
-        ],
-        [
-            'field' => 'no_hp',
-            'label' => 'Nomor Telepon',
-            'rules' => 'required|max_length[15]|min_length[10]'
-        ],
-
-
-
-    ];
+    $Myarray = array();
+    $i = 0;
+    $array_of_keys = array();
+    foreach ($arr as $val) {
+        if (!in_array($val[$key], $array_of_keys)) {
+            $array_of_keys[$i] = $val[$key];
+            $Myarray[$i] = $val;
+        }
+        $i++;
+    }
+    return $Myarray;
 }
-
-function rulesBayar()
-{
-    return [
-        [
-            'field' => 'bukti',
-            'label' => 'bukti bayar',
-            'rules' => 'required'
-        ],
-    ];
-}
-
-// function rulesMateri()
-// {
-//     return [
-//         [
-//             'field' => 'judul',
-//             'label' => 'Judul',
-//             'rules' => 'required|max_length[100]'
-//         ],
-//         [
-//             'field' => 'kategori',
-//             'label' => 'Kategori',
-//             'rules' => 'required'
-//         ],
-//         [
-//             'field' => 'tipe',
-//             'label' => 'Tipe',
-//             'rules' => 'required'
-//         ],
-//         [
-//             'field' => 'link',
-//             'label' => 'Link materi',
-//             'rules' => 'required'
-//         ],
-//     ];
-// }
 
 function unlinkFile($filename)
 {

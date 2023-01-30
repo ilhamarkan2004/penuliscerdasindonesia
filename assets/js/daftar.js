@@ -1,508 +1,518 @@
 $(document).ready(function () {
-  var jumlahPendaftar = document.querySelectorAll("#no_hp_lain").length + 1;
-  var limit = $("#add_no_hp").val();
-  limitAddView(jumlahPendaftar, limit);
+	$("#daftar").submit(function (e) {
+		e.preventDefault();
+		writerValidasi();
+		designerValidasi();
+		editorValidasi();
+		tata_letakValidasi();
 
-  $("#b_confirm_midtrans").off("click");
-  $(document).on("click", "#b_confirm_midtrans", function (e) {
-    e.preventDefault();
+		$("#judulErr").text("");
+		$("#descErr").text("");
+		$("#kertasErr").text("");
+		$("#berkasErr").text("");
+		$("#is_coverErr").text("");
+		$("#pembacaErr").text("");
+		$("#catatCoverErr").text("");
+		$("#uploadCoverErr").text("");
+		$("#alamatErr").text("");
+		$.ajax({
+			url: "pci/submit_form",
+			type: "POST",
+			data: new FormData(this),
+			processData: false,
+			contentType: false,
+			dataType: "JSON",
+			success: function (response) {
+				if (response.success) {
+					Swal.fire({
+						// position: 'top-end',
+						icon: response.message.icon,
+						title: response.message.title,
+						text: response.message.text,
+						showConfirmButton: true,
+					}).then((result) => {
+						/* Read more about isConfirmed, isDenied below */
+						window.location.href = "dashboard";
+					});
+				} else {
+					if (response.message.alert_type == "swal") {
+						Swal.fire({
+							// position: 'top-end',
+							icon: "error",
+							text: response.message.message,
+							showConfirmButton: true,
+						});
+					} else if (response.message.alert_type == "classic") {
+						var message = response.message;
+						$("#judulErr").text(message.title_error);
+						$("#descErr").text(message.desc_error);
+						$("#kertasErr").text(message.paket_harga_error);
+						$("#berkasErr").text(message.berkas_error);
+						$("#is_coverErr").text(message.is_cover_error);
+						$("#pembacaErr").text(message.pembaca_error);
+						$("#catatCoverErr").text(message.catat_cover_error);
+						$("#uploadCoverErr").text(message.upload_cover_error);
+						$("#alamatErr").text(message.alamat_error);
+					}
+				}
+			},
+		});
+	});
 
-    if (validasi() != []) {
-      console.log(validasi());
-      notifikasi();
-      return;
-    }
-    // $(this).prop("disabled", true);
-    // $(this).text("Mohon tunggu ...");
+	$("#cover").on("change", function () {
+		/* current this object refer to input element */ var $input = $(this);
+		/* collect list of files choosen */ var files = $input[0].files;
+		var filename = files[0].name;
+		/* getting file extenstion eg- .jpg,.png, etc */ var extension =
+			filename.substr(filename.lastIndexOf("."));
+		/* define allowed file types */ var allowedExtensionsRegx =
+			/(\.jpg|\.jpeg|\.png|\.gif)$/i;
+		/* testing extension with regular expression */ var isAllowed =
+			allowedExtensionsRegx.test(extension);
+		if (isAllowed) {
+			alert("File type is valid for the upload");
+			/* file upload logic goes here... */
+		} else {
+			alert("Invalid File Type.");
+			return false;
+		}
+	});
 
-    // setTimeout(function () {
-    //   $(this).attr("disabled", false);
-    //   $(this).text("Bayar Menggunakan Midtrans");
-    // }, 2000);
+	$("#no_hp").keyup(function (e) {
+		e.preventDefault();
 
-    var data = $("#daftar").serialize();
-    $.ajax({
-      type: "POST",
-      url: "daftar/token",
-      data: data,
-      cache: false,
-      success: function (data) {
-        // console.log("token = " + data);
-        $(this).prop("disabled", false);
-        $(this).text("Bayar Menggunakan Midtrans");
+		if (/\D/g.test(this.value)) {
+			// Filter non-digits from input value.
+			this.value = this.value.replace(/\D/g, "");
+			$("#mustNum").text("Hanya dapat diisi menggunakan nomor");
+		}
 
-        var resultType = document.getElementById("result-type");
-        var resultData = document.getElementById("result-data");
+		$("#no_hp1").val($("#no_hp").val());
+	});
 
-        function changeResult(type, data) {
-          $("#result-type").val(type);
-          $("#result-data").val(JSON.stringify(data));
-          //resultType.innerHTML = type;
-          //resultData.innerHTML = JSON.stringify(data);
-        }
+	$("#add_writer").off("click");
+	$(document).on("click", "#add_writer", function (e) {
+		e.preventDefault();
 
-        snap.pay(data, {
-          onSuccess: function (result) {
-            changeResult("success", result);
-            // console.log(result.status_message);
-            // console.log(result);
-            $("#payment-form").submit();
-          },
-          onPending: function (result) {
-            changeResult("pending", result);
-            // console.log(result.status_message);
-            $("#payment-form").submit();
-          },
-          onError: function (result) {
-            changeResult("error", result);
-            // console.log(result.status_message);
-            $("#payment-form").submit();
-          },
-        });
-      },
-    });
-  });
-
-  $("#b_confirm").off("click");
-  $(document).on("click", "#b_confirm", function (e) {
-    e.preventDefault();
-
-    if (validasi() != "") {
-      notifikasi();
-      return;
-    }
-
-    var data = $("#daftar").serialize();
-    $.ajax({
-      method: "post",
-      url: "daftar/manual",
-      data: data,
-      cache: false,
-      dataType: "json",
-      success: function (data) {
-        // console.log(data);
-
-        if (data.success == true) {
-          Swal.fire({
-            // position: 'top-end',
-            icon: "success",
-            title: "Berhasil melakukan pendaftaran",
-            text: "Segera lakukan pembayaran agar pembelian tidak kadaluarsa",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-
-          setTimeout(function () {
-            var hp = "6281332332036";
-            var textEncode = encodeURI(
-              `*ID Order : ${data.id}*\nBerikut adalah bukti pembayaran dari program yang telah saya pilih.`
-            );
-            window.location = `https://wa.me/${hp}?text=${textEncode}`;
-          }, 3000);
-        } else {
-          var message = data.message;
-          if (message.redirect == true) {
-            Swal.fire({
-              // position: 'top-end',
-              icon: message.icon,
-              text: message.pesan,
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            setTimeout(function () {
-              window.location.href = message.target;
-            }, 2000);
-          } else {
-            if (message.notif == true) {
-              Swal.fire({
-                // position: 'top-end',
-                icon: message.icon,
-                text: message.pesan,
-                showConfirmButton: true,
-                // timer: 2000,
-              });
-            }
-          }
-        }
-      },
-    });
-  });
-
-  $("#no_hp").keyup(function (e) {
-    e.preventDefault();
-
-    if (/\D/g.test(this.value)) {
-      // Filter non-digits from input value.
-      this.value = this.value.replace(/\D/g, "");
-      $("#mustNum").text("Hanya dapat diisi menggunakan nomor");
-    }
-
-    $("#no_hp1").val($("#no_hp").val());
-  });
-
-  $("#p_otomatis").off("click");
-  $(document).on("click", "#p_otomatis", function (e) {
-    e.preventDefault;
-    $("#p_manual").removeClass("metodeBayar-active");
-    $("#p_otomatis").addClass("metodeBayar-active");
-    $("#b_confirm_midtrans").removeClass("hidden");
-    $("#b_confirm").addClass("hidden");
-    $("#tf_ke").slideUp();
-  });
-
-  $("#p_manual").off("click");
-  $(document).on("click", "#p_manual", function (e) {
-    e.preventDefault;
-    $("#p_otomatis").removeClass("metodeBayar-active");
-    $("#p_manual").addClass("metodeBayar-active");
-    $("#b_confirm").removeClass("hidden");
-    $("#b_confirm_midtrans").addClass("hidden");
-    $("#tf_ke").slideDown();
-  });
-
-  $("#add_no_hp").off("click");
-  $(document).on("click", "#add_no_hp", function (e) {
-    e.preventDefault();
-
-    $("#d_no_hp").prepend(`<div id="per_nomor" class=" w-full">
-        <label class="block my-3 w-full">
-            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                Nomor telepon peserta lain
-            </span>
-      
-            <div class="flex items-center">
-            <div class="flex w-full">
-               <span class="flex items-center mt-1 px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                   +62
-               </span>
-                <input required type="text" id="no_hp_lain" name="no_hp_lain[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="Masukkan nomor telepon peserta lain" />
-                </div>
-                <button id="remove_no_hp" class="bg-red-500 rounded-lg text-white mx-3">
+		$(
+			"#d_writer"
+		).prepend(`<div id="per_writer" class="flex items-end w-full mb-2">
+    <label class="block  w-full pr-2">
+        <div class="relative">
+		<input type="text" id="writer" name="writer[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan nama penulis lainnya" />
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <!-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg> -->
+            </div>
+        </div>
+    </label>
+    
+    <button id="remove_writer" class="bg-red-500 rounded-lg text-white mx-3">
                     <img src="assets/assets/vector/close-square.svg" alt="">
                 </button>
+ </div>`);
+	});
+
+	$(document).on("click", "#remove_writer", function (e) {
+		e.preventDefault();
+
+		let listNoLain = $(this).parent();
+		$(listNoLain).remove();
+	});
+
+	$("#add_editor").off("click");
+	$(document).on("click", "#add_editor", function (e) {
+		e.preventDefault();
+
+		$(
+			"#d_editor"
+		).prepend(`<div id="per_editor" class="flex items-end w-full mb-2">
+    <label class="block  w-full pr-2">
+        <div class="relative">
+		<input type="text" id="editor" name="editor[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan email kontributor" />
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <!-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg> -->
             </div>
-            <small id="status[]"></small>
-        </label>
-        </div>`);
-    addJumlahView();
-    biaya();
-    potongan();
-    total();
-    var jumlahPendaftar = document.querySelectorAll("#no_hp_lain").length + 1;
-    var limit = $("#add_no_hp").val();
-    limitAddView(jumlahPendaftar, limit);
-  });
+        </div>
+    </label>
+    
+    <button id="remove_editor" class="bg-red-500 rounded-lg text-white mx-3">
+                    <img src="assets/assets/vector/close-square.svg" alt="">
+                </button>
+ </div>`);
+	});
 
-  $(document).on("click", "#remove_no_hp", function (e) {
-    e.preventDefault();
-    minJumlahView();
-    biaya();
-    potongan();
-    total();
+	$(document).on("click", "#remove_editor", function (e) {
+		e.preventDefault();
 
-    let listNoLain = $(this).parent().parent();
-    $(listNoLain).remove();
+		let listNoLain = $(this).parent();
+		$(listNoLain).remove();
+	});
 
-    var jumlahPendaftar = document.querySelectorAll("#no_hp_lain").length + 1;
-    var limit = $("#add_no_hp").val();
-    console.log(jumlahPendaftar);
-    console.log(limit);
-    limitAddView(jumlahPendaftar, limit);
-  });
+	$("#add_designer").off("click");
+	$(document).on("click", "#add_designer", function (e) {
+		e.preventDefault();
 
-  // function aja
+		$(
+			"#d_designer"
+		).prepend(`<div id="per_designer" class="flex items-end w-full mb-2">
+    <label class="block  w-full pr-2">
+        <div class="relative">
+		<input type="text" id="designer" name="designer[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan email kontributor" />
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <!-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg> -->
+            </div>
+        </div>
+    </label>
+    
+    <button id="remove_designer" class="bg-red-500 rounded-lg text-white mx-3">
+                    <img src="assets/assets/vector/close-square.svg" alt="">
+                </button>
+ </div>`);
+	});
 
-  function limitAddView(pendaftar, limit) {
-    if (pendaftar >= limit) {
-      $("#add_no_hp").addClass("hidden");
-    } else {
-      $("#add_no_hp").removeClass("hidden");
-    }
-  }
+	$(document).on("click", "#remove_designer", function (e) {
+		e.preventDefault();
 
-  function addJumlahView() {
-    var jumlahBeli = parseInt($("#jumlahBeli").text());
-    jumlahBeli++;
-    $("#jumlahBeli").text(jumlahBeli);
-  }
+		let listNoLain = $(this).parent();
+		$(listNoLain).remove();
+	});
 
-  function minJumlahView() {
-    var jumlahBeli = parseInt($("#jumlahBeli").text());
-    jumlahBeli--;
-    $("#jumlahBeli").text(jumlahBeli);
-  }
+	$("#add_tata_letak").off("click");
+	$(document).on("click", "#add_tata_letak", function (e) {
+		e.preventDefault();
 
-  function biaya() {
-    const rupiah = (number) => {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(number);
-    };
-    var harga = $("#hdnBiaya").val();
-    var jumlahBeli = parseInt($("#jumlahBeli").text());
-    var totalKali = jumlahBeli * harga;
-    $("#biaya").text(rupiah(parseInt(totalKali)));
-  }
+		$(
+			"#d_tata_letak"
+		).prepend(`<div id="per_tata_letak" class="flex items-end w-full mb-2">
+    <label class="block  w-full pr-2">
+        <div class="relative">
+		<input type="text" id="tata_letak" name="tata_letak[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan email kontributor" />
+            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <!-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                    </svg> -->
+            </div>
+        </div>
+    </label>
+    
+    <button id="remove_tata_letak" class="bg-red-500 rounded-lg text-white mx-3">
+                    <img src="assets/assets/vector/close-square.svg" alt="">
+                </button>
+ </div>`);
+	});
 
-  function potongan() {
-    const rupiah = (number) => {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(number);
-    };
-    var ph = $("#hdnDiskon").val();
-    var jumlahBeli = parseInt($("#jumlahBeli").text());
-    var potonganKali = jumlahBeli * ph;
-    $("#potongan").text(rupiah(parseInt(potonganKali)));
-  }
+	$(document).on("click", "#remove_tata_letak", function (e) {
+		e.preventDefault();
 
-  function total() {
-    const rupiah = (number) => {
-      return new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-      }).format(number);
-    };
-    var jumlah = $("#biaya").text();
-    var jmlh = parseInt(jumlah.replace(/Rp|,00|\./g, ""));
-    var potongan = $("#potongan").text();
-    var ptgn = parseInt(potongan.replace(/Rp|,00|\./g, ""));
-    var totalAll = jmlh - ptgn;
-    $("#total").text(rupiah(parseInt(totalAll)));
-  }
+		let listNoLain = $(this).parent();
+		$(listNoLain).remove();
+	});
 
-  $("#nama").keypress(function (e) {
-    if (e.which === 32 && !this.value.length) {
-      e.preventDefault();
-      Swal.fire({
-        // position: 'top-end',
-        icon: "error",
-        text: "Tidak dapat menggunakan spasi diawal nama",
-        showConfirmButton: true,
-      });
-    }
-    var inputValue = event.charCode;
-    if (
-      !(inputValue >= 65 && inputValue <= 122) &&
-      inputValue != 32 &&
-      inputValue != 0
-    ) {
-      e.preventDefault();
-      Swal.fire({
-        // position: 'top-end',
-        icon: "error",
-        text: "Hanya dapat memasukkan huruf",
-        showConfirmButton: true,
-      });
-    }
-  });
-  $("#alamat").keypress(function (e) {
-    if (e.which === 32 && !this.value.length) {
-      e.preventDefault();
-      Swal.fire({
-        // position: 'top-end',
-        icon: "error",
-        text: "Tidak dapat menggunakan spasi diawal",
-        showConfirmButton: true,
-      });
-    }
-  });
-  $("#tempat_lahir").keypress(function (e) {
-    if (e.which === 32 && !this.value.length) {
-      e.preventDefault();
-      Swal.fire({
-        // position: 'top-end',
-        icon: "error",
-        text: "Tidak dapat menggunakan spasi diawal",
-        showConfirmButton: true,
-      });
-    }
-  });
-  $("#instansi").keypress(function (e) {
-    if (e.which === 32 && !this.value.length) {
-      e.preventDefault();
-      Swal.fire({
-        // position: 'top-end',
-        icon: "error",
-        text: "Tidak dapat menggunakan spasi diawal nama",
-        showConfirmButton: true,
-      });
-    }
-  });
+	$("#harga_paket").off("click");
+	$(document).on("click", "#harga_paket", function (e) {
+		e.preventDefault();
+		var id = $(this).val();
+		const rupiah = (number) => {
+			return new Intl.NumberFormat("id-ID", {
+				style: "currency",
+				currency: "IDR",
+			}).format(number);
+		};
+		$.ajax({
+			type: "post",
+			url: "pci/getHargaPaket",
+			data: { id: id },
+			dataType: "json",
+			success: function (response) {
+				$("#biaya").text(rupiah(parseInt(response.harga)));
+				$("#ukuran").text(response.book_sizes_title);
+				total();
+				$("#id_paket_harga").val(id);
+			},
+		});
+		var harga_paket = document.querySelectorAll("#harga_paket");
+		// $(this).removeClass("bg-secondary-100");
+		for (const hp of harga_paket) {
+			hp.classList.remove("bg-green-500");
+		}
+		$(this).addClass("bg-green-500");
+		for (const hp of harga_paket) {
+			hp.classList.add("bg-green-300");
+		}
+		$(this).removeClass("bg-green-300");
+	});
 
-  function validasi() {
-    if ($("#email").val() == "") {
-      $("#email").focus();
-      return "Email tidak boleh kosong";
-    }
-    if ($("#email").val() != "" && IsEmail($("#email").val()) == false) {
-      $("#email").focus();
-      return "Email tidak valid";
-    }
-    if ($("#email").val().length > 100) {
-      $("#email").focus();
-      return "Jumlah karakter maksimal 100 karakter";
-    }
-    if ($("#nama").val() == "") {
-      $("#nama").focus();
-      return "Nama tidak boleh kosong";
-    }
-    if ($("#nama").val().length > 100 || $("#nama").val().length < 3) {
-      $("#nama").focus();
-      return "Jumlah karakter maksimal 100 karakter dan minimal 3 karakter";
-    }
+	function writerValidasi() {
+		$("[id^=writer]").each(function () {
+			var text = $(this).val();
+			var ini = $(this);
+			if (IsEmail(text) == true) {
+				$.ajax({
+					type: "post",
+					url: "pci/cekEmail",
+					data: {
+						email: text,
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.success == false) {
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-green-500");
+							ini.addClass("border-red-500");
+						} else {
+							$("#writerErr").text("");
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-red-500");
+							ini.addClass("border-green-500");
+						}
+					},
+				});
+			} else {
+				ini.removeClass("border-slate-300");
+				ini.removeClass("border-green-500");
+				ini.addClass("border-red-500");
+			}
+		});
+	}
+	function designerValidasi() {
+		$("[id^=designer]").each(function () {
+			var text = $(this).val();
+			var ini = $(this);
+			if (IsEmail(text) == true) {
+				$.ajax({
+					type: "post",
+					url: "pci/cekEmail",
+					data: {
+						email: text,
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.success == false) {
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-green-500");
+							ini.addClass("border-red-500");
+						} else {
+							$("#designerErr").text("");
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-red-500");
+							ini.addClass("border-green-500");
+						}
+					},
+				});
+			} else {
+				ini.removeClass("border-slate-300");
+				ini.removeClass("border-green-500");
+				ini.addClass("border-red-500");
+			}
+		});
+	}
+	function editorValidasi() {
+		$("[id^=editor]").each(function () {
+			var text = $(this).val();
+			var ini = $(this);
+			if (IsEmail(text) == true) {
+				$.ajax({
+					type: "post",
+					url: "pci/cekEmail",
+					data: {
+						email: text,
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.success == false) {
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-green-500");
+							ini.addClass("border-red-500");
+						} else {
+							$("#editorErr").text("");
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-red-500");
+							ini.addClass("border-green-500");
+						}
+					},
+				});
+			} else {
+				ini.removeClass("border-slate-300");
+				ini.removeClass("border-green-500");
+				ini.addClass("border-red-500");
+			}
+		});
+	}
+	function tata_letakValidasi() {
+		$("[id^=tata_letak]").each(function () {
+			var text = $(this).val();
+			var ini = $(this);
+			if (IsEmail(text) == true) {
+				$.ajax({
+					type: "post",
+					url: "pci/cekEmail",
+					data: {
+						email: text,
+					},
+					dataType: "json",
+					success: function (response) {
+						if (response.success == false) {
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-green-500");
+							ini.addClass("border-red-500");
+						} else {
+							$("#tata_letakErr").text("");
+							ini.removeClass("border-slate-300");
+							ini.removeClass("border-red-500");
+							ini.addClass("border-green-500");
+						}
+					},
+				});
+			} else {
+				ini.removeClass("border-slate-300");
+				ini.removeClass("border-green-500");
+				ini.addClass("border-red-500");
+			}
+		});
+	}
 
-    if ($("#no_hp").val() == "") {
-      $("#no_hp").focus();
-      return "Nomor telepon anda tidak boleh kosong";
-    }
+	function total() {
+		const rupiah = (number) => {
+			return new Intl.NumberFormat("id-ID", {
+				style: "currency",
+				currency: "IDR",
+			}).format(number);
+		};
+		var jumlah = $("#biaya").text();
+		var jmlh = parseInt(jumlah.replace(/Rp|,00|\./g, ""));
+		var potongan = $("#potongan").text();
+		var ptgn = parseInt(potongan.replace(/Rp|,00|\./g, ""));
+		var totalAll = jmlh - ptgn;
+		$("#total").text(rupiah(parseInt(totalAll)));
+	}
 
-    if ($("#no_hp").val().length > 13) {
-      $("#no_hp").focus();
-      return "Nomor telepon anda lebih dari 13 angka";
-    }
-    if ($("#no_hp").val().length < 10) {
-      $("#no_hp").focus();
-      return "Nomor telepon anda kurang dari 10 angka";
-    }
-    if ($("#no_hp").val().charAt(0) == 0) {
-      $("#no_hp").focus();
-      return "Nomor telepon anda tidak boleh diawali dengan angka 0";
-    }
-    if ($("#instansi").val() == "") {
-      $("#instansi").focus();
-      return "Instansi tidak boleh kosong";
-    }
-    if ($("#instansi").val().length > 100) {
-      $("#instansi").focus();
-      return "Jumlah karakter maksimal 100 karakter ";
-    }
+	$("#title").keypress(function (e) {
+		var inputValue = event.charCode;
+		if (e.which === 32 && !this.value.length) {
+			e.preventDefault();
+			$("#judulErr").text("Tidak dapat menggunakan spasi diawal judul");
+		} else if (
+			!(inputValue >= 65 && inputValue <= 122) &&
+			inputValue != 32 &&
+			inputValue != 0
+		) {
+			e.preventDefault();
+			$("#judulErr").text("Hanya dapat memasukkan huruf");
+		} else {
+			$("#judulErr").text("");
+		}
+	});
 
-    if ($("#alamat").val() == "") {
-      $("#alamat").focus();
-      return "Alamat tidak boleh kosong";
-    }
+	$("#desc").keypress(function (e) {
+		if (e.which === 32 && !this.value.length) {
+			e.preventDefault();
+			$("#descErr").text("Tidak dapat menggunakan spasi diawal deskripsi");
+		} else {
+		}
+	});
 
-    if ($("#alamat").val().length > 255) {
-      $("#alamat").focus();
-      return "Jumlah karakter maksimal 255 karakter ";
-    }
+	$("#alamat").keypress(function (e) {
+		if (e.which === 32 && !this.value.length) {
+			e.preventDefault();
+			Swal.fire({
+				// position: 'top-end',
+				icon: "error",
+				text: "Tidak dapat menggunakan spasi diawal",
+				showConfirmButton: true,
+			});
+		}
+	});
+	$("#tempat_lahir").keypress(function (e) {
+		if (e.which === 32 && !this.value.length) {
+			e.preventDefault();
+			Swal.fire({
+				// position: 'top-end',
+				icon: "error",
+				text: "Tidak dapat menggunakan spasi diawal",
+				showConfirmButton: true,
+			});
+		}
+	});
+	$("#instansi").keypress(function (e) {
+		if (e.which === 32 && !this.value.length) {
+			e.preventDefault();
+			Swal.fire({
+				// position: 'top-end',
+				icon: "error",
+				text: "Tidak dapat menggunakan spasi diawal nama",
+				showConfirmButton: true,
+			});
+		}
+	});
 
-    if (
-      $("#kec_id").val() == "" ||
-      $("#kab_id").val() == "" ||
-      $("#prov_id").val() == ""
-    ) {
-      if ($("#prov_id").val() == "") {
-        $("#prov_id").focus();
-      } else if ($("#kab_id").val() == "") {
-        $("#kab_id").focus();
-      } else if ($("#kec_id").val() == "") {
-        $("#kec_id").focus();
-      }
-      return "Lengkapi provinsi, kabupaten/ kota, dan kecamatan domisili anda";
-    }
+	function removeDuplicates(arr) {
+		return arr.filter((item, index) => arr.indexOf(item) === index);
+	}
 
-    if (!$("#lk").prop("checked") && !$("#pr").prop("checked")) {
-      return "Jenis kelamin belum dipilih";
-    }
+	// function notifikasi() {
+	// 	Swal.fire({
+	// 		// position: 'top-end',
+	// 		icon: "error",
+	// 		text: validasi(),
+	// 		showConfirmButton: true,
+	// 	});
+	// }
 
-    if ($("#tempat_lahir").val() == "") {
-      $("#tempat_lahir").focus();
-      return "Tempat lahir tidak boleh kosong";
-    }
-    if ($("#tempat_lahir").val().length > 255) {
-      $("#tempat_lahir").focus();
-      return "Jumlah karakter maksimal 255 karakter ";
-    }
-    if (!$("#tgl_lahir").val()) {
-      $("#tgl_lahir").focus();
-      return "Tanggal lahir tidak boleh kosong";
-    }
-    if (new Date($("#tgl_lahir").val()).getMilliseconds() > Date.now()) {
-      $("#tgl_lahir").focus();
-      return "Tanggal lahir tidak melebihi hari ini";
-    }
-    if ($("#pendidikan_id").val() == "") {
-      $("#pendidikan_id").focus();
-      return "Pendidikan tidak boleh kosong";
-    }
-    if ($("#pekerjaan_id").val() == "") {
-      $("#pekerjaan_id").focus();
-      return "Pekerjaan tidak boleh kosong";
-    }
-    var peringatan = [];
-    $("[id^=no_hp_lain]").each(function () {
-      if (/\D/g.test(this.value)) {
-        // Filter non-digits from input value.
-        peringatan.push("Nomor telepon hanya dapat diisi menggunakan nomor");
-        // this.value = this.value.replace(/\D/g, "");
-        return false;
-      }
+	function IsEmail(email) {
+		var regex =
+			/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (regex.test(email)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+});
 
-      if ($(this).val() == "") {
-        peringatan.push("Nomor telepon peserta lain tidak boleh kosong");
-        return false;
-      }
+$(document).ready(function () {
+	$("#butuh_desain1").click(function (e) {
+		e.preventDefault();
+		$("#bikinDesign").fadeOut();
+		$("#uploadCover").fadeIn();
+		$(this).removeClass("bg-green-300");
+		$(this).addClass("bg-green-500");
+		$("#butuh_desain2").removeClass("bg-red-500");
+		$("#butuh_desain2").addClass("bg-red-300");
+		$("#is_cover").val("0");
+	});
+	$("#butuh_desain2").click(function (e) {
+		e.preventDefault();
+		$("#bikinDesign").fadeIn();
+		$("#uploadCover").fadeIn();
+		$(this).removeClass("bg-red-300");
+		$(this).addClass("bg-red-500");
+		$("#butuh_desain1").removeClass("bg-green-500");
+		$("#butuh_desain1").addClass("bg-green-300");
+		$("#is_cover").val("1");
+	});
+});
 
-      if ($(this).val().length > 13) {
-        peringatan.push("Nomor telepon peserta lain lebih dari 13 angka");
-        return false;
-      }
-
-      if ($(this).val().length < 10) {
-        peringatan.push("Nomor telepon peserta lain kurang dari 10 angka");
-        return false;
-      }
-      if ($(this).val().charAt(0) == 0) {
-        peringatan.push(
-          "Nomor telepon peserta lain tidak boleh diawali dengan angka 0"
-        );
-        return false;
-      }
-    });
-
-    var arr = [$("#no_hp").val()];
-    $("[id^=no_hp_lain]").each(function () {
-      var value = $(this).val();
-      if (arr.indexOf(value) == -1) {
-        if (value != "") {
-          arr.push(value);
-        }
-        $(this).removeClass("errorInput");
-      } else {
-        if ($("#no_hp").val() != "") {
-          $(this).addClass("errorInput");
-          peringatan.push("Terdapat nomor telepon yang sama");
-        }
-      }
-    });
-
-    return removeDuplicates(peringatan).toString();
-  }
-
-  function removeDuplicates(arr) {
-    return arr.filter((item, index) => arr.indexOf(item) === index);
-  }
-
-  function notifikasi() {
-    Swal.fire({
-      // position: 'top-end',
-      icon: "error",
-      text: validasi(),
-      showConfirmButton: true,
-    });
-  }
-
-  function IsEmail(email) {
-    var regex =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (regex.test(email)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+$(document).ready(function () {
+	$("#butuh_kdt1").click(function (e) {
+		e.preventDefault();
+		$(this).removeClass("bg-green-300");
+		$(this).addClass("bg-green-500");
+		$("#butuh_kdt2").removeClass("bg-red-500");
+		$("#butuh_kdt2").addClass("bg-red-300");
+		$("#is_kdt").val("0");
+	});
+	$("#butuh_kdt2").click(function (e) {
+		e.preventDefault();
+		$(this).removeClass("bg-red-300");
+		$(this).addClass("bg-red-500");
+		$("#butuh_kdt1").removeClass("bg-green-500");
+		$("#butuh_kdt1").addClass("bg-green-300");
+		$("#is_kdt").val("1");
+	});
 });

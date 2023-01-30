@@ -18,14 +18,14 @@ class Auth extends CI_Controller
     }
 
     public function index()
-    {       
+    {
         $data['title'] = 'Login';
-        viewUser($this, 'auth/login', $data);  
+        viewUser($this, 'auth/login', $data);
     }
 
     public function login()
     {
-       
+
         $userLogin = $this->input->post();
         $user = $this->m_auth->login($userLogin['email'])->row_array();
 
@@ -37,11 +37,10 @@ class Auth extends CI_Controller
                 'success' => false,
                 'message' => [
                     'title' => 'Gagal login',
-                    'text' => form_error('email').', '.form_error('password'),
+                    'text' => form_error('email') . ', ' . form_error('password'),
                     'icon' => 'error'
                 ]
             ];
-            
         } elseif ($user) {
             if ($user['is_active'] == 1) {
                 if (password_verify($userLogin['password'], $user['password'])) {
@@ -185,7 +184,7 @@ class Auth extends CI_Controller
             ];
         } else {
             $referral_code = substr($this->input->post('nama'), 0, 3) . $this->randomReferralCode(3);
-            if ($this->m_auth->getIdUserReferral($referral_code)->num_rows() > 0 ) {
+            if ($this->m_auth->getIdUserReferral($referral_code)->num_rows() > 0) {
                 $referral_code = substr($this->input->post('nama'), 0, 3) . $this->randomReferralCode(3);
             }
             $users = [
@@ -229,7 +228,6 @@ class Auth extends CI_Controller
                     'message' => 'Gagal daftar'
                 ];
             }
-            
         }
         echo json_encode($result);
     }
@@ -265,19 +263,19 @@ class Auth extends CI_Controller
         // $this->session->unset_userdata('id_user');
         $this->m_auth->logout();
         // json_encode($result);
-        redirect("index/auth");
-        
+        redirect("auth");
     }
 
-    private function randomReferralCode($numChar) {
+    private function randomReferralCode($numChar)
+    {
         $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randomString = '';
-     
-        for ($i = 0; $i < $numChar; $i++) {
+
+        for ($i = 0; $i <= $numChar; $i++) {
             $index = rand(0, strlen($characters) - 1);
             $randomString .= $characters[$index];
         }
-     
+
         return $randomString;
     }
 }
