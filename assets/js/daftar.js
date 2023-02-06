@@ -389,6 +389,9 @@ $(document).ready(function () {
 		var potongan = $("#potongan").text();
 		var ptgn = parseInt(potongan.replace(/Rp|,00|\./g, ""));
 		var totalAll = jmlh - ptgn;
+		if (totalAll < 0) {
+			totalAll = 0;
+		}
 		$("#total").text(rupiah(parseInt(totalAll)));
 	}
 
@@ -397,13 +400,6 @@ $(document).ready(function () {
 		if (e.which === 32 && !this.value.length) {
 			e.preventDefault();
 			$("#judulErr").text("Tidak dapat menggunakan spasi diawal judul");
-		} else if (
-			!(inputValue >= 65 && inputValue <= 122) &&
-			inputValue != 32 &&
-			inputValue != 0
-		) {
-			e.preventDefault();
-			$("#judulErr").text("Hanya dapat memasukkan huruf");
 		} else {
 			$("#judulErr").text("");
 		}
@@ -505,7 +501,7 @@ $(document).ready(function () {
 		$(this).addClass("bg-green-500");
 		$("#butuh_kdt2").removeClass("bg-red-500");
 		$("#butuh_kdt2").addClass("bg-red-300");
-		$("#is_kdt").val("0");
+		$("#is_kdt").val("1");
 	});
 	$("#butuh_kdt2").click(function (e) {
 		e.preventDefault();
@@ -513,6 +509,6 @@ $(document).ready(function () {
 		$(this).addClass("bg-red-500");
 		$("#butuh_kdt1").removeClass("bg-green-500");
 		$("#butuh_kdt1").addClass("bg-green-300");
-		$("#is_kdt").val("1");
+		$("#is_kdt").val("0");
 	});
 });

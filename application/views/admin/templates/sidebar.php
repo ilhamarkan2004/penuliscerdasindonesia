@@ -26,11 +26,11 @@
   <!-- CSS Materi -->
   <link id="pagestyle" href="<?php echo base_url() ?>assets/css/materi.css" rel="stylesheet" />
   <link id="pagestyle" href="<?php echo base_url() ?>assets/css/styleDash.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
   <!-- jika menggunakan bootstrap4 gunakan css ini  -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css"> -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+  <script src="<?php echo base_url() ?>assets/js/jquery.min.js"></script>
 
   <!-- <script src="https://use.fontawesome.com/your-embed-code.js"></script> -->
 

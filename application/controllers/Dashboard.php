@@ -29,7 +29,7 @@ class Dashboard extends CI_Controller
         $data['sub_title'] = 'Selamat Datang';
         $data['menu'] = $menu;
         $data['user'] = $currentUser;
-        $data['idPeserta'] = $this->m_auth->getIDRole('Peserta')['id'];
+        $data['idPeserta'] = $this->m_auth->getIDRole('User')['id'];
         $data['idAdmin'] = $this->m_auth->getIDRole('Admin')['id'];
 
         // data sidebar & navbar || end

@@ -24,6 +24,14 @@ class M_Auth extends CI_Model
         return $this->db->get()->num_rows();
     }
 
+    public function getIdFromEmail($email)
+    {
+        $this->db->select('id')
+            ->from($this->_table)
+            ->where(['email' => $email]);
+        return $this->db->get()->row_array();
+    }
+
     // tools
 
     public function getIDRole($nama_role)

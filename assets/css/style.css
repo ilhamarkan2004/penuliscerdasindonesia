@@ -3884,6 +3884,9 @@ textarea.form-control.is-invalid {
 .ml-20 {
 	margin-left: 5rem;
 }
+.ml-0 {
+	margin-left: 0rem;
+}
 
 .mt-\[129px\] {
 	margin-top: 129px;
@@ -5214,6 +5217,9 @@ textarea.form-control.is-invalid {
 	.md\:left-0 {
 		left: 0px;
 	}
+	.md\:ml-20 {
+		margin-left: 5rem;
+	}
 
 	.md\:top-0 {
 		top: 0px;
@@ -5745,5 +5751,9 @@ textarea.form-control.is-invalid {
 }
 
 .text-red-500 {
-	color: rgb(239 68 68 / var(--tw-text-opacity));
+	color: rgb(239 68 68);
+}
+
+.underline {
+	text-decoration-line: underline;
 }

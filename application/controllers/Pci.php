@@ -9,6 +9,7 @@ class Pci extends CI_Controller
         // $this->load->library('form_validation');
         $this->load->model('M_Auth', 'm_auth');
         $this->load->model('M_Paket', 'm_paket');
+        $this->load->model('M_Daftar', 'm_daftar');
         $this->load->helper('c_helper');
     }
 
@@ -21,7 +22,7 @@ class Pci extends CI_Controller
     public function terbit()
     {
 
-        $data['paket'] = multi_unique_array($this->m_paket->getHargaPaket(), 'paket_id');
+        $data['paket'] = multi_unique_array($this->m_paket->getHargaPaket()->result_array(), 'paket_id');
         $data['title'] = 'Pilihan Paket';
 
         viewUser($this, 'user/pages/terbit_buku', $data);
@@ -35,8 +36,8 @@ class Pci extends CI_Controller
             $id_paket = $this->input->post()['id_paket'];
 
             $data['currentUser'] = $this->m_auth->getCurrentUser();
-            $data['paket'] = $this->m_paket->getPaket($id_paket)[0];
-            $data['harga_paket'] = $this->m_paket->getHargaPaket($data['paket']['id']);
+            $data['paket'] = $this->m_paket->getPaket($id_paket)->result_array()[0];
+            $data['harga_paket'] = $this->m_paket->getHargaPaket($data['paket']['id'])->result_array();
             $data['title'] = $data['paket']['paket_name'];
             $data['fasilitas'] = json_decode($data['paket']['service']);
 
@@ -51,8 +52,7 @@ class Pci extends CI_Controller
     {
 
         $param = $this->input->post();
-        $param['url_cover'] = '';
-
+        $param['user_id'] = $this->session->userdata('id_user');
 
         $rules = [
             [
@@ -210,7 +210,26 @@ class Pci extends CI_Controller
                 die;
             }
 
-            $proses =  $this->m_pendaftaran->postDaftar($param);
+
+
+            $param['total'] = $this->m_paket->getHargaPaket(null, $param['id_paket_harga'])->result_array()[0]['harga'] - $this->m_auth->getCurrentUser()['point'];
+            $param['jenis'] = 'Manual';
+            //setting id order
+            $id_order = time() + rand(4, 7);
+            if ($this->m_daftar->cekIdOrder($id_order) != 0) {
+                $id_order = $id_order + rand(2, 10);
+            }
+            // print_r($param);
+            // die;
+            if ($param['total'] < 0) {
+                $param['point'] = abs($param['total']);
+                $param['total'] = 0;
+            } else {
+                $param['point'] = '0';
+            }
+
+            $proses =  $this->m_daftar->postDaftar($param, $id_order);
+
 
             if ($proses['success']) {
                 $message = [
@@ -234,42 +253,46 @@ class Pci extends CI_Controller
         echo json_encode($message);
     }
 
-
-
-
-
     // Validasi
 
     public function getHargaPaket()
     {
         $param = $this->input->post();
-        $id_harga = $param['id'];
-        $proses = $this->m_paket->getHargaPaket(null, $id_harga)[0];
-        $result = ['harga' => $proses['harga'], 'book_sizes_title' => $proses['book_sizes_title']];
+        if ($param == []) {
+            redirect('');
+        } else {
+            $id_harga = $param['id'];
+            $proses = $this->m_paket->getHargaPaket(null, $id_harga)->result_array()[0];
+            $result = ['harga' => $proses['harga'], 'book_sizes_title' => $proses['book_sizes_title']];
 
-        echo json_encode($result);
+            echo json_encode($result);
+        }
     }
 
     public function cekEmail()
     {
         $param = $this->input->post();
-        $email = $param['email'];
-        // print_r($param);
-        // die;
-        $proses = $this->m_auth->cekEmail($email);
-        if ($proses == 0) {
-            $result = [
-                'success' => false,
-                'message' => 'Email tidak ditemukan'
-            ];
+        if ($param == []) {
+            redirect('');
         } else {
-            $result = [
-                'success' => true,
-                'message' => 'Email ditemukan'
-            ];
-        }
+            $email = $param['email'];
+            // print_r($param);
+            // die;
+            $proses = $this->m_auth->cekEmail($email);
+            if ($proses == 0) {
+                $result = [
+                    'success' => false,
+                    'message' => 'Email tidak ditemukan'
+                ];
+            } else {
+                $result = [
+                    'success' => true,
+                    'message' => 'Email ditemukan'
+                ];
+            }
 
-        echo json_encode($result);
+            echo json_encode($result);
+        }
     }
 
     private function cekEmailAll($arrPenulis, $arrEditor, $arrDesigner, $arrLayout)

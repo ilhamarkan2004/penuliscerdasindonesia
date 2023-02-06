@@ -14,7 +14,7 @@ class M_Paket extends CI_Model
         if ($id_paket !== null) {
             $this->db->where(['id' => $id_paket]);
         }
-        return $this->db->get()->result_array();
+        return $this->db->get();
     }
 
     public function getHargaPaket($id_paket = null, $id_paket_harga = null)
@@ -31,6 +31,101 @@ class M_Paket extends CI_Model
             $this->db->where(['paket_harga.id' => $id_paket_harga]);
         }
 
+        return $this->db->get();
+    }
+
+    public function getUkuranBuku($id_size = null)
+    {
+        $this->db->select('*')
+            ->from($this->t_book_sizes);
+        if ($id_size != null) {
+            $this->db->where(['book_size_id' => $id_size]);
+        }
         return $this->db->get()->result_array();
+    }
+
+    public function postPaket($param)
+    {
+        $data = [
+            'paket_name' => $param['name'],
+            'copy_num' => $param['copy'],
+            'is_active' => $param['status'],
+            'service' => '[{"fasilitas": ""}]'
+        ];
+        $this->db->insert('pakets', $data);
+        return [
+            'success' => true
+        ];
+    }
+
+    public function postHargaPaket($param)
+    {
+        $data = [
+            'paket_id' => $param['iP'],
+            'harga' => $param['price'],
+            'book_size_id' => $param['jenis_kertas']
+        ];
+        $this->db->insert('paket_harga', $data);
+        return [
+            'success' => true
+        ];
+    }
+
+    public function deletePaket($id_paket)
+    {
+        $this->db->where('id', $id_paket);
+        $this->db->delete('pakets');
+        return [
+            'success' => true
+        ];
+    }
+
+    public function deleteHargaPaket($id_harga_paket)
+    {
+        $this->db->where('id', $id_harga_paket);
+        $this->db->delete('paket_harga');
+        return [
+            'success' => true
+        ];
+    }
+
+    public function putPaket($param)
+    {
+        $data = [
+            'paket_name' => $param['name'],
+            'copy_num' => $param['copy'],
+            'is_active' => $param['status']
+        ];
+        $this->db->where('id', $param['iP']);
+        $this->db->update('pakets', $data);
+        return [
+            'success' => true
+        ];
+    }
+
+    public function putHargaPaket($param)
+    {
+        $data = [
+            'paket_id' => $param['iP'],
+            'harga' => $param['price'],
+            'book_size_id' => $param['jenis_kertas']
+        ];
+        $this->db->where('id', $param['iK']);
+        $this->db->update('paket_harga', $data);
+        return [
+            'success' => true
+        ];
+    }
+
+    public function putService($param)
+    {
+        $data = [
+            'service' => $param['fasilitas']
+        ];
+        $this->db->where('id', $param['id']);
+        $this->db->update('pakets', $data);
+        return [
+            'success' => true
+        ];
     }
 }
