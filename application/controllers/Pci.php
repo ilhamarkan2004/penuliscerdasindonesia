@@ -15,7 +15,9 @@ class Pci extends CI_Controller
 
     public function index()
     {
+        $pakets = multi_unique_array($this->m_paket->getHargaPaket()->result_array(), 'paket_id');
         $data['title'] = 'Home';
+        $data['paket'] = $pakets;
         viewUser($this, 'user/pages/home', $data);
     }
 

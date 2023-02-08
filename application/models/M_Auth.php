@@ -15,6 +15,15 @@ class M_Auth extends CI_Model
             ->where(['id' => $this->session->userdata('id_user')]);
         return $this->db->get()->row_array();
     }
+   
+    public function getUsers()
+    {
+        $id_role_user = $this->getIDRole('User')['id'];
+        $this->db->select('*')
+            ->from($this->_table)
+            ->where(['role_id' => $id_role_user ]);
+        return $this->db->get();
+    }
 
     public function cekUserAktif($id_user)
     {

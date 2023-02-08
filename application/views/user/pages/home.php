@@ -366,29 +366,55 @@
                 }
             }
         </style>
-        <div class="container-card mx-auto">
+        <div class="container mx-auto">
             <div class="flex justify-center flex-wrap">
-                <?php foreach ($pelatihan as $plt) { ?>
-                    <div class="kartu w-full p-3 border border-2 mt-8 mx-5  hover:shadow-lg transition ease ">
-                        <div class="flex flex-col">
-                            <div class="container-pelatihan h-[55px] flex items-center">
-                                <h1 class="pelatihan text-[22px] p-0 font-bold"><?php echo $plt['nama_pelatihan'] ?></h1>
+                <?php if (!empty($paket)) { ?>
+                    <div class="flex flex-wrap justify-center lg:justify-start">
+                        <?php foreach ($paket as $po) : ?>
+
+                            <!-- ITEM 2 -->
+                            <div class="min-w-[260px]">
+                                <div class="shadow-md rounded-md px-6 pb-6 bg-white my-3 mx-2">
+                                    <div class="border-b-2 border-[#F5F5F5];">
+                                        <h1 class="pt-[30px] text-center font-semibold text-xl lg:text-[24px]">
+                                            <?php echo $po['paket_name'] ?>
+                                        </h1>
+                                        <div class="flex items-center flex-col">
+                                            <img src="<?= base_url(); ?>assets/assets/vector/group.svg" class="my-[16px]" />
+                                        </div>
+                                        <div class="flex items-center flex-col">
+                                            <h2 class="text-secondaryTextBlue font-semibold text-base lg:text-[18px] text-center">
+                                                <?php echo $po['copy_num'] ?> eksemplar
+                                            </h2>
+
+                                            <!-- <h2 class="my-[4px] text-[#939393] line-through text-lg lg:text-xl font-normal">
+                                                                Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
+                                                            </h2> -->
+                                            <span class="text-sm font-bold mt-6">Mulai dari </span>
+                                            <h2 class="font-semibold text-[26px] lg:text-[28px] text-center">
+                                                Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
+                                            </h2>
+                                        </div>
+                                    </div>
+                                    <div class="my-6">
+                                        <?php foreach (json_decode($po['service']) as $fas) : ?>
+                                            <div class="flex">
+                                                <img src="<?= base_url() ?>assets/assets/vector/check-circle.svg" class="mx-3" />
+                                                <p class="leading-relaxed lg:text-base text-sm font-normal">
+                                                    <?= $fas->fasilitas ?>
+                                                </p>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+
                             </div>
-                            <?php if (!empty($plt['gambar'])) { ?>
-                                <img class="block w-full" style="height: 178px;" src="<?= base_url($plt['gambar']) ?>" alt="">
-                            <?php } else { ?>
-                                <img class="block w-full" src="<?= base_url() ?>assets/image/program/1.svg" alt="">
-                            <?php } ?>
-                            <p class="digital text-[20px] text-[#1089C0] font-semibold  my-1"><?php echo $plt['kategori'] ?></p>
-                            <p class="tanggal text-[12px] my-1"><?php echo konversi($plt['tanggal_mulai']) ?> - <?php echo konversi($plt['tanggal_selesai']) ?></p>
-                            <div class="text-center my-1">
-                                <p class="coret-harga line-through text-[20px] text-[#939393]"><?php echo number_format($plt['harga'], 2, ',', '.') ?></p>
-                                <p class="harga text-[26px] font-bold text-[#0F345E]">Rp <?php echo number_format($plt['harga'] - $plt['diskon'], 2, ',', '.') ?></p>
-                            </div>
-                            <a class="button items-end block bg-[#FFA110] self py-2 w-full rounded-lg text-center text-semibold text-white text-[14px] my-1 hover:bg-sky-700 transition ease" href="<?= base_url('AMDA/deskripsi') ?>/<?php echo $plt['id_pel'] ?>">Selengkapnya</a>
-                        </div>
+
+                        <?php endforeach; ?>
                     </div>
-                <?php } ?>
+                <?php } else {
+                    echo 'Mohon maaf, untuk saat ini tidak ada paket yang tersedia';
+                } ?>
             </div>
         </div>
 
