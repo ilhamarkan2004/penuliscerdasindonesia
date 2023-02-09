@@ -194,7 +194,7 @@ class Auth extends CI_Controller
                 'email' => $this->input->post('email'),
                 'password' =>  password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 // 'gambar' => default_profil(),
-                // 'user_group_id' => $this->m_auth->getIDRole('Pendaftar')['id'],
+                'role_id' => $this->m_auth->getIDRole('User')['id'],
                 'referral_code' =>  $referral_code
             ];
 
@@ -203,7 +203,11 @@ class Auth extends CI_Controller
 
             $id_users = $this->db->insert_id();
 
-            $referral_from = $this->m_auth->getIdUserReferral($this->input->post('referral'))->row_array()['id'];
+            if (trim($this->input->post('referral')) != '') {
+                $referral_from = $this->m_auth->getIdUserReferral($this->input->post('referral'))->row_array()['id'];
+            } else {
+                $referral_from = null;
+            }
 
             $user_referral = [
                 'referral_from' => $referral_from,

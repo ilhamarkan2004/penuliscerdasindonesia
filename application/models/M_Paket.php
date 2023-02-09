@@ -6,6 +6,8 @@ class M_Paket extends CI_Model
     private $t_paket = 'pakets';
     private $t_paket_harga = 'paket_harga';
     private $t_book_sizes = 'book_sizes';
+    private $active = '1';
+    private $notActive = '0';
 
     public function getPaket($id_paket = null)
     {
@@ -17,13 +19,16 @@ class M_Paket extends CI_Model
         return $this->db->get();
     }
 
-    public function getHargaPaket($id_paket = null, $id_paket_harga = null)
+    public function getHargaPaket($id_paket = null, $id_paket_harga = null, $is_active = null)
     {
         $this->db->select('*, book_sizes.title as book_sizes_title, pakets.id as id_pakets, paket_harga.id as id_paket_harga')
             ->from($this->t_paket_harga)
             ->order_by('harga', 'ASC')
             ->join($this->t_book_sizes, 'book_sizes.id = paket_harga.book_size_id')
             ->join($this->t_paket, 'pakets.id = paket_harga.paket_id');
+        if ($is_active != null) {
+            $this->db->where(['is_active' => $this->active]);
+        }
         if ($id_paket !== null) {
             $this->db->where(['paket_id' => $id_paket]);
         }

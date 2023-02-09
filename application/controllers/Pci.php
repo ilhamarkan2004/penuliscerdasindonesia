@@ -10,12 +10,14 @@ class Pci extends CI_Controller
         $this->load->model('M_Auth', 'm_auth');
         $this->load->model('M_Paket', 'm_paket');
         $this->load->model('M_Daftar', 'm_daftar');
+        $this->load->model('M_Event', 'm_event');
         $this->load->helper('c_helper');
     }
 
     public function index()
     {
-        $pakets = multi_unique_array($this->m_paket->getHargaPaket()->result_array(), 'paket_id');
+        $pakets = array_slice(multi_unique_array($this->m_paket->getHargaPaket(null, null, 1)->result_array(), 'paket_id'), 0, 2);
+        $data['event'] = $this->m_event->getEventType();
         $data['title'] = 'Home';
         $data['paket'] = $pakets;
         viewUser($this, 'user/pages/home', $data);
@@ -24,7 +26,8 @@ class Pci extends CI_Controller
     public function terbit()
     {
 
-        $data['paket'] = multi_unique_array($this->m_paket->getHargaPaket()->result_array(), 'paket_id');
+        $data['paket'] = multi_unique_array($this->m_paket->getHargaPaket(null, null, '1')->result_array(), 'paket_id');
+        $data['event'] = $this->m_event->getEventType();
         $data['title'] = 'Pilihan Paket';
 
         viewUser($this, 'user/pages/terbit_buku', $data);
@@ -42,6 +45,7 @@ class Pci extends CI_Controller
             $data['harga_paket'] = $this->m_paket->getHargaPaket($data['paket']['id'])->result_array();
             $data['title'] = $data['paket']['paket_name'];
             $data['fasilitas'] = json_decode($data['paket']['service']);
+            $data['event'] = $this->m_event->getEventType();
 
             // print_r($data['harga_paket']);
             // die;

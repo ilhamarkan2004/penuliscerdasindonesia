@@ -33,9 +33,9 @@
                     </a>
                     <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class=" right-0 w-full mt-2 origin-top-right rounded-md">
 
-                      <li class="list-program bg-white text-black px-3 py-1"><a href="">
-                          test 1
-                        </a></li>
+                      <?php foreach ($event as $e) : ?>
+                        <li class="list-program bg-white text-black px-3 py-1"><a href=""><?= $e['name_type'] ?></a></li>
+                      <?php endforeach; ?>
                     </div>
                   </div>
                 </div>
@@ -128,9 +128,9 @@
                   <!-- <li class="bg-white rounded-sm text-black px-3 py-1 hover:bg-orange-400">Programming</li>
                   <li class="bg-white rounded-sm text-black px-3 py-1 hover:bg-orange-400">DevOps</li> -->
 
-                  <li class="list-program bg-white text-black px-3 py-1"><a href="">
-                      test 1
-                    </a></li>
+                  <?php foreach ($event as $e) : ?>
+                    <li class="list-program bg-white text-black px-3 py-1"><a href=""><?= $e['name_type'] ?></a></li>
+                  <?php endforeach; ?>
 
                 </ul>
               </div>

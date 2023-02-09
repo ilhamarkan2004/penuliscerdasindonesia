@@ -28,6 +28,12 @@ class Paket extends CI_Controller
         }
     }
 
+    public function coba()
+    {
+        // print_r($this->m_paket->getPaket(null, null, 1)->result_array());
+        print_r($this->m_paket->coba()->result_array());
+    }
+
     // ========== HALAMAN ==========
     public function index()
     {

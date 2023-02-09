@@ -94,7 +94,7 @@ class M_Book extends CI_Model
     {
         $this->db->trans_start();
 
-        if (file_exists('./' . $ref_file && $ref_file != '')) {
+        if (file_exists('./' . $ref_file)  && $ref_file != '') {
             unlink(FCPATH . $ref_file);
         }
         $this->db->delete($this->t_bc, ['book_id' => $id_book]);

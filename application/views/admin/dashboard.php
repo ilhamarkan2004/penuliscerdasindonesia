@@ -16,6 +16,10 @@
   }
 
   @media (min-width: 768px) {
+    .lg-mb-3 {
+      margin-bottom: 1.5rem;
+    }
+
     .lg-sideNavDiv {
       display: block;
     }
@@ -68,7 +72,7 @@
           <img src="<?= base_url() ?>assets/assets/img/index/default.png" class="img-circle">
         </div>
         <div class="w-auto flex items-center lg-px-3">
-          <h3 class="" style="color:white;"><?= $user['name'] ?></h3>
+          <h3 class="lg-mb-3" style="color:white;"><?= $user['name'] ?></h3>
         </div>
       </div>
     </div>
@@ -78,16 +82,16 @@
   <div class="flex justify-center text-white">
     <div class="lg-flex gap-3">
       <?php foreach ($cards as $card) : ?>
-        <div style="background-color: <?=$card['bg-color']?>;" class="cardDashboard mt-5 flex align-center">
+        <div style="background-color: <?= $card['bg-color'] ?>;" class="cardDashboard mt-5 flex align-center">
           <div class="subCardDash">
             <p class="text-bold fs-5"><?= $card['titleCard'] ?></p>
             <p style="display: inline;" class="fs-6 text-bold"><?= $card['isi'] ?></p>
           </div>
           <div style="position:absolute;right:0px;top:0px">
             <i class="<?= $card['icon'] ?>" style="transform: rotate(-10deg); opacity: 50%; font-size: 5em;"></i>
-  
+
           </div>
         </div>
-        <?php endforeach;?>
+      <?php endforeach; ?>
     </div>
   </div>
