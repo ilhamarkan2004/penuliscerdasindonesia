@@ -15,13 +15,13 @@ class M_Auth extends CI_Model
             ->where(['id' => $this->session->userdata('id_user')]);
         return $this->db->get()->row_array();
     }
-   
+
     public function getUsers()
     {
         $id_role_user = $this->getIDRole('User')['id'];
         $this->db->select('*')
             ->from($this->_table)
-            ->where(['role_id' => $id_role_user ]);
+            ->where(['role_id' => $id_role_user]);
         return $this->db->get();
     }
 
@@ -96,5 +96,56 @@ class M_Auth extends CI_Model
             ->from($this->_table)
             ->where(['referral_code' => $referral_code]);
         return $this->db->get();
+    }
+
+    public function putProfile($param)
+    {
+        $this->db->trans_start();
+        $data = [
+            'name' => $param['name'],
+            'description' => $param['desc'],
+            'img_profile' => $param['url_img'],
+            'phone' => $param['telp']
+        ];
+        $this->db->where('id', $this->session->userdata('id_user'));
+        $this->db->update('users', $data);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal ketika update data ke databse'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil ubah data'
+            ];
+        }
+    }
+
+    public function putPass($param)
+    {
+        $this->db->trans_start();
+        $data = [
+            'password' => password_hash($param['newPass'], PASSWORD_DEFAULT)
+        ];
+        $this->db->where('id', $this->session->userdata('id_user'));
+        $this->db->update('users', $data);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal ketika update data ke databse'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil ubah data'
+            ];
+        }
     }
 }

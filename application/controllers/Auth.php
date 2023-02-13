@@ -192,6 +192,7 @@ class Auth extends CI_Controller
                 // 'username' => "62" . $this->input->post('nohp'),
                 'name' => $this->input->post('nama'),
                 'email' => $this->input->post('email'),
+                'phone' => $no_hp,
                 'password' =>  password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 // 'gambar' => default_profil(),
                 'role_id' => $this->m_auth->getIDRole('User')['id'],

@@ -37,7 +37,7 @@ class Dashboard extends CI_Controller
                 [
                     [
                         'isi' => number_format($currentUser['point'], 0, '', '.') . ' point',
-                        'titleCard' => 'Jumlah point anda',
+                        'titleCard' => 'Jumlah point',
                         'icon' => 'fa-solid fa-rupiah-sign',
                         'bg-color' => '#92D248'
                     ],
@@ -46,6 +46,12 @@ class Dashboard extends CI_Controller
                         'titleCard' => 'Jumlah buku terupload',
                         'icon' => 'fa-solid fa-book',
                         'bg-color' => '#3F7856'
+                    ],
+                    [
+                        'isi' => $currentUser['referral_code'],
+                        'titleCard' => 'Kode referral',
+                        'icon' => 'fa-solid fa-id-badge',
+                        'bg-color' => '#6AA5A9'
                     ]
                 ];
         } elseif ($currentUser['role_id'] == $data['idAdmin']) {
@@ -70,5 +76,167 @@ class Dashboard extends CI_Controller
         // print_r($data['cards'][0]);
         // die;
         viewAdmin($this, 'admin/dashboard', $data);
+    }
+
+    public function aksiProfile()
+    {
+        $param = $this->input->post();
+        if ($param == []) {
+            $result = [
+                'success' => false,
+                'message' => 'Data inputan tidak ada'
+            ];
+        } else {
+            $no_hp = '62' . $param['telp'];
+
+            if (trim($param['name']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'name_err' => 'Nama tidak boleh kosong'
+                    ]
+                ];
+            } elseif (trim($param['desc']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'desc_err' => 'Deskripsi tidak boleh kosong'
+                    ]
+                ];
+            } elseif (trim($param['telp']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'telp_err' => 'Nomor telepon tidak boleh kosong'
+                    ]
+                ];
+            } elseif ($this->m_auth->cekTelp($no_hp) && $this->m_auth->getCurrentUser()['phone'] != $no_hp) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'telp_err' => 'Nomor telepon telah digunakan',
+                    ]
+                ];
+            } elseif (strlen($no_hp) > 13 || strlen($no_hp) < 8) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'telp_err' => 'Nomor telepon maksimal 13 karakter dan minimal 8 karakter',
+                    ]
+                ];
+            } else {
+
+                $ref_file = $this->m_auth->getCurrentUser()['img_profile'];
+                if (!empty($_FILES['img_profile']['name'])) {
+
+                    $nama_file = $_FILES['img_profile']['name'];
+
+                    if (!in_array(substr($_FILES['img_profile']['name'], -4), [".jpg", "jpeg", ".png"])) {
+                        $array = [
+                            'success' => false,
+                            'message' => [
+                                'alert_type' => 'swal',
+                                'message' => 'Tipe file yang dapat diupload adalah jpg, jpeg, png'
+                            ]
+                        ];
+                        echo json_encode($array);
+                        die;
+                    } else {
+                        $root_folder = './public/uploads/profile';
+                        // if (!file_exists('./' . $root_folder)) {
+                        //     mkdir($root_folder, 775);
+                        // }
+                        $files = uploadImage2('img_profile', 'profile', 'profile_upload');
+                        $param['url_img'] = $files['file_name'];
+                        // print_r($param);
+                    }
+                } else {
+                    $param['url_img'] = $ref_file;
+                }
+
+                $param['telp'] = $no_hp;
+
+                $proses = $this->m_auth->putProfile($param);
+                if ($proses['success']) {
+                    if (file_exists('./' . $ref_file) && !empty($_FILES['img_profile']['name']) && $ref_file != '') {
+                        unlink(FCPATH . $ref_file);
+                    }
+                    $result = [
+                        'success' => true,
+                        'message' => 'Profil anda berhasil diubah'
+                    ];
+                } else {
+                    $result = [
+                        'success' => false,
+                        'message' => 'Kesalahan database'
+                    ];
+                }
+            }
+        }
+        echo json_encode($result);
+    }
+
+    public function aksiPass()
+    {
+        $param = $this->input->post();
+        if ($param == []) {
+            $result = [
+                'success' => false,
+                'message' => 'Data inputan tidak ada'
+            ];
+        } else {
+
+            if (trim($param['oldPass']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'oldPass_err' => 'Password lama tidak boleh kosong'
+                    ]
+                ];
+            } elseif (trim($param['newPass']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'newPass_err' => 'Password baru tidak boleh kosong'
+                    ]
+                ];
+            } elseif (!password_verify($param['oldPass'], $this->m_auth->getCurrentUser()['password'])) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'oldPass_err' => 'Password salah',
+                    ]
+                ];
+            } elseif (strlen($param['newPass']) < 8) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'newPass_err' => 'Password minimal 8 karakter',
+                    ]
+                ];
+            } elseif ($param['verif'] !== $param['newPass']) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'verif_err' => 'Verifikasi password berbeda',
+                    ]
+                ];
+            } else {
+
+                $proses = $this->m_auth->putPass($param);
+                if ($proses['success']) {
+                    $result = [
+                        'success' => true,
+                        'message' => 'Password anda berhasil diubah'
+                    ];
+                } else {
+                    $result = [
+                        'success' => false,
+                        'message' => $proses['message']
+                    ];
+                }
+            }
+        }
+        echo json_encode($result);
     }
 }

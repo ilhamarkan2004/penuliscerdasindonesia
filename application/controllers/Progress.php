@@ -95,7 +95,6 @@ class Progress extends CI_Controller
                 'naskah' => '<a href="' . base_url() . $r['naskah'] . '" type="button" target="_blank" class="btn btn-success btn-sm naskah">Naskah</a>',
                 'cover' => '<button type="button" id="' . $r['id_b'] . '" class="btn btn-light btn-sm edtProgressCover"><i class="fa-solid fa-image"></i></button>',
                 'action' => '
-                <button type="button" id="' . $r['id_b'] . '" class="btn btn-info btn-sm detailBook"><i class="fa-solid fa-circle-info"></i></button>
                 <button type="button" id="' . $r['id_b'] . '" class="btn btn-primary btn-sm edtProgress"><i class="fa-solid fa-pen-to-square"></i></button>
                 <button type="button" id="' . $r['id_b'] . '" class="btn btn-danger btn-sm delBuku"><i class="fa-solid fa-trash"></i></button>'
             );

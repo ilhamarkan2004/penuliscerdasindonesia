@@ -91,6 +91,16 @@ class Pci extends CI_Controller
                     'alamat_error' => strip_tags(form_error('alamat')),
                 ]
             ];
+        } elseif (trim($param['id_paket_harga']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+
+                    'alert_type' => 'classic',
+                    'paket_harga_error' => 'Ukuran kertas belum dipilih'
+
+                ]
+            ];
         } elseif (trim($param['is_cover']) == '') {
             $message = [
                 'success' => false,
@@ -119,22 +129,22 @@ class Pci extends CI_Controller
 
                 ]
             ];
-        } elseif (trim($param['id_paket_harga']) == '') {
-            $message = [
-                'success' => false,
-                'message' => [
-
-                    'alert_type' => 'classic',
-                    'paket_harga_error' => 'Ukuran kertas belum dipilih'
-
-                ]
-            ];
         } elseif ($this->cekEmailAll($param['writer'], $param['editor'], $param['designer'], $param['tata_letak']) == false) {
             $message = [
                 'success' => false,
                 'message' => [
                     'alert_type' => 'swal',
                     'message' => 'Terdapat email penulis atau kontributor yang tidak diketahui'
+                ]
+            ];
+        } elseif (trim($param['is_kdt']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+
+                    'alert_type' => 'classic',
+                    'is_kdt_error' => 'Kebutuhan KDT belum dipilih'
+
                 ]
             ];
         } else {
@@ -244,7 +254,8 @@ class Pci extends CI_Controller
                         'icon' => 'success',
                         'title' => 'Pendaftaran buku berhasil',
                         'text' => 'Pantau terus pemrosesan buku anda'
-                    ]
+                    ],
+                    'id' => $id_order
                 ];
             } else {
                 $message = [

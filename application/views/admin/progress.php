@@ -21,7 +21,7 @@
 
 
     <div class="container d-flex justify-content-between pl-3">
-        <div id="listBuku" class="p-3"></div>
+        <div id="listBuku" class="p-3 w-100"></div>
 
     </div>
     <div id="sideNavDiv" class="sticky-top end-2 lg-oke " style="display: none;">

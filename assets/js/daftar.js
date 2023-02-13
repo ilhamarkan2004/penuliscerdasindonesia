@@ -15,6 +15,7 @@ $(document).ready(function () {
 		$("#catatCoverErr").text("");
 		$("#uploadCoverErr").text("");
 		$("#alamatErr").text("");
+		$("#is_kdtErr").text("");
 		$.ajax({
 			url: "pci/submit_form",
 			type: "POST",
@@ -32,6 +33,11 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					}).then((result) => {
 						/* Read more about isConfirmed, isDenied below */
+						var hp = "6289683253025";
+						var textEncode = encodeURI(
+							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari penerbitan buku saya.`
+						);
+						window.location = `https://wa.me/${hp}?text=${textEncode}`;
 						window.location.href = "dashboard";
 					});
 				} else {
@@ -49,6 +55,7 @@ $(document).ready(function () {
 						$("#kertasErr").text(message.paket_harga_error);
 						$("#berkasErr").text(message.berkas_error);
 						$("#is_coverErr").text(message.is_cover_error);
+						$("#is_kdtErr").text(message.is_kdt_error);
 						$("#pembacaErr").text(message.pembaca_error);
 						$("#catatCoverErr").text(message.catat_cover_error);
 						$("#uploadCoverErr").text(message.upload_cover_error);
