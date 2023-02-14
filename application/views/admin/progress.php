@@ -18,8 +18,6 @@
     }
 </style>
 <div class="d-flex">
-
-
     <div class="container d-flex justify-content-between pl-3">
         <div id="listBuku" class="p-3 w-100"></div>
 

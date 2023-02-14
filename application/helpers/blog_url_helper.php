@@ -134,7 +134,7 @@ function uploadBerkas($nama_file, $path_folder, $prefix, $max_size = null, $allo
 			$config['allowed_types'] = $allowed_types;
 		}
 
-		$config['max_size'] = '3000';
+		$config['max_size'] = '300000';
 		if ($max_size != null) {
 			$config['max_size'] = $max_size;
 		}

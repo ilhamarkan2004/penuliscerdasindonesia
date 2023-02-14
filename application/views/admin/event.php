@@ -179,35 +179,35 @@
 
 
 <!-- DataTables Harga -->
-<?php if ($user_group_id == 1) { ?>
-    <div class="w-full">
-        <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive" style="margin:10px;">
-                <button style="float: left;" type="button" class="btn btn-primary" id="addEvent">
-                    <i class="fa fa-lg fa-fw fa-plus" aria-hidden="true"></i>Tambah Pilihan Event
-                </button>
-                <table class="table table-hover table-striped align-middle" id="eventTable" style="width: 100%;max-width:100%;">
-                    <thead class="">
-                        <tr>
-                            <th>No</th>
-                            <th>Jenis</th>
-                            <th>Nama</th>
-                            <th>Deskripsi</th>
-                            <th>Tanggal pendaftaran</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbl_data">
 
-                    </tbody>
-                </table>
-                <!-- Paginate -->
-                <div class="pagination"></div>
-            </div>
+<div class="w-full">
+    <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive" style="margin:10px;">
+            <button style="float: left;" type="button" class="btn btn-primary" id="addEvent">
+                <i class="fa fa-lg fa-fw fa-plus" aria-hidden="true"></i>Tambah Pilihan Event
+            </button>
+            <table class="table table-hover table-striped align-middle" id="eventTable" style="width: 100%;max-width:100%;">
+                <thead class="">
+                    <tr>
+                        <th>No</th>
+                        <th>Jenis</th>
+                        <th>Nama</th>
+                        <th>Deskripsi</th>
+                        <th>Tanggal pendaftaran</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbl_data">
+
+                </tbody>
+            </table>
+            <!-- Paginate -->
+            <div class="pagination"></div>
         </div>
     </div>
-<?php } ?>
+</div>
+
 
 <!-- </div> -->
 <!-- </div> -->

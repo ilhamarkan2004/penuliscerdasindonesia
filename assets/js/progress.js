@@ -10,6 +10,12 @@ $(document).ready(function () {
 				data: "progress",
 			},
 			{
+				data: "upload_at",
+			},
+			{
+				data: "update_at",
+			},
+			{
 				data: "naskah",
 			},
 			{
@@ -93,6 +99,41 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					});
 					$("#ProgressCoverModal").modal("hide");
+				} else {
+					if (response.message.alert_type == "swal") {
+						Swal.fire({
+							// position: 'top-end',
+							icon: "error",
+							text: response.message.message,
+							showConfirmButton: true,
+						});
+					} else if (response.message.alert_type == "classic") {
+						var message = response.message;
+						console.log(message);
+					}
+				}
+			},
+		});
+	});
+
+	$("#formProgressNaskah").submit(function (e) {
+		e.preventDefault();
+		$.ajax({
+			type: "post",
+			url: "progress/aksiNaskah",
+			data: new FormData(this),
+			processData: false,
+			contentType: false,
+			dataType: "json",
+			success: function (response) {
+				if (response.success) {
+					Swal.fire({
+						// position: 'top-end',
+						icon: "success",
+						text: response.message,
+						showConfirmButton: true,
+					});
+					$("#ProgressNaskahModal").modal("hide");
 				} else {
 					if (response.message.alert_type == "swal") {
 						Swal.fire({

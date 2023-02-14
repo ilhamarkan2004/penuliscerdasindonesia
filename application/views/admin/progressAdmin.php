@@ -97,6 +97,38 @@
     </div>
 </div>
 
+<!-- Modal Data Naskah -->
+<div class="modal fade" id="ProgressNaskahModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="jdlModelProgressNaskah">Naskah</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post" id="formProgressNaskah" enctype="multipart/form-data">
+                    <label class="form-label">Naskah saat ini</label>
+                    <a id="prevNaskah" href="" type="button" target="_blank" class="btn btn-success btn-sm naskah">Naskah</a>
+                    <input type="hidden" class="form-control" name="iB3" id="iB3" value="">
+
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Update Naskah</label>
+                        <input class="form-control" type="file" id="naskah" name="naskah">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="submit" id="" class="btn btn-primary aksiProgressNaskah">Tambah</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <link rel="stylesheet" href="<?= base_url('assets/css/slick.css'); ?>" />
 <link rel="stylesheet" href="<?= base_url('assets/css/slick-theme.css'); ?>" />
@@ -173,31 +205,33 @@
 </style>
 
 
-<!-- DataTables Harga -->
-<?php if ($user_group_id == 1) { ?>
-    <div class="w-full">
-        <div class="card-body px-0 pt-0 pb-2">
-            <div class="table-responsive" style="margin:10px;">
-                <table class="table table-hover table-striped align-middle" id="progressTable" style="width: 100%;max-width:100%;">
-                    <thead class="">
-                        <tr>
-                            <th>Judul Buku</th>
-                            <th>Progress</th>
-                            <th>Naskah</th>
-                            <th>Cover</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbl_data">
+<!-- DataTables  -->
 
-                    </tbody>
-                </table>
-                <!-- Paginate -->
-                <div class="pagination"></div>
-            </div>
+<div class="w-full">
+    <div class="card-body px-0 pt-0 pb-2">
+        <div class="table-responsive" style="margin:10px;">
+            <table class="table table-hover table-striped align-middle" id="progressTable" style="width: 100%;max-width:100%;">
+                <thead class="">
+                    <tr>
+                        <th>Judul Buku</th>
+                        <th>Progress</th>
+                        <th>Upload </th>
+                        <th>Update</th>
+                        <th>Naskah</th>
+                        <th>Cover</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tbl_data">
+
+                </tbody>
+            </table>
+            <!-- Paginate -->
+            <div class="pagination"></div>
         </div>
     </div>
-<?php } ?>
+</div>
+
 
 
 
@@ -231,6 +265,32 @@
                 }
                 $("#prevCover").attr("src", prevCover);
                 $("#ProgressCoverModal").modal("show");
+            },
+        });
+    });
+    $(document).off("click", ".edtProgressNaskah");
+    $(document).on("click", ".edtProgressNaskah", function() {
+        var id = $(this).attr("id");
+        $("#formProgressNaskah")[0].reset();
+        $.ajax({
+            type: "post",
+            url: "<?= base_url() ?>progress/detailBook",
+            data: {
+                id: id,
+            },
+            dataType: "JSON",
+            success: function(data) {
+                $("#jdlModelProgressNaskah").text("Ubah Naskah");
+                $(".aksiProgressNaskah").text("Ubah");
+                var response = data.message;
+                $("#iB3").val(response.id_b);
+                if (response.naskah == '') {
+                    var prevNaskah = '<?= base_url('assets/assets/default/preview_cover.jpg') ?>';
+                } else {
+                    var prevNaskah = response.prevNaskah;
+                }
+                $("#prevNaskah").attr("href", prevNaskah);
+                $("#ProgressNaskahModal").modal("show");
             },
         });
     });

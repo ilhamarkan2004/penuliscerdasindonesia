@@ -87,12 +87,16 @@ class Progress extends CI_Controller
         // die;
         $data = [];
 
+        // <a href="' . base_url() . $r['naskah'] . '" type="button" target="_blank" class="btn btn-success btn-sm naskah">Naskah</a>
+
         foreach (multi_unique_array($query->result_array(), 'book_id') as $r) {
 
             $data[] = array(
                 'title' => $r['title'],
                 'progress' => $r['status'],
-                'naskah' => '<a href="' . base_url() . $r['naskah'] . '" type="button" target="_blank" class="btn btn-success btn-sm naskah">Naskah</a>',
+                'upload_at' => date('j M Y', strtotime($r['created_at'])),
+                'update_at' => ($r['update_at'] != null) ? date('j M Y', strtotime($r['update_at'])) : '-',
+                'naskah' => '<button type="button" id="' . $r['id_b'] . '" class="btn btn-success btn-sm edtProgressNaskah">Naskah</button>',
                 'cover' => '<button type="button" id="' . $r['id_b'] . '" class="btn btn-light btn-sm edtProgressCover"><i class="fa-solid fa-image"></i></button>',
                 'action' => '
                 <button type="button" id="' . $r['id_b'] . '" class="btn btn-primary btn-sm edtProgress"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -119,6 +123,7 @@ class Progress extends CI_Controller
         } else {
             $proses = $this->m_book->getBooks($id_book)->row_array();
             $proses['prevCover'] = base_url() . $proses['cover'];
+            $proses['prevNaskah'] = base_url() . $proses['naskah'];
             $result = [
                 'success' => true,
                 'message' => $proses
@@ -224,6 +229,64 @@ class Progress extends CI_Controller
                 $result = [
                     'success' => true,
                     'message' => 'Cover berhasil diubah'
+                ];
+            } else {
+                $result = [
+                    'success' => false,
+                    'message' => 'Kesalahan database'
+                ];
+            }
+        }
+        echo json_encode($result);
+    }
+
+    public function aksiNaskah()
+    {
+        $param = $this->input->post();
+        // print_r($_FILES);
+        // die;
+        if ($param == []) {
+            $result = [
+                'success' => false,
+                'message' => 'Data inputan tidak ada'
+            ];
+        } else {
+            $ref_file = $this->m_book->getBooks($param['iB3'])->row_array()['naskah'];
+            if (!empty($_FILES['naskah']['name'])) {
+
+                $nama_file = $_FILES['naskah']['name'];
+
+                if (!in_array(substr($_FILES['naskah']['name'], -4), [".pdf", ".doc", "docx", '.ppt', 'pptx'])) {
+                    $array = [
+                        'success' => false,
+                        'message' => [
+                            'alert_type' => 'swal',
+                            'message' => 'Tipe file yang dapat diupload adalah pdf, doc, docx, ppt, pptx'
+                        ]
+                    ];
+                    echo json_encode($array);
+                    die;
+                } else {
+                    $root_folder = './public/uploads/berkas';
+                    // if (!file_exists('./' . $root_folder)) {
+                    //     mkdir($root_folder, 775);
+                    // }
+                    $files = uploadBerkas('naskah', 'berkas', 'berkas_upload', null, 'pdf|doc|docx|ppt|pptx');
+                    $param['url_naskah'] = $files['file_name'];
+                    // print_r($param);
+                }
+            } else {
+                $param['url_naskah'] = $ref_file;
+            }
+
+            $proses = $this->m_book->putBookNaskah($param);
+            if ($proses['success']) {
+                if (file_exists('./' . $ref_file) && !empty($_FILES['naskah']['name']) && $ref_file != '') {
+                    unlink(FCPATH . $ref_file);
+                }
+                $result = [
+                    'success' => true,
+                    'message' => 'Naskah berhasil diubah'
                 ];
             } else {
                 $result = [

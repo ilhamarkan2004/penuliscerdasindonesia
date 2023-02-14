@@ -194,12 +194,12 @@ class Pci extends CI_Controller
 
                 $nama_file = $_FILES['berkas']['name'];
 
-                if (!in_array(substr($_FILES['berkas']['name'], -4), [".pdf"])) {
+                if (!in_array(substr($_FILES['berkas']['name'], -4), [".pdf", ".doc", "docx", '.ppt', 'pptx'])) {
                     $array = [
                         'success' => false,
                         'message' => [
                             'alert_type' => 'classic',
-                            'berkas_error' => 'Tipe file yang dapat diupload adalah pdf'
+                            'berkas_error' => 'Tipe file yang dapat diupload adalah pdf, doc, docx, ppt, pptx'
                         ]
                     ];
                     echo json_encode($array);
@@ -209,7 +209,7 @@ class Pci extends CI_Controller
                     // if (!file_exists('./' . $root_folder)) {
                     //     mkdir($root_folder, 775);
                     // }
-                    $files = uploadBerkas('berkas', 'berkas', 'berkas_upload');
+                    $files = uploadBerkas('berkas', 'berkas', 'berkas_upload', null, 'pdf|doc|docx|ppt|pptx');
                     $param['url_berkas'] = $files['file_name'];
                     // print_r($param);
                 }
