@@ -92,6 +92,11 @@ class M_Daftar extends CI_Model
             'is_kdt' => $param['is_kdt'],
             'cover' => $param['url_cover'],
             'naskah' => $param['url_berkas'],
+            'book_size_id' => $param['id_kertas'],
+            'book_paper_id' => $param['id_jk'],
+            'ref_provinsi_id' => $param['provinsi_id'],
+            'ref_kota_id' => $param['kabupaten_id'],
+            'alamat_kirim' => $param['alamat']
 
         ];
         $this->db->insert($this->t_books, $dataPendaftaranUtama);

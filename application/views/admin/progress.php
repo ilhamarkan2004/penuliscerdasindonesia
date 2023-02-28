@@ -145,7 +145,7 @@
                 var data = response.message;
                 // console.log(data);
                 $.each(data, function(index, value) {
-                    console.log()
+                    // console.log()
                     var cover = value.cover;
                     var isbn = value.isbn;
                     var note_admin = value.note_admin;
@@ -171,7 +171,8 @@
                                     <p class="card-text"><b>ISBN : </b>${isbn}</p>
                                     <p class="card-text mt-4"><small class="text-muted" style="font-style: italic">${note_admin}</small></p>
                                 </div>
-                                <button class="btn btn-success float-end" id="progress" id_book="${value.book_id}">Progress</button>
+                                ${showButtonEdit(value.contributor_role_id,<?= $idPJ ?>, value.id_b, value.status_progres)}
+                                <button class="btn btn-dark float-end" id="progress" id_book="${value.book_id}">Progress</button>
                             </div>
                         </div>
                         <div class="shadow p-3 rounded mt-5" style="display:none;" id="progress${value.book_id}">
@@ -204,6 +205,8 @@
     function textComplete(step_id, progress_id) {
         if (progress_id - 1 >= step_id) {
             return 'complete';
+        } else if (progress_id == <?= $lastProgress ?>) {
+            return 'complete';
         } else {
             return '';
         }
@@ -218,6 +221,16 @@
             return 'success';
         } else {
             return 'secondary'
+        }
+    }
+
+    function showButtonEdit(contributor_id, role, id_b, status_progress) {
+        if (contributor_id == role && status_progress != <?= $success ?>) {
+            return `<form action="<?= base_url() . 'progress/editBuku' ?>" method="post">
+                                    <button type="submit" class="btn btn-dark" name="id" value="${id_b}"></button>
+                                </form>`;
+        } else {
+            return '';
         }
     }
 </script>

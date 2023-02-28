@@ -23,19 +23,15 @@
                         <small class="text-danger" id="errName"></small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Ukuran Buku</label>
-                        <select class="form-select form-control" name="jenis_kertas" id="jenis_kertas">
-                            <option value="">--pilih--</option>
-                            <?php foreach ($jenis_ukuran as $k) : ?>
-                                <option value="<?= $k['id'] ?>"><?= $k['title'] . ' ( ' . $k['desc'] . ' ) ' ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <span class="form-text text-danger" id="errPaper"></span>
+                    <div>
+                        <label for="">Jumlah eksemplar<span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="copy" name="copy" placeholder="Masukkan jumlah eksemplar">
+                        <small class="text-danger" id="errCopy"></small>
                     </div>
+
                     <div>
                         <label for="">Harga Paket <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="price" name="price" placeholder="Masukkan jumlah eksemplar" aria-label="linkBukti" aria-describedby="basic-addon1">
+                        <input type="number" class="form-control" id="price" name="price" aria-label="linkBukti" aria-describedby="basic-addon1">
                         <small class="text-danger" id="errPrice"></small>
                     </div>
 
@@ -152,7 +148,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Paket</th>
-                            <th>Jenis Kertas</th>
+                            <th>Jumlah eksemplar</th>
                             <th>Harga</th>
                             <th>Action</th>
                         </tr>
@@ -203,7 +199,7 @@
                     data: "name",
                 },
                 {
-                    data: "kertas",
+                    data: "copy",
                 },
                 {
                     data: "harga",
@@ -220,7 +216,7 @@
             $("#errPrice").text("");
             $("#errPaper").text("");
             $("#jdlModelKertas").text("Tambah Harga Baru");
-            $(".aksiHargaPaket").text("Ubah");
+            $(".aksiHargaPaket").text("Tambah");
             $("#iK").val("");
             $("#KertasModal").modal("show");
             $("#formKertas")[0].reset();
@@ -245,7 +241,7 @@
                     $(".aksiHargaPaket").text("Ubah");
                     var response = data.message;
                     $("#iK").val(response.id);
-                    $("#jenis_kertas").val(response.book_size_id);
+                    $("#copy").val(response.copy);
                     $("#price").val(response.harga);
                     $("#KertasModal").modal("show");
                 },
@@ -279,7 +275,7 @@
                     } else {
                         var error = response.message;
                         // console.log(error.kurikulum);
-                        $("#errPaper").text(error.paper_error);
+                        $("#errCopy").text(error.copy_error);
                         $("#errPrice").text(error.price_error);
                     }
                 },

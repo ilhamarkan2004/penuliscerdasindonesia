@@ -8,6 +8,21 @@ class M_Auth extends CI_Model
     const SESSION_KEY = 'id_user';
 
 
+    public function provinsi()
+    {
+        $query = $this->db->query("SELECT * FROM ref_provinsi ORDER BY nama_provinsi ASC");
+        return $query->result_array();
+    }
+    public function kabupaten($id_prov = null)
+    {
+        $this->db->select("*")
+            ->from('ref_kabupaten_kota');
+        if ($id_prov != null) {
+            $this->db->where(['ref_provinsi_id' => $id_prov]);
+        }
+        return $this->db->get()->result_array();
+    }
+
     public function getCurrentUser()
     {
         $this->db->select('*')
@@ -50,6 +65,7 @@ class M_Auth extends CI_Model
             ->where(['group' => $nama_role]);
         return $this->db->get()->row_array();
     }
+
 
     // REGISTRASI
     public function insertUsers($users)

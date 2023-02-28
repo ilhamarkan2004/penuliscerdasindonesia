@@ -12,6 +12,11 @@
                 <form action="" method="post" id="formProgress">
                     <input type="hidden" class="form-control" name="iB" id="iB" value="">
 
+                    <div>
+                        <label for="">ISBN</label>
+                        <input type="text" class="form-control" id="isbn" name="isbn" placeholder="Masukkan ISBN apabila sudah ada">
+                    </div>
+
                     <div class="form-group">
                         <label for="exampleInputPassword1">Progress</label>
                         <select class="form-select form-control" name="progress" id="progress">
@@ -215,6 +220,7 @@
                     <tr>
                         <th>Judul Buku</th>
                         <th>Progress</th>
+                        <th>Butuh</th>
                         <th>Upload </th>
                         <th>Update</th>
                         <th>Naskah</th>

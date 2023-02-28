@@ -43,12 +43,13 @@ class Pci extends CI_Controller
             $data['currentUser'] = $this->m_auth->getCurrentUser();
             $data['paket'] = $this->m_paket->getPaket($id_paket)->result_array()[0];
             $data['harga_paket'] = $this->m_paket->getHargaPaket($data['paket']['id'])->result_array();
+            $data['kertas'] = $this->m_paket->getUkuranKertas()->result_array();
+            $data['jk'] = $this->m_paket->getJenisKertas()->result_array();
             $data['title'] = $data['paket']['paket_name'];
             $data['fasilitas'] = json_decode($data['paket']['service']);
             $data['event'] = $this->m_event->getEventType();
-
-            // print_r($data['harga_paket']);
-            // die;
+            $data['provinsi'] = $this->m_auth->provinsi();
+            $data['kabupaten'] = $this->m_auth->kabupaten();
 
             viewUser($this, 'user/pages/form', $data);
         }
@@ -58,6 +59,8 @@ class Pci extends CI_Controller
     {
 
         $param = $this->input->post();
+        // print_r($param);
+        // die;
         $param['user_id'] = $this->session->userdata('id_user');
 
         $rules = [
@@ -97,7 +100,27 @@ class Pci extends CI_Controller
                 'message' => [
 
                     'alert_type' => 'classic',
-                    'paket_harga_error' => 'Ukuran kertas belum dipilih'
+                    'paket_harga_error' => 'Jumlah ekemplar belum dipilih'
+
+                ]
+            ];
+        } elseif (trim($param['id_kertas']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+
+                    'alert_type' => 'classic',
+                    'kertas_error' => 'Ukuran kertas belum dipilih'
+
+                ]
+            ];
+        } elseif (trim($param['id_jk']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+
+                    'alert_type' => 'classic',
+                    'jk_error' => 'Jenis kertas belum dipilih'
 
                 ]
             ];
@@ -126,7 +149,6 @@ class Pci extends CI_Controller
 
                     'alert_type' => 'classic',
                     'catat_cover_error' => 'Catatan permintaan cover tidak boleh kosong'
-
                 ]
             ];
         } elseif ($this->cekEmailAll($param['writer'], $param['editor'], $param['designer'], $param['tata_letak']) == false) {
@@ -147,6 +169,24 @@ class Pci extends CI_Controller
 
                 ]
             ];
+        } elseif (trim($param['provinsi_id']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+                    'alert_type' => 'classic',
+                    'alamat_error' => 'Alamat belum lengkap'
+
+                ]
+            ];
+        } elseif (trim($param['kabupaten_id']) == '') {
+            $message = [
+                'success' => false,
+                'message' => [
+                    'alert_type' => 'classic',
+                    'alamat_error' => 'Alamat belum lengkap'
+
+                ]
+            ];
         } else {
             // Upload cover
             if (!empty($_FILES['cover']['name'])) {
@@ -157,7 +197,7 @@ class Pci extends CI_Controller
                     $array = [
                         'success' => false,
                         'message' => [
-                            'cover' => 'Tipe file yang dapat diupload adalah jpg, jpeg, png'
+                            'upload_cover_error' => 'Tipe file yang dapat diupload adalah jpg, jpeg, png'
                         ]
                     ];
                     echo json_encode($array);
@@ -189,7 +229,6 @@ class Pci extends CI_Controller
             }
 
             // Upload berkas
-            $param['url_berkas'] = '';
             if (!empty($_FILES['berkas']['name'])) {
 
                 $nama_file = $_FILES['berkas']['name'];
@@ -244,9 +283,9 @@ class Pci extends CI_Controller
                 $param['point'] = '0';
             }
 
+
+
             $proses =  $this->m_daftar->postDaftar($param, $id_order);
-
-
             if ($proses['success']) {
                 $message = [
                     'success' => true,
@@ -280,7 +319,10 @@ class Pci extends CI_Controller
         } else {
             $id_harga = $param['id'];
             $proses = $this->m_paket->getHargaPaket(null, $id_harga)->result_array()[0];
-            $result = ['harga' => $proses['harga'], 'book_sizes_title' => $proses['book_sizes_title']];
+            $result = [
+                'harga' => $proses['harga'],
+                'eksemplar' => $proses['copy_num'] . ' eksemplar'
+            ];
 
             echo json_encode($result);
         }

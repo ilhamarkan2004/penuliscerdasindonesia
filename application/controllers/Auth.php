@@ -283,4 +283,14 @@ class Auth extends CI_Controller
 
         return $randomString;
     }
+
+    // GET ALAMAT
+    public function getKab()
+    {
+        $prov_id = $this->input->post('provinsi');
+        // print_r($prov_id);
+        // die;
+        $kabupaten = $this->m_auth->kabupaten($prov_id);
+        echo json_encode($kabupaten);
+    }
 }

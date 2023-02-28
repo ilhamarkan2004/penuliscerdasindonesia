@@ -5,6 +5,7 @@ class M_Book extends CI_Model
 {
     private $t_books = 'books';
     private $t_bc = 'book_contributors';
+    private $t_bcr = 'book_contributors_role';
     private $t_op = 'order_progress';
     private $t_order = 'order';
     private $t_bs = 'book_sell';
@@ -15,8 +16,8 @@ class M_Book extends CI_Model
     public function getBooks($id_book = null, $id_user = null)
     {
         $this->db->select('*, books.id as id_b, book_contributors.id as id_bc, order_progress.id as id_op')
-            ->from($this->t_bc)
-            ->join($this->t_books, 'books.id = book_contributors.book_id')
+            ->from($this->t_books)
+            ->join($this->t_bc, 'books.id = book_contributors.book_id')
             ->join($this->t_order, 'books.id = order.book_id')
             ->join($this->t_op, 'order_progress.id = order.progress_id');
         if ($id_user != null) {
@@ -98,11 +99,15 @@ class M_Book extends CI_Model
             'publisher_id' => $param['pub'],
             'sell_price' => $param['price'],
         ];
+
+        //set id column value as UUID
+        $this->db->set('uuid', 'UUID()', FALSE);
+
         $this->db->insert($this->t_bs, $data);
 
         $data = [
             'category_id' => $param['category'],
-            'language_id' => $param['book'],
+            'language_id' => $param['lang'],
             'num_page' => $param['num_page'],
         ];
         $this->db->where(['id' => $param['book']]);
@@ -185,6 +190,7 @@ class M_Book extends CI_Model
         $this->db->trans_start();
         $data1 = [
             'note_admin' => $param['catatan'],
+            'isbn' => $param['isbn'],
         ];
         $this->db->where('id', $param['iB']);
         $this->db->update('books', $data1);
@@ -287,6 +293,10 @@ class M_Book extends CI_Model
         }
     }
 
+
+
+
+    //private
     private function getIDProgress($nama_progress)
     {
         $this->db->select('id')
@@ -295,11 +305,144 @@ class M_Book extends CI_Model
         return $this->db->get()->row_array();
     }
 
+
+    // cek
     public function cekBookSell($book_id)
     {
         $this->db->select('id')
             ->from($this->t_bs)
             ->where(['book_id' => $book_id]);
         return $this->db->get()->num_rows();
+    }
+
+    public function cekContributor($book_id, $user_id, $role)
+    {
+        $this->db->select('id')
+            ->from($this->t_bc)
+            ->where(
+                [
+                    'book_id' => $book_id,
+                    'user_id' => $user_id,
+                    'contributor_role_id' => $role
+                ]
+            );
+        return $this->db->get()->num_rows();
+    }
+
+    public function getContributor($jenis_kontributor = null)
+    {
+        $this->db->select('*')
+            ->from('book_contributors_role');
+        if ($jenis_kontributor != null) {
+            $this->db->where(['role_name' => $jenis_kontributor]);
+        }
+        return $this->db->get();
+    }
+
+    public function getLastProgress()
+    {
+        $this->db->select('*')
+            ->from($this->t_op)
+            ->order_by('id', 'DESC');
+        return $this->db->get()->row_array();
+    }
+
+
+    //Update buku
+
+    private function getIdRole($nama_role)
+    {
+        $this->db->select('*')
+            ->from($this->t_bcr)
+            ->where(['role_name' => $nama_role]);
+        return $this->db->get()->row_array();
+    }
+
+    public function getContributorBook($id_buku, $id_role)
+    {
+        $this->db->select('*')
+            ->from('book_contributors')
+            ->join('users', 'users.id = book_contributors.user_id')
+            ->where(['book_id' => $id_buku, 'contributor_role_id' => $id_role]);
+        return $this->db->get()->result_array();
+    }
+
+    public function putBookAll($param = null)
+    {
+        $this->load->model('M_Auth', 'm_auth');
+
+        $this->db->trans_start();
+
+        //put book
+        $this->putBook($param);
+
+        //delete kontributor
+        $this->db->delete($this->t_bc, ['book_id' => $param['id_book']]);
+
+        //post kontributor
+        $book_id = $param['id_book'];
+        $this->postKontributor($book_id, $param['user_id'], $this->getIdRole('PJ')['id']);
+
+        foreach ($param['writer'] as $e_writer) {
+            $user_id = $this->m_auth->getIdFromEmail($e_writer)['id'];
+            $this->postKontributor($book_id, $user_id, $this->getIdRole('Penulis')['id']);
+        }
+
+        foreach ($param['editor'] as $e_editor) {
+            $user_id = $this->m_auth->getIdFromEmail($e_editor)['id'];
+            $this->postKontributor($book_id, $user_id, $this->getIdRole('Editor')['id']);
+        }
+
+        foreach ($param['tata_letak'] as $e_tata_letak) {
+            $user_id = $this->m_auth->getIdFromEmail($e_tata_letak)['id'];
+            $this->postKontributor($book_id, $user_id, $this->getIdRole('Tata Letak')['id']);
+        }
+
+        foreach ($param['designer'] as $e_designer) {
+            $user_id = $this->m_auth->getIdFromEmail($e_designer)['id'];
+            $this->postKontributor($book_id, $user_id, $this->getIdRole('Desain Cover')['id']);
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal ketika menambahkan data ke databse'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil menambahkan data'
+            ];
+        }
+    }
+
+    private function putBook($param)
+    {
+        $dataPendaftaranUtama = [
+            'title' => $param['title'],
+            'description' => $param['desc'],
+            'reader_cover' => $param['pembaca'],
+            'note_cover' => $param['catatCover'],
+            'is_cover' => $param['is_cover'],
+            'is_kdt' => $param['is_kdt'],
+            'cover' => $param['url_cover'],
+            'naskah' => $param['url_berkas'],
+            'book_size_id' => $param['id_kertas']
+
+        ];
+        $this->db->where(['id' => $param['id_book']]);
+        $this->db->update($this->t_books, $dataPendaftaranUtama);
+    }
+
+    private function postKontributor($book_id, $user_id, $role_id)
+    {
+        $dataKontributor = [
+            'book_id' => $book_id,
+            'user_id' => $user_id,
+            'contributor_role_id' => $role_id
+        ];
+        $this->db->insert($this->t_bc, $dataKontributor);
     }
 }

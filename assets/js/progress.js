@@ -1,13 +1,16 @@
 $(document).ready(function () {
 	table2 = $("#progressTable").DataTable({
 		responsive: true,
-		ajax: `progress/getAllBooks`,
+		ajax: "getAllBooks",
 		columns: [
 			{
 				data: "title",
 			},
 			{
 				data: "progress",
+			},
+			{
+				data: "butuh",
 			},
 			{
 				data: "upload_at",
@@ -33,7 +36,7 @@ $(document).ready(function () {
 		var id = $(this).attr("id");
 		$.ajax({
 			type: "post",
-			url: "progress/detailBookAdmin",
+			url: "detailBookAdmin",
 			data: {
 				id: id,
 			},
@@ -45,6 +48,7 @@ $(document).ready(function () {
 				$("#iB").val(response.id);
 				$("#progress").val(response.progress_id);
 				$("#catatan").val(response.catatan);
+				$("#isbn").val(response.isbn);
 				$("#" + response.status_progres).prop("checked", true);
 
 				$("#ProgressModal").modal("show");
@@ -57,7 +61,7 @@ $(document).ready(function () {
 		// console.log(data);
 		$.ajax({
 			type: "POST",
-			url: "progress/aksiProgress",
+			url: "aksiProgress",
 			data: data,
 			dataType: "JSON",
 			success: function (response) {
@@ -85,7 +89,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			type: "post",
-			url: "progress/aksiCover",
+			url: "aksiCover",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -120,7 +124,7 @@ $(document).ready(function () {
 		e.preventDefault();
 		$.ajax({
 			type: "post",
-			url: "progress/aksiNaskah",
+			url: "aksiNaskah",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -171,7 +175,7 @@ $(document).ready(function () {
 						data: {
 							id: data,
 						},
-						url: "progress/deleteBuku",
+						url: "deleteBuku",
 						dataType: "JSON",
 						success: function (response) {
 							if (response.success) {

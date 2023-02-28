@@ -1,0 +1,23 @@
+$(document).ready(function () {
+	table2 = $("#purchaseTable").DataTable({
+		responsive: true,
+		ajax: "purchase/getPurchase",
+		columns: [
+			{
+				data: "no",
+			},
+			{
+				data: "judul",
+			},
+			{
+				data: "publish_at",
+			},
+			{
+				data: "terjual",
+			},
+			{
+				data: "action",
+			},
+		],
+	});
+});

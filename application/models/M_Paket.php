@@ -6,6 +6,7 @@ class M_Paket extends CI_Model
     private $t_paket = 'pakets';
     private $t_paket_harga = 'paket_harga';
     private $t_book_sizes = 'book_sizes';
+    private $t_book_papers = 'book_papers';
     private $active = '1';
     private $notActive = '0';
 
@@ -19,12 +20,34 @@ class M_Paket extends CI_Model
         return $this->db->get();
     }
 
+    public function getPaketUsePaketHarga($id_paket_harga)
+    {
+        $this->db->select('paket_id')
+            ->from($this->t_paket_harga)
+            ->where(['id' => $id_paket_harga]);
+        return $this->db->get()->row_array();
+    }
+
+    public function getUkuranKertas()
+    {
+        $this->db->select('*')
+            ->from($this->t_book_sizes);
+        return $this->db->get();
+    }
+
+    public function getJenisKertas()
+    {
+        $this->db->select('*')
+            ->from($this->t_book_papers);
+        return $this->db->get();
+    }
+
     public function getHargaPaket($id_paket = null, $id_paket_harga = null, $is_active = null)
     {
-        $this->db->select('*, book_sizes.title as book_sizes_title, pakets.id as id_pakets, paket_harga.id as id_paket_harga')
+        $this->db->select('*, pakets.id as id_pakets, paket_harga.id as id_paket_harga')
             ->from($this->t_paket_harga)
             ->order_by('harga', 'ASC')
-            ->join($this->t_book_sizes, 'book_sizes.id = paket_harga.book_size_id')
+            // ->join($this->t_book_sizes, 'book_sizes.id = paket_harga.book_size_id')
             ->join($this->t_paket, 'pakets.id = paket_harga.paket_id');
         if ($is_active != null) {
             $this->db->where(['is_active' => $this->active]);
@@ -68,7 +91,7 @@ class M_Paket extends CI_Model
         $data = [
             'paket_id' => $param['iP'],
             'harga' => $param['price'],
-            'book_size_id' => $param['jenis_kertas']
+            'copy_num' => $param['copy']
         ];
         $this->db->insert('paket_harga', $data);
         return [
@@ -98,7 +121,7 @@ class M_Paket extends CI_Model
     {
         $data = [
             'paket_name' => $param['name'],
-            'copy_num' => $param['copy'],
+            // 'copy_num' => $param['copy'],
             'is_active' => $param['status']
         ];
         $this->db->where('id', $param['iP']);
@@ -113,7 +136,7 @@ class M_Paket extends CI_Model
         $data = [
             'paket_id' => $param['iP'],
             'harga' => $param['price'],
-            'book_size_id' => $param['jenis_kertas']
+            'copy_num' => $param['copy']
         ];
         $this->db->where('id', $param['iK']);
         $this->db->update('paket_harga', $data);

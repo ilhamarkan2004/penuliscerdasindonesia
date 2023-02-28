@@ -10,9 +10,9 @@ $(document).ready(function () {
 			{
 				data: "name",
 			},
-			{
-				data: "copy_num",
-			},
+			// {
+			// 	data: "copy_num",
+			// },
 			{
 				data: "is_active",
 			},
@@ -28,7 +28,7 @@ $(document).ready(function () {
 	$(document).off("click", "#addPaket");
 	$(document).on("click", "#addPaket", function () {
 		$("#errName").text("");
-		$("#errCopy").text("");
+		// $("#errCopy").text("");
 		$("#errStatus").text("");
 		$("#jdlModelPaket").text("Tambah Paket Baru");
 		$(".aksiPaket").text("Tambah");
@@ -40,7 +40,7 @@ $(document).ready(function () {
 	$(document).off("click", ".edtPaket");
 	$(document).on("click", ".edtPaket", function () {
 		$("#errName").text("");
-		$("#errCopy").text("");
+		// $("#errCopy").text("");
 		$("#errStatus").text("");
 		$("#formPaket")[0].reset();
 		var id = $(this).attr("id");
@@ -57,7 +57,7 @@ $(document).ready(function () {
 				var response = data.message;
 				$("#iP").val(response.id);
 				$("#name").val(response.paket_name);
-				$("#copy").val(response.copy_num);
+				// $("#copy").val(response.copy_num);
 				$("#status").val(response.is_active);
 				$("#PaketModal").modal("show");
 			},
@@ -216,7 +216,7 @@ $(document).ready(function () {
 	$(document).off("click", ".aksiPaket");
 	$(document).on("click", ".aksiPaket", function () {
 		$("#errName").text("");
-		$("#errCopy").text("");
+		// $("#errCopy").text("");
 		$("#errStatus").text("");
 
 		var data = $("#formPaket").serialize();
@@ -241,7 +241,7 @@ $(document).ready(function () {
 					var error = response.message;
 					// console.log(error.kurikulum);
 					$("#errName").text(error.name_error);
-					$("#errCopy").text(error.copy_error);
+					// $("#errCopy").text(error.copy_error);
 				}
 			},
 		});

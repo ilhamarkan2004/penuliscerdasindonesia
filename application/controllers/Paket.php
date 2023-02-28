@@ -28,12 +28,6 @@ class Paket extends CI_Controller
         }
     }
 
-    public function coba()
-    {
-        // print_r($this->m_paket->getPaket(null, null, 1)->result_array());
-        print_r($this->m_paket->coba()->result_array());
-    }
-
     // ========== HALAMAN ==========
     public function index()
     {
@@ -75,7 +69,7 @@ class Paket extends CI_Controller
             $data['user_group_id'] = $currentUser['role_id'];
 
 
-            $data['title'] = 'Jenis Kertas';
+            $data['title'] = 'Harga';
             $data['url'] = 'paket';
             $data['sub_title'] = 'Harga Paket : ' . $paket['paket_name'];
             $data['menu'] = $menu;
@@ -118,7 +112,7 @@ class Paket extends CI_Controller
             $data[] = array(
                 'no' => $key + 1,
                 'name' => $r['paket_name'],
-                'copy_num' => $r['copy_num'],
+                // 'copy_num' => $r['copy_num'],
                 'is_active' => $this->textStatus($r['is_active']),
                 'service' => '<button type="button" id="' . $r['id'] . '" class="btn btn-success btn-sm fasilitas">Layanan</button>',
                 'action' => '
@@ -152,7 +146,7 @@ class Paket extends CI_Controller
             $data[] = array(
                 'no' => $key + 1,
                 'name' => $r['paket_name'],
-                'kertas' => $r['book_sizes_title'],
+                'copy' => $r['copy_num'],
                 'harga' => "Rp." . number_format($r['harga'], 0, '', '.'),
                 'action' => '
                 <button type="button" id="' . $r['id_paket_harga'] . '" class="btn btn-primary btn-sm edtHargaPaket"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -206,7 +200,7 @@ class Paket extends CI_Controller
                 'success' => true,
                 'message' => [
                     'id' => $proses['id_paket_harga'],
-                    'book_size_id' => $proses['book_size_id'],
+                    'copy' => $proses['copy_num'],
                     'harga' => $proses['harga']
                 ]
             ];
@@ -221,11 +215,6 @@ class Paket extends CI_Controller
                 'field' => 'name',
                 'label' => 'nama paket',
                 'rules' => 'required|max_length[100]'
-            ],
-            [
-                'field' => 'copy',
-                'label' => 'jumlah eksemplar',
-                'rules' => 'required'
             ],
 
         ];
@@ -244,18 +233,20 @@ class Paket extends CI_Controller
                 'message' => [
                     'alert_type' => 'classic',
                     'name_error' => strip_tags(form_error('name')),
-                    'copy_error' => strip_tags(form_error('copy')),
+                    // 'copy_error' => strip_tags(form_error('copy')),
                 ]
             ];
-        } elseif ($param['copy'] <= 0) {
-            $result = [
-                'success' => false,
-                'message' => [
-                    'alert_type' => 'classic',
-                    'copy_error' => 'Jumlah eksemplar tidak boleh kurang dari 1 eksemplar',
-                ]
-            ];
-        } else {
+        }
+        // elseif ($param['copy'] <= 0) {
+        //     $result = [
+        //         'success' => false,
+        //         'message' => [
+        //             'alert_type' => 'classic',
+        //             'copy_error' => 'Jumlah eksemplar tidak boleh kurang dari 1 eksemplar',
+        //         ]
+        //     ];
+        // } 
+        else {
             if ($param['iP'] == '') {
                 $proses = $this->m_paket->postPaket($param);
                 if ($proses['success']) {
@@ -297,12 +288,12 @@ class Paket extends CI_Controller
                 'success' => false,
                 'message' => 'Data inputan tidak ada'
             ];
-        } elseif ($param['jenis_kertas'] == '') {
+        } elseif (trim($param['copy']) == '') {
             $result = [
                 'success' => false,
                 'message' => [
                     'alert_type' => 'classic',
-                    'paper_error' => 'Jenis ukuran kertas belum terpilih',
+                    'copy_error' => 'Jumlah eksemplar belum diisi',
                 ]
             ];
         } elseif (trim($param['price']) == '') {

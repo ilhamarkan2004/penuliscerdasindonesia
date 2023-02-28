@@ -1,3 +1,15 @@
+<style>
+    #progress-bar {
+        background-color: #12CC1A;
+        color: #FFFFFF;
+        width: 0%;
+        -webkit-transition: width .3s;
+        -moz-transition: width .3s;
+        transition: width .3s;
+        border-radius: 5px;
+    }
+</style>
+
 <script src="https://cdn.tailwindcss.com"></script>
 <section class="flex justify-center">
     <div class="container min-w-[360px]">
@@ -14,12 +26,12 @@
                                 <div class="flex items-center flex-col">
                                     <img src="<?= base_url('assets/assets/vector/solo.svg'); ?>" class="my-[16px]" />
                                 </div>
-                                <div class="flex items-center flex-col">
+                                <!-- <div class="flex items-center flex-col">
                                     <h2 class="text-secondaryTextBlue font-semibold text-base lg:text-[18px] text-center">
                                         <?= $paket['copy_num'] ?> eksemplar
                                     </h2>
 
-                                </div>
+                                </div> -->
                             </div>
 
                             <!-- Fasililtas -->
@@ -81,18 +93,50 @@
 
                         <label class="block mb-7">
                             <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
-                                Ukuran kertas
+                                Jumlah eksemplar
                             </span>
-                            <div class="w-full my-3">
+                            <div class="w-full my-3" style="gap: 0.5rem;">
                                 <?php foreach ($harga_paket as $hp) : ?>
-                                    <button id="harga_paket" value="<?= $hp['id_paket_harga'] ?>" name="paket_harga_id" class="bg-green-300 rounded-xl text-white py-4 px-3">
-                                        <?= $hp['book_sizes_title'] ?>
+                                    <button id="harga_paket" value="<?= $hp['id_paket_harga'] ?>" name="paket_harga_id" class="bg-green-300 rounded-xl text-white py-4 px-3 my-2">
+                                        <?= $hp['copy_num'] ?> eksemplar
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                            <small id="copyErr" class="text-red-500"></small>
+                            <input type="text" id="id_paket_harga" name="id_paket_harga" value="" hidden>
+                            <!-- <small style="font-size: x-small ;">( Klik salah satu untuk memilih ukuran kertas )</small> -->
+                        </label>
+
+                        <label class="block mb-7">
+                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
+                                Pilihan ukuran kertas
+                            </span>
+                            <div class="w-full my-3" style="gap: 0.5rem;">
+                                <?php foreach ($kertas as $hp) : ?>
+                                    <button id="kertas" value="<?= $hp['id'] ?>" name="book_size_id" class="bg-green-300 rounded-xl text-white py-4 px-3 my-2">
+                                        <?= $hp['title'] ?>
                                     </button>
                                 <?php endforeach; ?>
                             </div>
                             <small id="kertasErr" class="text-red-500"></small>
-                            <input type="text" id="id_paket_harga" name="id_paket_harga" value="" hidden>
+                            <input type="text" id="id_kertas" name="id_kertas" value="" hidden>
                             <small style="font-size: x-small ;">( Klik salah satu untuk memilih ukuran kertas )</small>
+                        </label>
+
+                        <label class="block mb-7">
+                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700">
+                                Pilihan jenis kertas
+                            </span>
+                            <div class="w-full my-3" style="gap: 0.5rem;">
+                                <?php foreach ($jk as $j) : ?>
+                                    <button id="jk" value="<?= $j['id'] ?>" name="book_paper_id" class="bg-green-300 rounded-xl text-white py-4 px-3 my-2">
+                                        <?= $j['paper_name'] ?>
+                                    </button>
+                                <?php endforeach; ?>
+                            </div>
+                            <small id="typeErr" class="text-red-500"></small>
+                            <input type="hidden" id="id_jk" name="id_jk" value="">
+                            <small style="font-size: x-small ;">( Klik salah satu untuk memilih jenis kertas )</small>
                         </label>
 
                         <label class="block mb-7">
@@ -147,7 +191,7 @@
                         </div>
 
 
-                        <p class="font-bold text-2xl mx-4 pt-10 border-b">Kebutuhan BNSP</p>
+                        <p class="font-bold text-2xl mx-4 pt-10 border-b">Kebutuhan ISBN</p>
 
                         <div id="list_writer mt-7">
                             <!-- per Nomor -->
@@ -275,13 +319,50 @@
                             <small id="is_kdtErr" class="text-red-500"></small>
                         </div>
 
-                        <label class="block mt-7">
-                            <span class=" block text-sm font-medium text-slate-700">
-                                Alamat pengiriman
-                            </span>
+                        <span class=" block text-sm font-medium text-slate-700">
+                            Alamat pengiriman
+                        </span>
+                        <div class="flex flex-wrap mt-1 pt-2">
+                            <label class="block mb-7 text-sm font-medium text-slate-700">Provinsi
+                                <select id="prov_id" name="provinsi_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
+                                    <?php
+                                    // $selected_prov = $data_member['provinsi_id'];
+                                    ?>
+                                    <option value="" selected>--pilih--</option>
+                                    <?php foreach ($provinsi as $prov) : ?>
+
+                                        <option value="<?= $prov['id'] ?>"><?= $prov['nama_provinsi'] ?></option>
+
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+
+                            <label class="block mb-7 text-sm font-medium text-slate-700 ">Kabupaten
+                                <select id="kab_id" name="kabupaten_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
+                                    <?php if (isset($data_member)) : ?>
+                                        <?php
+                                        // $selected_kab = $data_member['kabupaten_id'];
+                                        ?>
+                                        <option selected>--pilih--</option>
+                                        <?php foreach ($kabupaten as $kab) : ?>
+
+                                            <option value="<?= $kab['id'] ?>"><?= $kab['nama_kabupaten_kota'] ?></option>
+
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </select>
+                            </label>
+                        </div>
+                        <label class="block mb-7 text-sm font-medium text-slate-700">
                             <input type="text" id="alamat" name="alamat" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="Masukkan alamat pengiriman hasil cetak" />
                             <small id="alamatErr" class="text-red-500"></small>
                         </label>
+
+                        <!-- <label class="block mt-7">
+
+                            <input type="text" id="alamat" name="alamat" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="Masukkan alamat pengiriman hasil cetak" />
+                            <small id="alamatErr" class="text-red-500"></small>
+                        </label> -->
 
 
 
@@ -305,7 +386,7 @@
                                         <span class=""><b><?= $currentUser['name'] ?></b></span>
                                     </div>
                                     <div class="flex w-full py-1 justify-between">
-                                        <span for="n_program"><?= $paket['paket_name'] ?> - <span id="ukuran">(Pilih ukuran)</span> </span>
+                                        <span for="n_program"><?= $paket['paket_name'] ?> - <span id="ukuran">(Jumlah eksemplar)</span> </span>
                                         <span class="" id="biaya">Rp. 0,00</span>
                                     </div>
                                     <div class="flex w-full py-1 justify-between">
@@ -339,6 +420,10 @@
                                     <button type="submit" id="b_confirm" class=" bg-green-500 text-white rounded-lg py-4 font-bold w-full hover:ring-primaryDetailText ring-2">
                                         Konfirmasi Pembayaran
                                     </button>
+                                    <div id="progress-div">
+                                        <div id="progress-bar"></div>
+                                    </div>
+                                    <div id="loader-icon" style="display:none;"><img src="LoaderIcon.gif"></div>
                                 </div>
                             </div>
                         </div>

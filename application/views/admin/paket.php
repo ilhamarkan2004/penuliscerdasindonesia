@@ -22,11 +22,6 @@
                         <input type="text" class="form-control" id="name" name="name" placeholder="Masukkan nama paket" aria-label="linkBukti" aria-describedby="basic-addon1">
                         <small class="text-danger" id="errName"></small>
                     </div>
-                    <div>
-                        <label for="">Jumlah Eksemplar <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="copy" name="copy" placeholder="Masukkan jumlah eksemplar" aria-label="linkBukti" aria-describedby="basic-addon1">
-                        <small class="text-danger" id="errCopy"></small>
-                    </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Status</label>
                         <select class="form-select form-control" name="status" id="status">
@@ -181,7 +176,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Paket</th>
-                            <th>Jumlah Eksemplar</th>
+                            <!-- <th>Jumlah Eksemplar</th> -->
                             <th>Status</th>
                             <th>Pelayanan</th>
                             <th>Action</th>

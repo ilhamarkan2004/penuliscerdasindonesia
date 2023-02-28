@@ -9,6 +9,7 @@ $(document).ready(function () {
 		$("#judulErr").text("");
 		$("#descErr").text("");
 		$("#kertasErr").text("");
+		$("#copyErr").text("");
 		$("#berkasErr").text("");
 		$("#is_coverErr").text("");
 		$("#pembacaErr").text("");
@@ -16,15 +17,44 @@ $(document).ready(function () {
 		$("#uploadCoverErr").text("");
 		$("#alamatErr").text("");
 		$("#is_kdtErr").text("");
+		$("#typeErr").text("");
 		$.ajax({
+			xhr: function () {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener(
+					"progress",
+					function (evt) {
+						if (evt.lengthComputable) {
+							var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+							$("#progress-bar").width(percentComplete + "%");
+							$("#progress-bar").html(percentComplete + "%");
+						}
+					},
+					false
+				);
+				return xhr;
+			},
 			url: "pci/submit_form",
 			type: "POST",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
 			dataType: "JSON",
+			beforeSend: function () {
+				$("#progress-bar").width("0%");
+				$("#loader-icon").show();
+			},
+			error: function () {
+				$("#loader-icon").html(
+					'<p style="color:#EA4335;">File upload failed, please try again.</p>'
+				);
+			},
 			success: function (response) {
 				if (response.success) {
+					$("#daftar")[0].reset();
+					$("#loader-icon").html(
+						'<p style="color:#28A74B;">File has uploaded successfully!</p>'
+					);
 					Swal.fire({
 						// position: 'top-end',
 						icon: response.message.icon,
@@ -38,9 +68,12 @@ $(document).ready(function () {
 							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari penerbitan buku saya.`
 						);
 						window.location = `https://wa.me/${hp}?text=${textEncode}`;
-						window.location.href = "dashboard";
+						// window.location.href = "dashboard";
 					});
 				} else {
+					$("#loader-icon").html(
+						'<p style="color:#EA4335;">Terdapat inputan yang tidak sesuai, mohon cek ulang.</p>'
+					);
 					if (response.message.alert_type == "swal") {
 						Swal.fire({
 							// position: 'top-end',
@@ -52,7 +85,8 @@ $(document).ready(function () {
 						var message = response.message;
 						$("#judulErr").text(message.title_error);
 						$("#descErr").text(message.desc_error);
-						$("#kertasErr").text(message.paket_harga_error);
+						$("#copyErr").text(message.paket_harga_error);
+						$("#kertasErr").text(message.kertas_error);
 						$("#berkasErr").text(message.berkas_error);
 						$("#is_coverErr").text(message.is_cover_error);
 						$("#is_kdtErr").text(message.is_kdt_error);
@@ -60,30 +94,31 @@ $(document).ready(function () {
 						$("#catatCoverErr").text(message.catat_cover_error);
 						$("#uploadCoverErr").text(message.upload_cover_error);
 						$("#alamatErr").text(message.alamat_error);
+						$("#typeErr").text(message.jk_error);
 					}
 				}
 			},
 		});
 	});
 
-	$("#cover").on("change", function () {
-		/* current this object refer to input element */ var $input = $(this);
-		/* collect list of files choosen */ var files = $input[0].files;
-		var filename = files[0].name;
-		/* getting file extenstion eg- .jpg,.png, etc */ var extension =
-			filename.substr(filename.lastIndexOf("."));
-		/* define allowed file types */ var allowedExtensionsRegx =
-			/(\.jpg|\.jpeg|\.png|\.gif)$/i;
-		/* testing extension with regular expression */ var isAllowed =
-			allowedExtensionsRegx.test(extension);
-		if (isAllowed) {
-			alert("File type is valid for the upload");
-			/* file upload logic goes here... */
-		} else {
-			alert("Invalid File Type.");
-			return false;
-		}
-	});
+	// $("#cover").on("change", function () {
+	// 	/* current this object refer to input element */ var $input = $(this);
+	// 	/* collect list of files choosen */ var files = $input[0].files;
+	// 	var filename = files[0].name;
+	// 	/* getting file extenstion eg- .jpg,.png, etc */ var extension =
+	// 		filename.substr(filename.lastIndexOf("."));
+	// 	/* define allowed file types */ var allowedExtensionsRegx =
+	// 		/(\.jpg|\.jpeg|\.png|\.gif)$/i;
+	// 	/* testing extension with regular expression */ var isAllowed =
+	// 		allowedExtensionsRegx.test(extension);
+	// 	if (isAllowed) {
+	// 		alert("File type is valid for the upload");
+	// 		/* file upload logic goes here... */
+	// 	} else {
+	// 		alert("Invalid File Type.");
+	// 		return false;
+	// 	}
+	// });
 
 	$("#no_hp").keyup(function (e) {
 		e.preventDefault();
@@ -106,7 +141,7 @@ $(document).ready(function () {
 		).prepend(`<div id="per_writer" class="flex items-end w-full mb-2">
     <label class="block  w-full pr-2">
         <div class="relative">
-		<input type="text" id="writer" name="writer[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan nama penulis lainnya" />
+		<input type="text" id="writer" name="writer[]" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none block w-full rounded-md sm:text-sm" placeholder="Masukkan email penulis lainnya" />
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <!-- <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
@@ -238,12 +273,48 @@ $(document).ready(function () {
 			dataType: "json",
 			success: function (response) {
 				$("#biaya").text(rupiah(parseInt(response.harga)));
-				$("#ukuran").text(response.book_sizes_title);
+				$("#ukuran").text(response.eksemplar);
 				total();
 				$("#id_paket_harga").val(id);
 			},
 		});
 		var harga_paket = document.querySelectorAll("#harga_paket");
+		// $(this).removeClass("bg-secondary-100");
+		for (const hp of harga_paket) {
+			hp.classList.remove("bg-green-500");
+		}
+		$(this).addClass("bg-green-500");
+		for (const hp of harga_paket) {
+			hp.classList.add("bg-green-300");
+		}
+		$(this).removeClass("bg-green-300");
+	});
+
+	$("#kertas").off("click");
+	$(document).on("click", "#kertas", function (e) {
+		e.preventDefault();
+		var id = $(this).val();
+
+		$("#id_kertas").val(id);
+		var harga_paket = document.querySelectorAll("#kertas");
+		// $(this).removeClass("bg-secondary-100");
+		for (const hp of harga_paket) {
+			hp.classList.remove("bg-green-500");
+		}
+		$(this).addClass("bg-green-500");
+		for (const hp of harga_paket) {
+			hp.classList.add("bg-green-300");
+		}
+		$(this).removeClass("bg-green-300");
+	});
+
+	$("#jk").off("click");
+	$(document).on("click", "#jk", function (e) {
+		e.preventDefault();
+		var id = $(this).val();
+
+		$("#id_jk").val(id);
+		var harga_paket = document.querySelectorAll("#jk");
 		// $(this).removeClass("bg-secondary-100");
 		for (const hp of harga_paket) {
 			hp.classList.remove("bg-green-500");
@@ -519,3 +590,39 @@ $(document).ready(function () {
 		$("#is_kdt").val("0");
 	});
 });
+
+$(document).ready(function () {
+	loadkabupaten();
+});
+
+function loadkabupaten() {
+	$("#prov_id").change(function () {
+		var getprovinsi = $(this).val();
+		console.log(getprovinsi);
+
+		$.ajax({
+			type: "POST",
+			dataType: "JSON",
+			url: "auth/getKab",
+			data: {
+				provinsi: getprovinsi,
+			},
+			async: false,
+			success: function (data) {
+				var html = "";
+				var i;
+				html = "<option value='' selected>--pilih--</option>";
+				for (i = 0; i < data.length; i++) {
+					html +=
+						'<option value="' +
+						data[i].id +
+						'">' +
+						data[i].nama_kabupaten_kota +
+						"</option>";
+				}
+
+				$("#kab_id").html(html);
+			},
+		});
+	});
+}
