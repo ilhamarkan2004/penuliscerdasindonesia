@@ -76,7 +76,7 @@ class M_Paket extends CI_Model
     {
         $data = [
             'paket_name' => $param['name'],
-            'copy_num' => $param['copy'],
+            // 'copy_num' => $param['copy'],
             'is_active' => $param['status'],
             'service' => '[{"fasilitas": ""}]'
         ];

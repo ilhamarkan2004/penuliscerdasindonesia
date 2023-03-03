@@ -186,6 +186,13 @@ class Sell extends CI_Controller
                         'price_err' => 'Harga tidak boleh dibawah 0 rupiah'
                     ]
                 ];
+            } elseif (trim($this->m_book->getISBN($param['book'])['isbn']) == '') {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'book_err' => 'Buku masih belum punya ISBN'
+                    ]
+                ];
             } else {
                 if ($param['iS'] == '') {
 

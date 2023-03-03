@@ -99,6 +99,8 @@ class M_Daftar extends CI_Model
             'alamat_kirim' => $param['alamat']
 
         ];
+        //set id column value as UUID
+        $this->db->set('uuid', 'UUID()', FALSE);
         $this->db->insert($this->t_books, $dataPendaftaranUtama);
         $last_id_book = $this->db->insert_id();
         return $last_id_book;

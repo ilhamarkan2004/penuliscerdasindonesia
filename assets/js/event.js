@@ -12,7 +12,7 @@ function resetError() {
 $(document).ready(function () {
 	table = $("#eventTable").DataTable({
 		responsive: true,
-		ajax: `event/getEvent`,
+		ajax: "event/getEvent",
 		columns: [
 			{
 				data: "no",

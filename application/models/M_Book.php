@@ -13,7 +13,7 @@ class M_Book extends CI_Model
     private $t_cat = 'book_category';
     private $t_lang = 'book_language';
 
-    public function getBooks($id_book = null, $id_user = null)
+    public function getBooks($id_book = null, $id_user = null, $uuid = null)
     {
         $this->db->select('*, books.id as id_b, book_contributors.id as id_bc, order_progress.id as id_op')
             ->from($this->t_books)
@@ -25,6 +25,9 @@ class M_Book extends CI_Model
         }
         if ($id_book != null) {
             $this->db->where(['books.id' => $id_book]);
+        }
+        if ($uuid != null) {
+            $this->db->where(['books.uuid' => $uuid]);
         }
         return $this->db->get();
     }
@@ -329,6 +332,14 @@ class M_Book extends CI_Model
         return $this->db->get()->num_rows();
     }
 
+    public function cekUUID($uuid)
+    {
+        $this->db->select('id')
+            ->from($this->t_books)
+            ->where(['uuid' => $uuid]);
+        return $this->db->get()->num_rows();
+    }
+
     public function getContributor($jenis_kontributor = null)
     {
         $this->db->select('*')
@@ -344,6 +355,14 @@ class M_Book extends CI_Model
         $this->db->select('*')
             ->from($this->t_op)
             ->order_by('id', 'DESC');
+        return $this->db->get()->row_array();
+    }
+
+    public function getISBN($book_id)
+    {
+        $this->db->select('isbn')
+            ->from($this->t_books)
+            ->where(['id' => $book_id]);
         return $this->db->get()->row_array();
     }
 

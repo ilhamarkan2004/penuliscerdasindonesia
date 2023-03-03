@@ -7,8 +7,7 @@ class M_Event extends CI_Model
     private $t_events = 'events';
     private $t_et = 'event_type';
 
-
-    public function getEvents($event_id = null)
+    public function getEvents($event_id = null, $inisial = null, $is_active = null)
     {
         $this->db->select('*, event_type.id as et_id, events.id as e_id')
             ->from($this->t_events)
@@ -17,15 +16,34 @@ class M_Event extends CI_Model
             $this->db->where(['events.id' => $event_id]);
         }
 
+        if ($inisial != null) {
+            $this->db->where(['event_type.inisial' => $inisial]);
+        }
+
+        if ($is_active != null) {
+            if ($is_active == 1 || $is_active == 0) {
+                $this->db->where(['events.status' => $is_active]);
+            }
+        }
+
         return $this->db->get();
     }
 
     public function getEventType()
     {
-        $this->db->select('id, name_type')
+        $this->db->select('id, name_type, inisial')
             ->from($this->t_et);
 
         return $this->db->get()->result_array();
+    }
+
+    public function getEventTypeDetail($inisial)
+    {
+        $this->db->select('name_type, desc')
+            ->from($this->t_et)
+            ->where(['inisial' => $inisial]);
+
+        return $this->db->get()->row_array();
     }
 
     public function postEvent($param)
@@ -91,5 +109,13 @@ class M_Event extends CI_Model
                 'message' => 'Berhasil ubah data'
             ];
         }
+    }
+
+    public function cekInisial($inisial)
+    {
+        $this->db->select('inisial')
+            ->from($this->t_et)
+            ->where(['inisial' => $inisial]);
+        return $this->db->get()->num_rows();
     }
 }

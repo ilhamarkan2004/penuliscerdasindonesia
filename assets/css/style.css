@@ -3785,6 +3785,10 @@ textarea.form-control.is-invalid {
 	margin: 0.5rem;
 }
 
+.m-1 {
+	margin: 0.25rem;
+}
+
 .my-\[16px\] {
 	margin-top: 16px;
 	margin-bottom: 16px;
@@ -4370,6 +4374,10 @@ textarea.form-control.is-invalid {
 	border-width: 1px;
 }
 
+.border-0 {
+	border-width: 0px;
+}
+
 .border-2 {
 	border-width: 2px;
 }
@@ -4409,6 +4417,10 @@ textarea.form-control.is-invalid {
 .border-slate-300 {
 	--tw-border-opacity: 1;
 	border-color: rgb(203 213 225 / var(--tw-border-opacity));
+}
+
+.border-transparant {
+	border-color: transparent;
 }
 
 .border-neutral-10 {
@@ -4572,9 +4584,18 @@ textarea.form-control.is-invalid {
 	padding-right: 1rem;
 }
 
+.px-1 {
+	padding-left: 0.25rem;
+	padding-right: 0.25rem;
+}
+
 .py-3 {
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
+}
+.px-3 {
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
 }
 
 .px-\[6px\] {
@@ -5145,6 +5166,10 @@ textarea.form-control.is-invalid {
 	--tw-ring-color: rgb(15 52 94 / var(--tw-ring-opacity));
 }
 
+.hover\:.border:hover {
+	border-width: 1px;
+}
+
 .focus\:border-b-2:focus {
 	border-bottom-width: 2px;
 }
@@ -5321,6 +5346,11 @@ textarea.form-control.is-invalid {
 		padding: 2rem;
 	}
 
+	.md\:px-6 {
+		padding-left: 3rem;
+		padding-right: 3rem;
+	}
+
 	.md\:py-24 {
 		padding-top: 6rem;
 		padding-bottom: 6rem;
@@ -5427,6 +5457,11 @@ textarea.form-control.is-invalid {
 
 	.lg\:mb-0 {
 		margin-bottom: 0px;
+	}
+
+	.lg\:px-4 {
+		padding-left: 2rem;
+		padding-right: 2rem;
 	}
 
 	.lg\:block {
@@ -5756,4 +5791,8 @@ textarea.form-control.is-invalid {
 
 .underline {
 	text-decoration-line: underline;
+}
+
+.table-auto {
+	table-layout: auto;
 }

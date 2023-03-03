@@ -58,8 +58,7 @@ class Event extends CI_Controller
         $start = intval($this->input->get("start"));
         $length = intval($this->input->get("length"));
         $query = $this->m_event->getEvents();
-        // var_dump($tes);
-        // die;
+
         $data = [];
 
         foreach ($query->result_array() as $key => $r) {

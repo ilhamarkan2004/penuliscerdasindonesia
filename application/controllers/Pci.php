@@ -309,6 +309,38 @@ class Pci extends CI_Controller
         echo json_encode($message);
     }
 
+    public function event($inisial = null)
+    {
+        if ($this->m_event->cekInisial($inisial) == 0 || $inisial == null) {
+            redirect(base_url());
+        } else {
+            $data['title'] = 'Event';
+            $data['event'] = $this->m_event->getEventType();
+            $data['eventDetail'] = $this->m_event->getEventTypeDetail($inisial);
+            $data['by_type'] = $this->m_event->getEvents(null, $inisial, 1)->result_array();
+            viewUser($this, 'user/pages/event', $data);
+        }
+    }
+
+    public function daftarISBN($uuid = null)
+    {
+        $this->load->model('M_Book', 'm_book');
+        if ($this->m_book->cekUUID($uuid) == 0 || $uuid == null) {
+            redirect(base_url());
+        } else {
+            $data['title'] = 'Daftar ISBN';
+            $data['event'] = $this->m_event->getEventType();
+            $data['bookDetail'] = $this->m_book->getBooks(null, null, $uuid)->row_array();
+            $contributor = $this->m_book->getContributor()->result_array();
+            $data['contributor'] = $contributor;
+            foreach ($contributor as $c) {
+                $data[strtolower(str_replace(' ', '', $c['role_name']))] = $this->m_book->getContributorBook($data['bookDetail']['id_b'], $c['id']);
+            }
+            // $data['by_type'] = $this->m_event->getEvents(null, $inisial, 1)->result_array();
+            viewUser($this, 'user/pages/forIsbn', $data);
+        }
+    }
+
     // Validasi
 
     public function getHargaPaket()
