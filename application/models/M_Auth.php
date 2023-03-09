@@ -48,6 +48,14 @@ class M_Auth extends CI_Model
         return $this->db->get()->num_rows();
     }
 
+    public function cekUserAktifEmail($email)
+    {
+        $this->db->select('is_active')
+            ->from($this->_table)
+            ->where(['email' => $email]);
+        return $this->db->get()->row_array();
+    }
+
     public function getIdFromEmail($email)
     {
         $this->db->select('id')
@@ -57,7 +65,6 @@ class M_Auth extends CI_Model
     }
 
     // tools
-
     public function getIDRole($nama_role)
     {
         $this->db->select('*')
@@ -65,7 +72,6 @@ class M_Auth extends CI_Model
             ->where(['group' => $nama_role]);
         return $this->db->get()->row_array();
     }
-
 
     // REGISTRASI
     public function insertUsers($users)
@@ -147,7 +153,7 @@ class M_Auth extends CI_Model
         $data = [
             'password' => password_hash($param['newPass'], PASSWORD_DEFAULT)
         ];
-        $this->db->where('id', $this->session->userdata('id_user'));
+        $this->db->where('id', $param['user_id']);
         $this->db->update('users', $data);
 
         if ($this->db->trans_status() === FALSE) {
@@ -163,5 +169,125 @@ class M_Auth extends CI_Model
                 'message' => 'Berhasil ubah data'
             ];
         }
+    }
+
+    public function getVerifyEmail($id_user)
+    {
+        $this->db->select('uuid, verify_code')
+            ->from($this->_table)
+            ->where(['id' => $id_user]);
+        return $this->db->get()->row_array();
+    }
+
+    public function getDefaultValue($key)
+    {
+        $this->db->select('value')
+            ->from('default_value')
+            ->where(['key' => $key]);
+        return $this->db->get()->row_array();
+    }
+
+    public function cekActivate($uuid, $verify_code)
+    {
+        $this->db->select('uuid')
+            ->from('users')
+            ->where(
+                [
+                    'uuid' => $uuid,
+                    'verify_code' => $verify_code
+                ]
+            );
+        return $this->db->get()->num_rows();
+    }
+
+    public function activateAccount($uuid, $verify_code)
+    {
+        // set default timezone
+        date_default_timezone_set('Asia/Jakarta'); // CDT
+        $this->db->trans_start();
+        $data = [
+            'is_active' => '1',
+            'email_verified_at' => date('Y-m-d H:i:s')
+        ];
+
+        $this->db->where(['users.uuid' => $uuid, 'users.verify_code' => $verify_code]);
+        $this->db->update('users', $data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil'
+            ];
+        }
+    }
+
+    public function postPassReset($data)
+    {
+        $this->db->trans_start();
+        $this->db->insert('password_resets', $data);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal '
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil'
+            ];
+        }
+    }
+
+    public function putPassReset($data)
+    {
+        $this->db->trans_start();
+        $arr = [
+            'token' => $data['token']
+        ];
+        $this->db->where(['user_id' => $data['user_id']]);
+        $this->db->update('password_resets', $arr);
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal '
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil'
+            ];
+        }
+    }
+
+    public function cekPassReset($user_id = null, $token = null)
+    {
+        $this->db->select('id')
+            ->from('password_resets');
+        if ($user_id != null) {
+            $this->db->where(['user_id' => $user_id]);
+        }
+        if ($token != null) {
+            $this->db->where(['token' => $token]);
+        }
+        return $this->db->get()->num_rows();
+    }
+
+    public function getUserToken($token)
+    {
+        $this->db->select('users.id as u_id, users.password, password_resets.token')
+            ->from('password_resets')
+            ->join($this->_table, 'password_resets.user_id = users.id')
+            ->where(['password_resets.token' => $token]);
+        return $this->db->get()->row_array();
     }
 }

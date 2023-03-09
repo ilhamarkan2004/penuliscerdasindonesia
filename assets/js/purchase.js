@@ -20,4 +20,13 @@ $(document).ready(function () {
 			},
 		],
 	});
+
+	$(document).on("click", ".showGraph", function () {
+		Swal.fire({
+			icon: "info",
+			title: "Mohon maaf",
+			text: "Fitur tampilan grafik masih dalam pengembangan",
+			showConfirmButton: true,
+		});
+	});
 });

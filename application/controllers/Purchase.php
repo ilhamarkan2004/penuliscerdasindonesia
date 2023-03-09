@@ -52,12 +52,6 @@ class Purchase extends CI_Controller
         viewAdmin($this, 'admin/purchase', $data);
     }
 
-    public function coba()
-    {
-        print_r($this->m_purchase->getBookPublish('5')->result_array());
-        die;
-    }
-
     public function getPurchase()
     {
         $draw = intval($this->input->get("draw"));

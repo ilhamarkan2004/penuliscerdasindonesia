@@ -9,20 +9,195 @@ class Auth extends CI_Controller
         parent::__construct();
         // $this->load->library('form_validation');
         $this->load->model('M_Auth', 'm_auth');
-        // $this->load->model('M_Pendaftaran', 'm_daftar');
+        $this->load->model('M_Event', 'm_event');
         $this->load->helper('c_helper');
-
-        // if ($this->session->has_userdata('id_user')) {
-        //     redirect(base_url());
-        // }
     }
 
+    //Show View
     public function index()
     {
         $data['title'] = 'Login';
+        $data['event'] = $this->m_event->getEventType();
         viewUser($this, 'auth/login', $data);
     }
 
+    public function registrasi()
+    {
+        $data['title'] = 'Registrasi';
+        $data['event'] = $this->m_event->getEventType();
+        viewUser($this, 'auth/register', $data);
+    }
+
+    public function forgot()
+    {
+        $data['title'] = 'Lupa Password';
+        $data['event'] = $this->m_event->getEventType();
+        viewUser($this, 'auth/forgot', $data);
+    }
+
+    public function changepass($token = null)
+    {
+        if ($token == null) {
+            redirect('custom404');
+        } else {
+            if ($this->m_auth->cekPassReset(null, $token) == 0) {
+                redirect('custom404');
+            } else {
+                $data['token'] = $token;
+                $data['title'] = 'Ubah Password';
+                $data['event'] = $this->m_event->getEventType();
+                viewUser($this, 'auth/changePass', $data);
+            }
+        }
+    }
+
+
+    public function prosesForgot()
+    {
+        $param = $this->input->post();
+        if ($this->m_auth->cekEmail($param['email']) == 0) {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'icon' => 'error',
+                    'title' => 'Tidak ditemukan',
+                    'text' => 'Email tidak ditemukan. Pastikan email telah terdaftar sebelumnya'
+                ]
+            ];
+        } else {
+            if ($this->m_auth->cekUserAktifEmail($param['email']) == 0) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'icon' => 'error',
+                        'title' => 'Tidak aktif',
+                        'text' => 'Akun belum diaktifkan. Cek email dari kami mengenai aktivasi akun'
+                    ]
+                ];
+            } else {
+                //generate simple random code
+                $set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                $token = substr(time(), -3) . substr(str_shuffle($set), 2, 5);
+
+                $data = [
+                    'user_id' => $this->m_auth->getIdFromEmail($param['email'])['id'],
+                    'token' => $token
+                ];
+
+                if ($this->m_auth->cekPassReset($data['user_id']) == 0) {
+                    $proses1 = $this->m_auth->postPassReset($data);
+                } else {
+                    $proses1 = $this->m_auth->putPassReset($data);
+                }
+
+                if ($proses1['success']) {
+                    $subject = 'Lupa password';
+                    $message = "
+                        <html>
+                        <head>
+                            <title>Change Password</title>
+                        </head>
+                        <body>
+                            <h2>Ubah Password.</h2>
+                            <p>Klik link di bawah untuk mengganti password</p>
+
+                            <h4><a href='" . base_url() . "auth/changePass/" .  $token . "'>Ubah password saya</a></h4>
+                        </body>
+                        </html>
+                        ";
+
+                    $proses = sendEmail($this, $param['email'], $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
+                    if ($proses['success']) {
+                        $result = [
+                            'success' => true,
+                            'message' => 'Link untuk mengubah password telah terkirim. Silahkan cek email anda'
+                        ];
+                    } else {
+                        $result = [
+                            'success' => false,
+                            'message' => [
+                                'icon' => 'error',
+                                'title' => 'Tidak terkirim',
+                                'text' => 'Link untuk mengubah password gagal terkirim. Coba ulangi beberapa saat lagi'
+                            ]
+                        ];
+                    }
+                } else {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'icon' => 'error',
+                            'title' => 'Token gagal',
+                            'text' => 'Token gagal dibuat. Coba ulangi beberapa saat lagi'
+                        ]
+                    ];
+                }
+            }
+        }
+        echo json_encode($result);
+    }
+
+    public function prosesChange()
+    {
+        $param = $this->input->post();
+        $token = $param['token'];
+
+        if ($token == '') {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'icon' => 'error',
+                    'title' => 'Tidak ditemukan',
+                    'text' => 'Token tidak ada'
+                ]
+            ];
+        } else {
+            if ($this->m_auth->cekPassReset(null, $token) == 0) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'icon' => 'error',
+                        'title' => 'Tidak ditemukan',
+                        'text' => 'Token tidak ditemukan'
+                    ]
+                ];
+            } else {
+
+                if (trim($param['password']) == '') {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'icon' => 'error',
+                            'title' => 'Tidak sesuai',
+                            'text' => 'Terdapat kolom yang masih kosong'
+                        ]
+                    ];
+                } elseif ($param['password'] != $param['passConf']) {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'icon' => 'error',
+                            'title' => 'Tidak sesuai',
+                            'text' => 'Konfirmasi password tidak sama'
+                        ]
+                    ];
+                } else {
+                    $user = $this->m_auth->getUserToken($token);
+                    $data['newPass'] = $param['password'];
+                    $data['user_id'] = $user['u_id'];
+                    $proses = $this->m_auth->putPass($data);
+                    if ($proses['success']) {
+                        $result = [
+                            'success' => true,
+                            'message' => 'Ubah password berhasil!'
+                        ];
+                    }
+                }
+            }
+        }
+        echo json_encode($result);
+    }
+    //Proses
     public function login()
     {
 
@@ -86,23 +261,25 @@ class Auth extends CI_Controller
         echo json_encode($result);
     }
 
-    public function checkAlphaOnly($nama)
+    public function activate($uuid = null, $verify_code = null)
     {
-        if (!preg_match('/^[a-zA-Z ]*$/', $nama)) return FALSE;
-        else return TRUE;
+        if ($uuid == null || $verify_code == null) {
+            redirect('Custom404');
+        } else {
+            if ($this->m_auth->cekActivate($uuid, $verify_code) == 0) {
+                redirect('Custom404');
+            } else {
+                $proses = $this->m_auth->activateAccount($uuid, $verify_code);
+                if ($proses) {
+                    $this->session->set_flashdata('message_success', 'Aktivasi akun berhasil');
+                } else {
+                    $this->session->set_flashdata('message_error', 'Aktivasi akun gagal');
+                }
+                redirect('auth');
+            }
+        }
     }
 
-    public function checkNumber($no)
-    {
-        if (!preg_match('/((^(\+62)\d{12}))/', $no)) return FALSE;
-        else return TRUE;
-    }
-
-    public function registrasi()
-    {
-        $data['title'] = 'Registrasi';
-        viewUser($this, 'auth/register', $data);
-    }
 
     public function prosesRegist()
     {
@@ -187,19 +364,25 @@ class Auth extends CI_Controller
             if ($this->m_auth->getIdUserReferral($referral_code)->num_rows() > 0) {
                 $referral_code = substr($this->input->post('nama'), 0, 3) . $this->randomReferralCode(3);
             }
-            $users = [
 
-                // 'username' => "62" . $this->input->post('nohp'),
+            //generate simple random code
+            $set = '123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $code = time() . substr(str_shuffle($set), 2, 12) . substr($this->input->post('email'), 0, 3);
+
+            $this->db->trans_begin();
+
+            $users = [
                 'name' => $this->input->post('nama'),
                 'email' => $this->input->post('email'),
                 'phone' => $no_hp,
                 'password' =>  password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                // 'gambar' => default_profil(),
                 'role_id' => $this->m_auth->getIDRole('User')['id'],
-                'referral_code' =>  $referral_code
+                'referral_code' =>  $referral_code,
+                'verify_code' => $code
             ];
+            //set id column value as UUID
+            $this->db->set('uuid', 'UUID()', FALSE);
 
-            $this->db->trans_begin();
             $this->m_auth->insertUsers($users);
 
             $id_users = $this->db->insert_id();
@@ -219,13 +402,29 @@ class Auth extends CI_Controller
 
             if ($this->db->trans_status() === true) {
                 $this->db->trans_commit();
-                // $text = "Anda telah terdaftar di AMD Academy\nBerikut adalah username dan password akun anda : \n *Username : 62" .  $this->input->post('nohp') . "* \n *Password : " . $this->input->post('password1') . "* \n";
-                // $this->m_daftar->postWA("62" . $this->input->post('nohp'), $text);
+                $user = $this->m_auth->getVerifyEmail($id_users);
+                $subject = 'Signup Verification Email';
+                $message =     "
+						<html>
+						<head>
+							<title>Verification Code</title>
+						</head>
+						<body>
+							<h2>Thank you for Registering.</h2>
+							<p>Your Account:</p>
+							<p>Email: " .  $this->input->post('email') . "</p>
+							<p>Password: " . $this->input->post('password') . "</p>
+							<p>Please click the link below to activate your account.</p>
+							<h4><a href='" . base_url() . "auth/activate/" .  $user['uuid'] . "/" . $user['verify_code'] . "'>Activate My Account</a></h4>
+						</body>
+						</html>
+						";
+
+                $prosesEmail = sendEmail($this, $this->input->post('email'), $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
                 $result = [
                     'success' => true,
-                    'message' => 'Selamat! Pendaftaran akun berhasil. Silahkan Login!'
+                    'message' => 'Selamat! Pendaftaran akun berhasil. Silahkan Login!' . $prosesEmail['success']
                 ];
-                // return TRUE;
             } else {
                 $this->db->trans_rollback();
                 $result = [
@@ -237,11 +436,18 @@ class Auth extends CI_Controller
         echo json_encode($result);
     }
 
-    public function forgot()
+    public function checkAlphaOnly($nama)
     {
-        $this->session->set_flashdata('message', '<div class="alert alert-info" role="alert">Kamu nanya? password kamu apa kamu nanya?');
-        redirect('auth');
+        if (!preg_match('/^[a-zA-Z ]*$/', $nama)) return FALSE;
+        else return TRUE;
     }
+
+    public function checkNumber($no)
+    {
+        if (!preg_match('/((^(\+62)\d{12}))/', $no)) return FALSE;
+        else return TRUE;
+    }
+
 
     public function logout()
     {

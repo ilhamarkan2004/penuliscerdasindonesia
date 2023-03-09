@@ -69,6 +69,15 @@ class M_Book extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function getBooksUsingStatus($progress_id)
+    {
+        $this->db->select('*, books.id as ib_b')
+            ->from($this->t_books)
+            ->join($this->t_order, 'order.book_id = books.id')
+            ->where(['order.progress_id >=' => $progress_id]);
+        return $this->db->get();
+    }
+
     public function getStep($id_step = null)
     {
         $this->db->select('*')
@@ -77,6 +86,14 @@ class M_Book extends CI_Model
             $this->db->where(['id' => $id_step]);
         }
         return $this->db->get();
+    }
+
+    public function getProgressUseName($status_name)
+    {
+        $this->db->select('id')
+            ->from($this->t_op)
+            ->where(['status' => $status_name]);
+        return $this->db->get()->row_array();
     }
 
     public function getSellBooks($id_book_sell = null)
@@ -308,7 +325,6 @@ class M_Book extends CI_Model
         return $this->db->get()->row_array();
     }
 
-
     // cek
     public function cekBookSell($book_id)
     {
@@ -332,13 +348,18 @@ class M_Book extends CI_Model
         return $this->db->get()->num_rows();
     }
 
-    public function cekUUID($uuid)
+    public function cekUUID($uuid, $progress_id = null)
     {
-        $this->db->select('id')
+        $this->db->select('books.id')
             ->from($this->t_books)
             ->where(['uuid' => $uuid]);
+        if ($progress_id != null) {
+            $this->db->join($this->t_order, 'order.book_id = books.id')
+                ->where(['order.progress_id >=' => $progress_id]);
+        }
         return $this->db->get()->num_rows();
     }
+
 
     public function getContributor($jenis_kontributor = null)
     {

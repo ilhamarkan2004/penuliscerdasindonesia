@@ -84,3 +84,19 @@ $("#formProfile").submit(function (e) {
 		},
 	});
 });
+
+table = $("#linkTable").DataTable({
+	responsive: true,
+	ajax: "getISBN",
+	columns: [
+		{
+			data: "no",
+		},
+		{
+			data: "judul",
+		},
+		{
+			data: "link",
+		},
+	],
+});

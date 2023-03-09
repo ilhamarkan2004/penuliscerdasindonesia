@@ -325,21 +325,24 @@ class Pci extends CI_Controller
     public function daftarISBN($uuid = null)
     {
         $this->load->model('M_Book', 'm_book');
-        if ($this->m_book->cekUUID($uuid) == 0 || $uuid == null) {
-            redirect(base_url());
+        $statusisbn = $this->m_book->getProgressUseName('isbn')['id'];
+        if ($this->m_book->cekUUID($uuid, $statusisbn) == 0 || $uuid == null) {
+            redirect('Custom404');
         } else {
+            $contributor = $this->m_book->getContributor()->result_array();
             $data['title'] = 'Daftar ISBN';
             $data['event'] = $this->m_event->getEventType();
             $data['bookDetail'] = $this->m_book->getBooks(null, null, $uuid)->row_array();
-            $contributor = $this->m_book->getContributor()->result_array();
             $data['contributor'] = $contributor;
             foreach ($contributor as $c) {
                 $data[strtolower(str_replace(' ', '', $c['role_name']))] = $this->m_book->getContributorBook($data['bookDetail']['id_b'], $c['id']);
             }
             // $data['by_type'] = $this->m_event->getEvents(null, $inisial, 1)->result_array();
-            viewUser($this, 'user/pages/forIsbn', $data);
+            viewUser($this, 'user/pages/forisbn', $data);
         }
     }
+
+
 
     // Validasi
 

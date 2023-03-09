@@ -17,6 +17,7 @@ class Dashboard extends CI_Controller
         }
     }
 
+    // HALAMAN
     public function index()
     {
         //data sidebar & navbar || start
@@ -77,6 +78,31 @@ class Dashboard extends CI_Controller
         // die;
         viewAdmin($this, 'admin/dashboard', $data);
     }
+
+    public function linkisbn()
+    {
+        $currentUser = $this->m_auth->getCurrentUser();
+        if ($currentUser['role_id'] != $this->m_auth->getIDRole('Admin')['id']) {
+            redirect('dashboard');
+        }
+        //data sidebar & navbar || start
+        $menu = $this->m_sidebar->getSidebarMenu($currentUser['role_id']);
+        $data['user_group_id'] = $currentUser['role_id'];
+
+
+        $data['title'] = 'Buku ISBN';
+        $data['sub_title'] = 'List link deskripsi buku siap pengajuan ISBN';
+        $data['url'] = 'dashboard/linkisbn';
+        $data['menu'] = $menu;
+        $data['user'] = $currentUser;
+        $data['idPeserta'] = $this->m_auth->getIDRole('User')['id'];
+        $data['idAdmin'] = $this->m_auth->getIDRole('Admin')['id'];
+
+        // data sidebar & navbar || end
+        viewAdmin($this, 'admin/linkisbn', $data);
+    }
+
+    //halaman end
 
     public function aksiProfile()
     {
@@ -223,6 +249,7 @@ class Dashboard extends CI_Controller
                 ];
             } else {
 
+                $param['user_id'] = $this->session->userdata('id_user');
                 $proses = $this->m_auth->putPass($param);
                 if ($proses['success']) {
                     $result = [
@@ -237,6 +264,37 @@ class Dashboard extends CI_Controller
                 }
             }
         }
+        echo json_encode($result);
+    }
+
+    public function getISBN()
+    {
+        $statusisbn = $this->m_book->getProgressUseName('isbn')['id'];
+        $draw = intval($this->input->get("draw"));
+        $start = intval($this->input->get("start"));
+        $length = intval($this->input->get("length"));
+
+        $query = $this->m_book->getBooksUsingStatus($statusisbn);
+
+        $data = [];
+
+        $array = multi_unique_array($query->result_array(), 'book_id');
+        foreach ($array as $key => $r) {
+
+            $link = base_url() . 'pci/daftarISBN/' . $r['uuid'];
+            $data[] = array(
+                'no' => $key + 1,
+                'judul' => $r['title'],
+                'link' => '<a target="_blank" href="' . $link . '">' . $link . '</a>',
+
+            );
+        }
+        $result = array(
+            "draw" => $draw,
+            "recordsTotal" => $query->num_rows(),
+            "recordFiltered" => $query->num_rows(),
+            "data" => $data
+        );
         echo json_encode($result);
     }
 }
