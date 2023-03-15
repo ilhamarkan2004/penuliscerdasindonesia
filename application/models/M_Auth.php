@@ -27,7 +27,7 @@ class M_Auth extends CI_Model
     {
         $this->db->select('*')
             ->from($this->_table)
-            ->where(['id' => $this->session->userdata('id_user')]);
+            ->where(['uuid' => $this->session->userdata('id_user')]);
         return $this->db->get()->row_array();
     }
 
@@ -52,8 +52,8 @@ class M_Auth extends CI_Model
     {
         $this->db->select('is_active')
             ->from($this->_table)
-            ->where(['email' => $email]);
-        return $this->db->get()->row_array();
+            ->where(['email' => $email, 'is_active' => '1']);
+        return $this->db->get()->num_rows();
     }
 
     public function getIdFromEmail($email)
@@ -92,7 +92,7 @@ class M_Auth extends CI_Model
 
     public function login($email)
     {
-        $this->db->where('email', $email);
+        $this->db->where(['email' => $email]);
         return $this->db->get('users');
     }
 
@@ -129,7 +129,7 @@ class M_Auth extends CI_Model
             'img_profile' => $param['url_img'],
             'phone' => $param['telp']
         ];
-        $this->db->where('id', $this->session->userdata('id_user'));
+        $this->db->where('uuid', $this->session->userdata('id_user'));
         $this->db->update('users', $data);
 
         if ($this->db->trans_status() === FALSE) {
@@ -288,6 +288,14 @@ class M_Auth extends CI_Model
             ->from('password_resets')
             ->join($this->_table, 'password_resets.user_id = users.id')
             ->where(['password_resets.token' => $token]);
+        return $this->db->get()->row_array();
+    }
+
+    public function getIdUserFromUUID($uuid)
+    {
+        $this->db->select('id')
+            ->from($this->_table)
+            ->where(['uuid' => $uuid]);
         return $this->db->get()->row_array();
     }
 }

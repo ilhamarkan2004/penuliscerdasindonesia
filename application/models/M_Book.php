@@ -62,13 +62,6 @@ class M_Book extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function getBookSell()
-    {
-        $this->db->select('*')
-            ->from($this->t_bs);
-        return $this->db->get()->result_array();
-    }
-
     public function getBooksUsingStatus($progress_id)
     {
         $this->db->select('*, books.id as ib_b')
@@ -484,5 +477,21 @@ class M_Book extends CI_Model
             'contributor_role_id' => $role_id
         ];
         $this->db->insert($this->t_bc, $dataKontributor);
+    }
+
+
+
+
+    ///////// BUAT API //////////
+
+    public function getBookSell($uuid = null)
+    {
+        $this->db->select('*, book_sell.uuid as bs_uuid, books.uuid as b_uuid')
+            ->from($this->t_bs)
+            ->join($this->t_books, 'book_sell.book_id = books.id');
+        if ($uuid != null) {
+            $this->db->where(['book_sell.uuid' => $uuid]);
+        }
+        return $this->db->get();
     }
 }

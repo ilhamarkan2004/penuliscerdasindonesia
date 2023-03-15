@@ -219,7 +219,7 @@ class Auth extends CI_Controller
         } elseif ($user) {
             if ($user['is_active'] == 1) {
                 if (password_verify($userLogin['password'], $user['password'])) {
-                    $this->session->set_userdata('id_user', $user['id']);
+                    $this->session->set_userdata('id_user', $user['uuid']);
                     $result = [
                         'success' => true,
                         'message' => [

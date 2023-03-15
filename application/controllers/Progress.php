@@ -14,11 +14,12 @@ class Progress extends CI_Controller
         $this->load->model('M_Paket', 'm_paket');
 
 
-        if ($this->session->userdata('id_user') == null) {
+        if ($this->session->has_userdata('id_user') == false) {
             redirect('auth');
         }
 
-        if ($this->m_auth->cekUserAktif($this->session->userdata('id_user')) == 0) {
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+        if ($this->m_auth->cekUserAktif($idUserLogin) == 0) {
             $this->session->unset_userdata('id_user');
             redirect('auth');
         }
@@ -75,10 +76,12 @@ class Progress extends CI_Controller
             redirect('progress');
         }
         $param = $this->input->post();
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+
 
         if ($param = array()) {
             redirect('progress');
-        } elseif ($this->m_book->cekContributor($this->input->post()['id'], $this->session->userdata('id_user'), $this->m_book->getContributor('PJ')->row_array()['id']) == 0) {
+        } elseif ($this->m_book->cekContributor($this->input->post()['id'], $idUserLogin, $this->m_book->getContributor('PJ')->row_array()['id']) == 0) {
             // $this->session->set_flashdata('error', 'Role anda tidak boleh akses');
             redirect('progress');
         } else {
@@ -119,7 +122,8 @@ class Progress extends CI_Controller
     // CRUD
     public function getBooks()
     {
-        $proses = $this->m_book->getBooks(null, $this->session->userdata('id_user'))->result_array();
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+        $proses = $this->m_book->getBooks(null, $idUserLogin)->result_array();
 
         $result = multi_unique_array($proses, 'book_id');
         $result = [
@@ -212,10 +216,11 @@ class Progress extends CI_Controller
 
     public function aksiEditBuku()
     {
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
         $param = $this->input->post();
 
 
-        $param['user_id'] = $this->session->userdata('id_user');
+        $param['user_id'] = $idUserLogin;
 
         $rules = [
             [

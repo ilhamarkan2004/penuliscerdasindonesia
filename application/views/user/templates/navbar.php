@@ -1,15 +1,15 @@
 <body>
   <nav id="nav" class="relative z-50 w-full top-0 left-0">
-    <div class="bg-primary-100 w-full text-white">
+    <div class=" w-full text-white">
 
-      <div class="absolute z-50 shadow-md ml-0 md:ml-20 md:top-0 rounded-b-xl bg-white p-4 lg:p-4">
+      <div class="absolute z-50 shadow-md ml-0 md:ml-20 md:top-0 shadow-primary-100 rounded-b-xl bg-white p-4 lg:p-4">
         <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-14 h-14" alt="">
       </div>
 
     </div>
-    <div class="w-100 bg-primary-200 text-white font-medium">
+    <div class="w-100 bg-transparent text-primary-100 font-medium">
       <div class="md:hidden relative">
-        <div class="bg-primary-200 block h-14 ">
+        <div class="bg-primary-200 text-white block h-14 ">
           <div id="nav_toggle" onclick="setNavOpen(!getNavOpen())" class="ml-auto w-14 h-14 p-4 flex flex-col items-center justify-center gap-2">
             <span class="block h-1 w-full rounded-full bg-white transition duration-300"></span>
             <span class="block h-1 w-full rounded-full bg-white transition duration-200"></span>
@@ -17,7 +17,7 @@
           </div>
           <div id="nav_menu" class="absolute hidden top-full w-full left-0 cursor-pointer">
             <div class="flex flex-col text-start bg-primary-200">
-              <a href="<?= site_url() ?>" class="px-4 pt-5 w-full mt-10 text-secondary-100">Home</a>
+              <a href="<?= site_url() ?>" class="px-4 pt-5 w-full mt-10 text-white">Home</a>
 
 
               <!-- START DROP PROGRAM -->
@@ -45,7 +45,7 @@
 
               <a class="px-4 mt-2 w-full hover:opacity-75" href="<?= base_url() ?>pci/terbit" class="p-2.5 text-blog">Terbitkan buku</a>
               <!-- <a class="px-4 mt-2 w-full hover:opacity-75" href="#contact" class="p-2.5">Contact</a> -->
-              <a class="px-4 py-2 mt-2 w-[97%] text-center border-white rounded-lg mb-2 self-center bg-primaryBtn hover:bg-primaryBtn" href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>"><?= ($this->session->has_userdata('id_user') ? 'Dashboard' : 'Login') ?></a>
+              <a class="px-4 py-2 mt-2 w-[97%] text-center rounded-lg mb-2 self-center border-white border" href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>"><?= ($this->session->has_userdata('id_user') ? 'Dashboard' : 'Login') ?></a>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@
           <!-- <a href="" class="p-2.5 text-kontak">Contact</a> -->
         </div>
         <div class="flex flex-row items-center font-semibold gap-4">
-          <a href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>" class="px-6 xl:px-12 py-2 xl:py-3 rounded-lg border border-white hover:bg-primaryBtn">
+          <a href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>" class="px-6 xl:px-12 py-2 xl:py-3 rounded-lg border lg:border-primaryBtn bg-primary-200 hover:bg-white text-white hover:text-primaryBtn">
             <?= ($this->session->has_userdata('id_user') ? 'Dashboard' : 'Login') ?>
 
           </a>

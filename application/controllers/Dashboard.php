@@ -23,6 +23,7 @@ class Dashboard extends CI_Controller
         //data sidebar & navbar || start
         $currentUser = $this->m_auth->getCurrentUser();
         $menu = $this->m_sidebar->getSidebarMenu($currentUser['role_id']);
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
 
 
         $data['url'] = 'dashboard';
@@ -43,7 +44,7 @@ class Dashboard extends CI_Controller
                         'bg-color' => '#92D248'
                     ],
                     [
-                        'isi' => $this->m_book->getBooks(null, $this->session->userdata('id_user'))->num_rows() . ' buku',
+                        'isi' => $this->m_book->getBooks(null, $idUserLogin)->num_rows() . ' buku',
                         'titleCard' => 'Jumlah buku terupload',
                         'icon' => 'fa-solid fa-book',
                         'bg-color' => '#3F7856'
@@ -248,8 +249,8 @@ class Dashboard extends CI_Controller
                     ]
                 ];
             } else {
-
-                $param['user_id'] = $this->session->userdata('id_user');
+                $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+                $param['user_id'] = $idUserLogin;
                 $proses = $this->m_auth->putPass($param);
                 if ($proses['success']) {
                     $result = [

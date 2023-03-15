@@ -1,21 +1,25 @@
-<button type="button" class="" style="position: fixed; right: 40px; bottom: 20px; display: none;" id="btn-back-to-top">
+<button type="button" class="lg:w-14 w-10" style="position: fixed; right: 40px; bottom: 20px; display: none;" id="btn-back-to-top">
     <img src="<?= base_url() ?>assets/assets/logo/top.svg" width="56px" alt="">
 </button>
-<button type="button" class="" style="position: fixed; right: 40px; bottom: 100px; display: block;" id="wa">
+<button type="button" class="lg:w-14 w-14" style="position: fixed; right: 40px; bottom: 100px; display: block;" id="wa">
     <img src="<?= base_url() ?>assets/assets/logo/wa.svg" width="60px" alt="">
 </button>
-<div class="mt-[72px] text-center">
-    <p class="text-4xl font-bold relative w-fit mx-auto">
-        <!-- <span class="block h-4 bg-primary-300 w-full absolute top-1/2"></span> -->
-        <span class="relative md:text-4xl text-2xl text-primary-500">
+<div class="text-center lg:text-right lg:flex lg:items-center lg:px-24 lg:pb-24 h-screen">
+    <div class="lg:text-right lg:w-2/5 ">
+        <p class="mt-8 md:text-base lg:text-4xl text-primary-100  md:text-4xl text-2xl font-bold ">
+            <!-- <span class="block h-4 bg-primary-300 w-full absolute top-1/2"></span> -->
+            <!-- title text-4xl  w-fit lg:w-2/5   -->
             Explore and publish your knowledge.
-        </span>
-    </p>
-    <p class="title mt-8 md:text-base text-lg">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-    </p>
+            <!-- <span class="relative md:text-4xl text-2xl text-primary-500 ">
+                Explore and publish your knowledge.
+            </span> -->
+        </p>
+        <p class="title mt-8 md:text-base text-lg">
+            Berkarya, terbitkan, dan berbagi pengetahuan bersama <span class="font-bold text-primary-100">Penulis Cerdas Indonesia</span>
+        </p>
+    </div>
 
-    <div class="my-container mt-12">
+    <div class="my-container mt-12 lg:w-3/5 w-full ">
         <div class="relative">
             <img class="w-full bg-contain" src="<?= base_url() ?>assets/assets/image/jumbo_home.png" />
             <div class="learn absolute top-0 right-0 shadow-md bg-white rounded-lg lg:px-8 lg:py-4 p-2 lg:text-base text-xxs font-medium text-primary-400">
@@ -51,241 +55,86 @@
     <div class="my-container flex flex-col gap-12">
         <div class="flex flex-col lg:flex-row items-start lg:gap-0 gap-6">
             <div class="desc lg:w-1/2 lg:text-left text-center lg:pr-12 flex flex-col gap-4 items-start">
-                <a class="about px-3 py-2 lg:py-1 rounded bg-primary-600 text-primary-500">
-                    About Us
+                <a class="about px-3 py-2 lg:py-1 rounded bg-primary-600 " style="background-color: #e5c99e; color: #f59300;">
+                    Tentang Kami
                 </a>
                 <p class="text-2xl md:text-2xl font-bold">
-                    Lorem Ipsum
+                    Explore and publish your knowledge
                     <!-- <span class="md:block hidden">dalam menghadapi </span>Era 5.0 -->
                 </p>
-                <a class="md:block px-3 py-1 bg-white text-black">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque quae dolorem blanditiis tenetur
+                <a class="md:block px-3 py-1 text-black rounded" style="background-color: #a3d2d5;">
+                    Merupakan komitmen kami dalam menyebarluaskan hasil penelitian bagi para peneliti di seluruh Indonesia.
+
                 </a>
             </div>
             <div class="lg:w-1/2 text-start lg:text-left lg:pl-12">
-                <p>Penulis Cerdas Indonesia didirikan untuk ........ Saat ini Penulis Cerdas Indonesia mengembangkan ..........<br><br>Penulis Cerdas Indonesia bekerjasama dengan ......... dalam memberikan pelayanannya. </p>
-            </div>
-        </div>
-        <video style="border-radius: 15px;" src="<?= base_url() ?>assets/video/1.mp4" controls width="1400px" poster="<?= base_url() ?>assets/assets/img/index/videotron.png"></video>
-    </div>
-</div>
-<div class="my-container md:py-24 py-16 lg:pt-28 lg:pb-0 flex flex-col gap-12">
-    <div>
-        <div class="text-secondary-100 w-fit mb-4 mx-auto bg-secondary-200 rounded px-3 py-2 lg:py-1 text-sm">
-            Grow with Our Program
-        </div>
-        <p class="font-bold text-2xl text-center">(Nyediain apa aja)</p>
-    </div>
-    <div class="flex flex-wrap h-fit md:flex-wrap-0 flex-row gap-x-4 md:gap-x-8 gap-y-8">
-        <div class="w-[312px] lg:h-full lg:flex-col lg:w-1/5 flex-grow flex gap-4 rounded-lg bg-white shadow-lg p-4 md:p-8 items-start">
-            <svg class="w-1/3 h-28 lg:w-1/2" width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg ">
-                <path d="M69.2315 71.5025H60.9404C62.1841 68.1926 58.004 63.5726 55.7585 61.6763C54.5148 59.6077 53.8585 56.6771 53.6857 55.4704C53.2712 47.1957 61.1131 44.0927 65.0859 43.5756C73.7916 44.8168 76.3134 50.6435 76.4862 53.4017C77.7298 58.7802 73.2043 63.9174 70.7861 65.8137C69.5424 68.296 69.2315 70.6405 69.2315 71.5025Z" fill="#FCA333" />
-                <path d="M60.9404 73.054H69.2315V77.7084H67.6769C65.6041 80.8114 63.0132 79.2599 62.495 77.7084H60.9404V73.054Z" fill="#FCA333" />
-                <rect x="49.9854" y="43.7065" width="3.09008" height="4.45426" transform="rotate(-45.5652 49.9854 43.7065)" fill="#FCA333" />
-                <rect x="77.8975" y="41.6718" width="3.09008" height="4.45426" transform="rotate(42.094 77.8975 41.6718)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.700097 0.714048 0.714048 -0.700097 50.9067 69.025)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.8184 71.0596)" fill="#FCA333" />
-                <rect x="45.3799" y="57.7193" width="3.09008" height="4.45426" transform="rotate(-90 45.3799 57.7193)" fill="#FCA333" />
-                <rect x="84.8584" y="54.6596" width="3.09008" height="4.45426" transform="rotate(90.3909 84.8584 54.6596)" fill="#FCA333" />
-                <path d="M60.5806 78.5551C61.1432 80.2394 63.9559 81.9238 66.2062 78.5551M58.8929 71.8178H67.8938C67.8938 70.8821 68.2314 68.3369 69.5815 65.642C72.2068 63.5833 77.1197 58.0064 75.7696 52.1674C75.5821 49.173 72.8443 42.8475 63.3934 41.5C59.0805 42.0614 50.5671 45.4301 51.0172 54.4131C51.2047 55.7232 51.9173 58.9047 53.2674 61.1504C55.7051 63.2091 60.2431 68.2246 58.8929 71.8178ZM58.8929 73.5021H67.8938V78.5551H58.8929V73.5021Z" stroke="black" stroke-width="0.5" />
-                <rect x="47.3535" y="41.6386" width="2.85463" height="4.3356" transform="rotate(-45.5652 47.3535 41.6386)" stroke="black" stroke-width="0.5" />
-                <rect x="77.3192" y="39.7863" width="2.85463" height="4.3356" transform="rotate(42.094 77.3192 39.7863)" stroke="black" stroke-width="0.5" />
-                <rect x="0.353536" y="0.00348777" width="2.85463" height="4.3356" transform="matrix(0.700097 0.714048 0.714048 -0.700097 48.1035 68.8817)" stroke="black" stroke-width="0.5" />
-                <rect x="0.0179244" y="-0.353099" width="2.85463" height="4.3356" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.0692 70.7339)" stroke="black" stroke-width="0.5" />
-                <rect x="42.25" y="56.6046" width="2.85463" height="4.3356" transform="rotate(-90 42.25 56.6046)" stroke="black" stroke-width="0.5" />
-                <rect x="84.6067" y="53.7812" width="2.85463" height="4.3356" transform="rotate(90.3909 84.6067 53.7812)" stroke="black" stroke-width="0.5" />
-                <path d="M45.5389 32.7449L33.376 19.9418C61.7987 -2.59153 90.0295 10.5529 100.592 19.9418L87.7889 31.4646C67.3041 18.6615 51.0869 26.9835 45.5389 32.7449Z" fill="#F98810" />
-                <path d="M92.7849 36.9063L105.371 24.5187C128.403 52.5383 115.761 80.9972 106.56 91.7242L94.8126 79.127C107.251 58.4188 98.6435 42.3514 92.7849 36.9063Z" fill="#F98810" />
-                <path d="M88.3557 84.1463L100.413 97.0487C71.8064 119.348 43.6845 105.972 33.1994 96.4972L46.0965 85.0799C66.4757 98.0506 82.7606 89.8619 88.3557 84.1463Z" fill="#F98810" />
-                <path d="M41.3447 80.7525L28.6861 93.0656C5.81887 64.9108 18.6293 36.5269 27.8929 25.8543L39.5659 38.5205C27.0055 59.155 35.5183 75.2729 41.3447 80.7525Z" fill="#F98810" />
-                <path d="M41.6714 28.7043L28.8682 15.2271C58.7874 -8.4926 88.5044 5.34392 99.6231 15.2271L86.146 27.3566C64.5826 13.8794 47.5115 22.6396 41.6714 28.7043Z" stroke="black" stroke-width="0.5" />
-                <path d="M91.4048 33.0848L104.653 20.045C128.899 49.5398 115.59 79.497 105.905 90.7888L93.5393 77.5285C106.633 55.7299 97.5719 38.8166 91.4048 33.0848Z" stroke="black" stroke-width="0.5" />
-                <path d="M86.7423 82.8119L99.4346 96.3937C69.3218 119.867 39.7192 105.787 28.6821 95.8132L42.2583 83.7947C63.7104 97.4483 80.8527 88.8285 86.7423 82.8119Z" stroke="black" stroke-width="0.5" />
-                <path d="M37.256 79.2395L23.9309 92.2009C-0.140224 62.5637 13.3446 32.6854 23.096 21.4509L35.3836 34.784C22.1619 56.5049 31.1228 73.4714 37.256 79.2395Z" stroke="black" stroke-width="0.5" />
-            </svg>
-            <div class="w-2/3 lg:w-full">
-                <p class="font-semibold md:text-lg">Lorem Ipsum</p>
-                <p class="font-light text-xs md:text-sm">
-                    <br />
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus aspernatur consequatur dolore rem blanditiis porro mollitia minima fuga atque quos autem, sint explicabo tempora saepe hic quis at! Distinctio, dolorem.
+                <p>Penulis Cerdas Indonesia (PCI) merupakan salah satu produk unggulan yang fokus sebagai penerbit buku yang mendukung transformasi digital dan telah terintegrasi dengan website. Buku-buku yang diterbitkan memiliki fitur interaktif "Smart Fitur" yang memudahkan pembaca dalam memahami isi buku.
+                    <br> <br>
+                    Penulis Cerdas Indonesia (PCI) juga berperan sebagai platform interaksi dan marketplace untuk penerbitan buku digital serta menyediakan proses penerbitan buku untuk dosen dan guru di seluruh Indonesia
                 </p>
             </div>
         </div>
-        <div class="w-[312px] lg:h-full lg:flex-col lg:w-1/5 flex-grow flex gap-4 rounded-lg bg-white shadow-lg p-4 md:p-8 items-start">
-            <svg class="w-1/3 h-28 lg:w-1/2" width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg ">
-                <path d="M69.2315 71.5025H60.9404C62.1841 68.1926 58.004 63.5726 55.7585 61.6763C54.5148 59.6077 53.8585 56.6771 53.6857 55.4704C53.2712 47.1957 61.1131 44.0927 65.0859 43.5756C73.7916 44.8168 76.3134 50.6435 76.4862 53.4017C77.7298 58.7802 73.2043 63.9174 70.7861 65.8137C69.5424 68.296 69.2315 70.6405 69.2315 71.5025Z" fill="#FCA333" />
-                <path d="M60.9404 73.054H69.2315V77.7084H67.6769C65.6041 80.8114 63.0132 79.2599 62.495 77.7084H60.9404V73.054Z" fill="#FCA333" />
-                <rect x="49.9854" y="43.7065" width="3.09008" height="4.45426" transform="rotate(-45.5652 49.9854 43.7065)" fill="#FCA333" />
-                <rect x="77.8975" y="41.6718" width="3.09008" height="4.45426" transform="rotate(42.094 77.8975 41.6718)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.700097 0.714048 0.714048 -0.700097 50.9067 69.025)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.8184 71.0596)" fill="#FCA333" />
-                <rect x="45.3799" y="57.7193" width="3.09008" height="4.45426" transform="rotate(-90 45.3799 57.7193)" fill="#FCA333" />
-                <rect x="84.8584" y="54.6596" width="3.09008" height="4.45426" transform="rotate(90.3909 84.8584 54.6596)" fill="#FCA333" />
-                <path d="M60.5806 78.5551C61.1432 80.2394 63.9559 81.9238 66.2062 78.5551M58.8929 71.8178H67.8938C67.8938 70.8821 68.2314 68.3369 69.5815 65.642C72.2068 63.5833 77.1197 58.0064 75.7696 52.1674C75.5821 49.173 72.8443 42.8475 63.3934 41.5C59.0805 42.0614 50.5671 45.4301 51.0172 54.4131C51.2047 55.7232 51.9173 58.9047 53.2674 61.1504C55.7051 63.2091 60.2431 68.2246 58.8929 71.8178ZM58.8929 73.5021H67.8938V78.5551H58.8929V73.5021Z" stroke="black" stroke-width="0.5" />
-                <rect x="47.3535" y="41.6386" width="2.85463" height="4.3356" transform="rotate(-45.5652 47.3535 41.6386)" stroke="black" stroke-width="0.5" />
-                <rect x="77.3192" y="39.7863" width="2.85463" height="4.3356" transform="rotate(42.094 77.3192 39.7863)" stroke="black" stroke-width="0.5" />
-                <rect x="0.353536" y="0.00348777" width="2.85463" height="4.3356" transform="matrix(0.700097 0.714048 0.714048 -0.700097 48.1035 68.8817)" stroke="black" stroke-width="0.5" />
-                <rect x="0.0179244" y="-0.353099" width="2.85463" height="4.3356" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.0692 70.7339)" stroke="black" stroke-width="0.5" />
-                <rect x="42.25" y="56.6046" width="2.85463" height="4.3356" transform="rotate(-90 42.25 56.6046)" stroke="black" stroke-width="0.5" />
-                <rect x="84.6067" y="53.7812" width="2.85463" height="4.3356" transform="rotate(90.3909 84.6067 53.7812)" stroke="black" stroke-width="0.5" />
-                <path d="M45.5389 32.7449L33.376 19.9418C61.7987 -2.59153 90.0295 10.5529 100.592 19.9418L87.7889 31.4646C67.3041 18.6615 51.0869 26.9835 45.5389 32.7449Z" fill="#F98810" />
-                <path d="M92.7849 36.9063L105.371 24.5187C128.403 52.5383 115.761 80.9972 106.56 91.7242L94.8126 79.127C107.251 58.4188 98.6435 42.3514 92.7849 36.9063Z" fill="#F98810" />
-                <path d="M88.3557 84.1463L100.413 97.0487C71.8064 119.348 43.6845 105.972 33.1994 96.4972L46.0965 85.0799C66.4757 98.0506 82.7606 89.8619 88.3557 84.1463Z" fill="#F98810" />
-                <path d="M41.3447 80.7525L28.6861 93.0656C5.81887 64.9108 18.6293 36.5269 27.8929 25.8543L39.5659 38.5205C27.0055 59.155 35.5183 75.2729 41.3447 80.7525Z" fill="#F98810" />
-                <path d="M41.6714 28.7043L28.8682 15.2271C58.7874 -8.4926 88.5044 5.34392 99.6231 15.2271L86.146 27.3566C64.5826 13.8794 47.5115 22.6396 41.6714 28.7043Z" stroke="black" stroke-width="0.5" />
-                <path d="M91.4048 33.0848L104.653 20.045C128.899 49.5398 115.59 79.497 105.905 90.7888L93.5393 77.5285C106.633 55.7299 97.5719 38.8166 91.4048 33.0848Z" stroke="black" stroke-width="0.5" />
-                <path d="M86.7423 82.8119L99.4346 96.3937C69.3218 119.867 39.7192 105.787 28.6821 95.8132L42.2583 83.7947C63.7104 97.4483 80.8527 88.8285 86.7423 82.8119Z" stroke="black" stroke-width="0.5" />
-                <path d="M37.256 79.2395L23.9309 92.2009C-0.140224 62.5637 13.3446 32.6854 23.096 21.4509L35.3836 34.784C22.1619 56.5049 31.1228 73.4714 37.256 79.2395Z" stroke="black" stroke-width="0.5" />
-            </svg>
-            <div class="w-2/3 lg:w-full">
-                <p class="font-semibold md:text-lg">Lorem Ipsum</p>
-                <p class="font-light text-xs md:text-sm">
-                    <br />
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus aspernatur consequatur dolore rem blanditiis porro mollitia minima fuga atque quos autem, sint explicabo tempora saepe hic quis at! Distinctio, dolorem.
-                </p>
-            </div>
-        </div>
-        <div class="w-[312px] lg:h-full lg:flex-col lg:w-1/5 flex-grow flex gap-4 rounded-lg bg-white shadow-lg p-4 md:p-8 items-start">
-            <svg class="w-1/3 h-28 lg:w-1/2" width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg ">
-                <path d="M69.2315 71.5025H60.9404C62.1841 68.1926 58.004 63.5726 55.7585 61.6763C54.5148 59.6077 53.8585 56.6771 53.6857 55.4704C53.2712 47.1957 61.1131 44.0927 65.0859 43.5756C73.7916 44.8168 76.3134 50.6435 76.4862 53.4017C77.7298 58.7802 73.2043 63.9174 70.7861 65.8137C69.5424 68.296 69.2315 70.6405 69.2315 71.5025Z" fill="#FCA333" />
-                <path d="M60.9404 73.054H69.2315V77.7084H67.6769C65.6041 80.8114 63.0132 79.2599 62.495 77.7084H60.9404V73.054Z" fill="#FCA333" />
-                <rect x="49.9854" y="43.7065" width="3.09008" height="4.45426" transform="rotate(-45.5652 49.9854 43.7065)" fill="#FCA333" />
-                <rect x="77.8975" y="41.6718" width="3.09008" height="4.45426" transform="rotate(42.094 77.8975 41.6718)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.700097 0.714048 0.714048 -0.700097 50.9067 69.025)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.8184 71.0596)" fill="#FCA333" />
-                <rect x="45.3799" y="57.7193" width="3.09008" height="4.45426" transform="rotate(-90 45.3799 57.7193)" fill="#FCA333" />
-                <rect x="84.8584" y="54.6596" width="3.09008" height="4.45426" transform="rotate(90.3909 84.8584 54.6596)" fill="#FCA333" />
-                <path d="M60.5806 78.5551C61.1432 80.2394 63.9559 81.9238 66.2062 78.5551M58.8929 71.8178H67.8938C67.8938 70.8821 68.2314 68.3369 69.5815 65.642C72.2068 63.5833 77.1197 58.0064 75.7696 52.1674C75.5821 49.173 72.8443 42.8475 63.3934 41.5C59.0805 42.0614 50.5671 45.4301 51.0172 54.4131C51.2047 55.7232 51.9173 58.9047 53.2674 61.1504C55.7051 63.2091 60.2431 68.2246 58.8929 71.8178ZM58.8929 73.5021H67.8938V78.5551H58.8929V73.5021Z" stroke="black" stroke-width="0.5" />
-                <rect x="47.3535" y="41.6386" width="2.85463" height="4.3356" transform="rotate(-45.5652 47.3535 41.6386)" stroke="black" stroke-width="0.5" />
-                <rect x="77.3192" y="39.7863" width="2.85463" height="4.3356" transform="rotate(42.094 77.3192 39.7863)" stroke="black" stroke-width="0.5" />
-                <rect x="0.353536" y="0.00348777" width="2.85463" height="4.3356" transform="matrix(0.700097 0.714048 0.714048 -0.700097 48.1035 68.8817)" stroke="black" stroke-width="0.5" />
-                <rect x="0.0179244" y="-0.353099" width="2.85463" height="4.3356" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.0692 70.7339)" stroke="black" stroke-width="0.5" />
-                <rect x="42.25" y="56.6046" width="2.85463" height="4.3356" transform="rotate(-90 42.25 56.6046)" stroke="black" stroke-width="0.5" />
-                <rect x="84.6067" y="53.7812" width="2.85463" height="4.3356" transform="rotate(90.3909 84.6067 53.7812)" stroke="black" stroke-width="0.5" />
-                <path d="M45.5389 32.7449L33.376 19.9418C61.7987 -2.59153 90.0295 10.5529 100.592 19.9418L87.7889 31.4646C67.3041 18.6615 51.0869 26.9835 45.5389 32.7449Z" fill="#F98810" />
-                <path d="M92.7849 36.9063L105.371 24.5187C128.403 52.5383 115.761 80.9972 106.56 91.7242L94.8126 79.127C107.251 58.4188 98.6435 42.3514 92.7849 36.9063Z" fill="#F98810" />
-                <path d="M88.3557 84.1463L100.413 97.0487C71.8064 119.348 43.6845 105.972 33.1994 96.4972L46.0965 85.0799C66.4757 98.0506 82.7606 89.8619 88.3557 84.1463Z" fill="#F98810" />
-                <path d="M41.3447 80.7525L28.6861 93.0656C5.81887 64.9108 18.6293 36.5269 27.8929 25.8543L39.5659 38.5205C27.0055 59.155 35.5183 75.2729 41.3447 80.7525Z" fill="#F98810" />
-                <path d="M41.6714 28.7043L28.8682 15.2271C58.7874 -8.4926 88.5044 5.34392 99.6231 15.2271L86.146 27.3566C64.5826 13.8794 47.5115 22.6396 41.6714 28.7043Z" stroke="black" stroke-width="0.5" />
-                <path d="M91.4048 33.0848L104.653 20.045C128.899 49.5398 115.59 79.497 105.905 90.7888L93.5393 77.5285C106.633 55.7299 97.5719 38.8166 91.4048 33.0848Z" stroke="black" stroke-width="0.5" />
-                <path d="M86.7423 82.8119L99.4346 96.3937C69.3218 119.867 39.7192 105.787 28.6821 95.8132L42.2583 83.7947C63.7104 97.4483 80.8527 88.8285 86.7423 82.8119Z" stroke="black" stroke-width="0.5" />
-                <path d="M37.256 79.2395L23.9309 92.2009C-0.140224 62.5637 13.3446 32.6854 23.096 21.4509L35.3836 34.784C22.1619 56.5049 31.1228 73.4714 37.256 79.2395Z" stroke="black" stroke-width="0.5" />
-            </svg>
-            <div class="w-2/3 lg:w-full">
-                <p class="font-semibold md:text-lg">Lorem Ipsum</p>
-                <p class="font-light text-xs md:text-sm">
-                    <br />
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus aspernatur consequatur dolore rem blanditiis porro mollitia minima fuga atque quos autem, sint explicabo tempora saepe hic quis at! Distinctio, dolorem.
-                </p>
-            </div>
-        </div>
-        <div class="w-[312px] lg:h-full lg:flex-col lg:w-1/5 flex-grow flex gap-4 rounded-lg bg-white shadow-lg p-4 md:p-8 items-start">
-            <svg class="w-1/3 h-28 lg:w-1/2" width="130" height="110" viewBox="0 0 130 110" fill="none" xmlns="http://www.w3.org/2000/svg ">
-                <path d="M69.2315 71.5025H60.9404C62.1841 68.1926 58.004 63.5726 55.7585 61.6763C54.5148 59.6077 53.8585 56.6771 53.6857 55.4704C53.2712 47.1957 61.1131 44.0927 65.0859 43.5756C73.7916 44.8168 76.3134 50.6435 76.4862 53.4017C77.7298 58.7802 73.2043 63.9174 70.7861 65.8137C69.5424 68.296 69.2315 70.6405 69.2315 71.5025Z" fill="#FCA333" />
-                <path d="M60.9404 73.054H69.2315V77.7084H67.6769C65.6041 80.8114 63.0132 79.2599 62.495 77.7084H60.9404V73.054Z" fill="#FCA333" />
-                <rect x="49.9854" y="43.7065" width="3.09008" height="4.45426" transform="rotate(-45.5652 49.9854 43.7065)" fill="#FCA333" />
-                <rect x="77.8975" y="41.6718" width="3.09008" height="4.45426" transform="rotate(42.094 77.8975 41.6718)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.700097 0.714048 0.714048 -0.700097 50.9067 69.025)" fill="#FCA333" />
-                <rect width="3.09008" height="4.45426" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.8184 71.0596)" fill="#FCA333" />
-                <rect x="45.3799" y="57.7193" width="3.09008" height="4.45426" transform="rotate(-90 45.3799 57.7193)" fill="#FCA333" />
-                <rect x="84.8584" y="54.6596" width="3.09008" height="4.45426" transform="rotate(90.3909 84.8584 54.6596)" fill="#FCA333" />
-                <path d="M60.5806 78.5551C61.1432 80.2394 63.9559 81.9238 66.2062 78.5551M58.8929 71.8178H67.8938C67.8938 70.8821 68.2314 68.3369 69.5815 65.642C72.2068 63.5833 77.1197 58.0064 75.7696 52.1674C75.5821 49.173 72.8443 42.8475 63.3934 41.5C59.0805 42.0614 50.5671 45.4301 51.0172 54.4131C51.2047 55.7232 51.9173 58.9047 53.2674 61.1504C55.7051 63.2091 60.2431 68.2246 58.8929 71.8178ZM58.8929 73.5021H67.8938V78.5551H58.8929V73.5021Z" stroke="black" stroke-width="0.5" />
-                <rect x="47.3535" y="41.6386" width="2.85463" height="4.3356" transform="rotate(-45.5652 47.3535 41.6386)" stroke="black" stroke-width="0.5" />
-                <rect x="77.3192" y="39.7863" width="2.85463" height="4.3356" transform="rotate(42.094 77.3192 39.7863)" stroke="black" stroke-width="0.5" />
-                <rect x="0.353536" y="0.00348777" width="2.85463" height="4.3356" transform="matrix(0.700097 0.714048 0.714048 -0.700097 48.1035 68.8817)" stroke="black" stroke-width="0.5" />
-                <rect x="0.0179244" y="-0.353099" width="2.85463" height="4.3356" transform="matrix(0.742046 -0.670349 -0.670349 -0.742046 78.0692 70.7339)" stroke="black" stroke-width="0.5" />
-                <rect x="42.25" y="56.6046" width="2.85463" height="4.3356" transform="rotate(-90 42.25 56.6046)" stroke="black" stroke-width="0.5" />
-                <rect x="84.6067" y="53.7812" width="2.85463" height="4.3356" transform="rotate(90.3909 84.6067 53.7812)" stroke="black" stroke-width="0.5" />
-                <path d="M45.5389 32.7449L33.376 19.9418C61.7987 -2.59153 90.0295 10.5529 100.592 19.9418L87.7889 31.4646C67.3041 18.6615 51.0869 26.9835 45.5389 32.7449Z" fill="#F98810" />
-                <path d="M92.7849 36.9063L105.371 24.5187C128.403 52.5383 115.761 80.9972 106.56 91.7242L94.8126 79.127C107.251 58.4188 98.6435 42.3514 92.7849 36.9063Z" fill="#F98810" />
-                <path d="M88.3557 84.1463L100.413 97.0487C71.8064 119.348 43.6845 105.972 33.1994 96.4972L46.0965 85.0799C66.4757 98.0506 82.7606 89.8619 88.3557 84.1463Z" fill="#F98810" />
-                <path d="M41.3447 80.7525L28.6861 93.0656C5.81887 64.9108 18.6293 36.5269 27.8929 25.8543L39.5659 38.5205C27.0055 59.155 35.5183 75.2729 41.3447 80.7525Z" fill="#F98810" />
-                <path d="M41.6714 28.7043L28.8682 15.2271C58.7874 -8.4926 88.5044 5.34392 99.6231 15.2271L86.146 27.3566C64.5826 13.8794 47.5115 22.6396 41.6714 28.7043Z" stroke="black" stroke-width="0.5" />
-                <path d="M91.4048 33.0848L104.653 20.045C128.899 49.5398 115.59 79.497 105.905 90.7888L93.5393 77.5285C106.633 55.7299 97.5719 38.8166 91.4048 33.0848Z" stroke="black" stroke-width="0.5" />
-                <path d="M86.7423 82.8119L99.4346 96.3937C69.3218 119.867 39.7192 105.787 28.6821 95.8132L42.2583 83.7947C63.7104 97.4483 80.8527 88.8285 86.7423 82.8119Z" stroke="black" stroke-width="0.5" />
-                <path d="M37.256 79.2395L23.9309 92.2009C-0.140224 62.5637 13.3446 32.6854 23.096 21.4509L35.3836 34.784C22.1619 56.5049 31.1228 73.4714 37.256 79.2395Z" stroke="black" stroke-width="0.5" />
-            </svg>
-            <div class="w-2/3 lg:w-full">
-                <p class="font-semibold md:text-lg">Lorem Ipsum</p>
-                <p class="font-light text-xs md:text-sm">
-                    <br />
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Delectus aspernatur consequatur dolore rem blanditiis porro mollitia minima fuga atque quos autem, sint explicabo tempora saepe hic quis at! Distinctio, dolorem.
-                </p>
-            </div>
-        </div>
-
+        <!-- <video style="border-radius: 15px;" src="<?= base_url() ?>assets/video/1.mp4" controls width="1400px" poster="<?= base_url() ?>assets/assets/img/index/videotron.png"></video> -->
     </div>
 </div>
 
-<!-- Kenapa memilih AMD Academy -->
-<div>
+<!-- Kenapa memilih -->
+<div id="aboutUs">
     <div class="my-container md:py-24 py-16 lg:py-28 flex flex-col gap-12">
         <div>
-            <div class="text-tertiary-100 w-fit mb-6 md:mb-4 mx-auto bg-tertiary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                Choose Us
+            <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+                Pilih Kami
             </div>
             <p class="font-bold text-xl md:text-2xl text-center mb-4">
                 Kenapa memilih Penulis Cerdas Indonesia
             </p>
             <p class="text-center">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Esse est qui ad incidunt
+                Terbitkan buku anda dengan layanan yang akan kami berikan
             </p>
         </div>
-        <div class="flex flex-row flex-wrap gap-4 md:gap-8 justify-center">
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
+        <div class="flex flex-row flex-wrap gap-4 md:gap-8 justify-center text-center">
+            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-money-bill text-4xl" style="color: #FFA110;"></i>
+                <p class="font-semibold md:text-base text-lg">Harga Terjangkau</p>
+                <p class="md:text-sm">
+                    Kami memberikan layanan jasa yang terjangkau, sehingga memudahkan penulis dalam menyebarluaskan karyanya.
+                </p>
+            </div>
+            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-bolt-lightning text-4xl" style="color: #FFA110;"></i>
+                <p class="font-semibold md:text-base text-lg">Cepat Terbit</p>
+                <p class="md:text-sm">
+                    Jasa penerbitan buku kami terpercaya dan menjamin 100% terbitnya buku. Dengan pengalaman dalam proses penerbitan, kami mampu menerbitkan buku dengan cepat.
+                </p>
+            </div>
+            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-fingerprint text-4xl" style="color: #FFA110;"></i>
+                <p class="font-semibold md:text-base text-lg">Ber-ISBN dan IKAPI</p>
+                <p class="md:text-sm">
+                    Setiap buku yang kami terbitkan memiliki kode unik ISBN (International Standard Book Number) sehingga judul buku dapat diidentifikasi secara internasional dan telah menjadi anggota IKAPI
+                </p>
+            </div>
+            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-check text-4xl" style="color: #FFA110;"></i>
+                <p class="font-semibold md:text-base text-lg">Anti ribet</p>
+                <p class="md:text-sm">
+                    Jasa kami memberikan layanan lengkap berupa editing EYD, layout, desain cover, dan Turnitin yang dapat memudahkan penulis dalam meningkatkan kualitas buku.
+                </p>
+            </div>
+            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-book text-4xl" style="color: #FFA110;"></i>
+                <p class="font-semibold md:text-base text-lg">Buku Digital Interaktif</p>
+                <p class="md:text-sm">
+                    Buku digital kami didesain interaktif untuk mendukung proses belajar mengajar dengan konten menarik berupa materi, gambar, audio, dan video.
+                </p>
+            </div>
+            <!-- <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6 hover:border hover:border-secondary-100">
+                <i class="fa-solid fa-money-bill text-4xl" style="color: #FFA110;"></i>
                 <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
                 <p class="md:text-sm">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
                 </p>
-            </div>
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
-                <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
-                <p class="md:text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
-                </p>
-            </div>
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
-                <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
-                <p class="md:text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
-                </p>
-            </div>
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
-                <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
-                <p class="md:text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
-                </p>
-            </div>
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
-                <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
-                <p class="md:text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
-                </p>
-            </div>
-            <div class="md:p-8 p-4 md:flex-grow-0 flex-grow w-1/3 lg:w-1/4 rounded-xl bg-white shadow-lg flex flex-col gap-6">
-                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M29.1665 23.8833C30.4832 23.8833 31.8832 24.0167 33.3332 24.2833V26.7833C32.2998 26.5167 30.8998 26.3833 29.1665 26.3833C25.9998 26.3833 23.5165 26.9333 21.6665 28.0333V25.2167C23.6165 24.3333 26.1165 23.8833 29.1665 23.8833ZM21.6665 20.7667C23.8165 19.8833 26.3165 19.45 29.1665 19.45C30.4832 19.45 31.8832 19.5667 33.3332 19.8333V22.3333C32.2998 22.0667 30.8998 21.9333 29.1665 21.9333C25.9998 21.9333 23.5165 22.5 21.6665 23.5833V20.7667ZM29.1665 17.5C25.9998 17.5 23.5165 18.0333 21.6665 19.1667V16.4C23.7165 15.4667 26.2165 15 29.1665 15C30.4832 15 31.8832 15.1333 33.3332 15.3833V17.9667C32.0998 17.65 30.6832 17.5 29.1665 17.5ZM34.9998 30.8333V11.6667C33.2665 11.1167 31.3165 10.8333 29.1665 10.8333C25.7498 10.8333 22.6998 11.6667 19.9998 13.3333V32.5C22.6998 30.8333 25.7498 30 29.1665 30C31.1498 30 33.0998 30.2667 34.9998 30.8333ZM29.1665 7.5C33.0832 7.5 36.1498 8.33333 38.3332 10V34.2667C38.3332 34.4667 38.2498 34.6667 38.0665 34.85C37.8832 35 37.6832 35.1333 37.4998 35.1333C37.3165 35.1333 37.1832 35.1 37.0832 35.05C34.9498 33.9 32.2998 33.3333 29.1665 33.3333C25.7498 33.3333 22.6998 34.1667 19.9998 35.8333C17.7665 34.1667 14.7165 33.3333 10.8332 33.3333C8.0665 33.3333 5.4165 33.9333 2.9165 35.1167C2.8665 35.1333 2.79984 35.1333 2.7165 35.1667C2.64984 35.1833 2.58317 35.2 2.49984 35.2C2.3165 35.2 2.1165 35.1333 1.93317 35C1.74984 34.8167 1.6665 34.6333 1.6665 34.4167V10C3.89984 8.33333 6.9665 7.5 10.8332 7.5C14.7165 7.5 17.7665 8.33333 19.9998 10C22.2332 8.33333 25.2832 7.5 29.1665 7.5Z" fill="#FFA110" />
-                </svg>
-                <p class="font-semibold md:text-base text-lg">Lorem Ipsum</p>
-                <p class="md:text-sm">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus possimus
-                </p>
-            </div>
+            </div> -->
 
 
         </div>
@@ -296,14 +145,14 @@
 <div>
     <div class="my-container md:py-24 py-16 lg:py-8 flex flex-col gap-12">
         <div>
-            <div class="text-tertiary-100 w-fit mb-6 md:mb-4 mx-auto bg-tertiary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                Pelatihan
+            <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+                Paket Penerbitan
             </div>
             <p class="font-bold text-xl md:text-2xl text-center mb-4">
-                Pelatihan di AMD Academy
+                Paket Penerbitan di Penulis Cerdas Indonesia
             </p>
             <p class="text-center">
-                Build your skill to advance your career path
+                Beberapa paket penerbitan buku yang dapat anda pilih
             </p>
         </div>
 
@@ -370,45 +219,47 @@
             <div class="flex justify-center flex-wrap">
                 <?php if (!empty($paket)) { ?>
                     <div class="flex flex-wrap justify-center lg:justify-start">
+
                         <?php foreach ($paket as $po) : ?>
-
-                            <!-- ITEM 2 -->
-                            <div class="min-w-[260px]">
-                                <div class="shadow-md rounded-md px-6 pb-6 bg-white my-3 mx-2">
-                                    <div class="border-b-2 border-[#F5F5F5];">
-                                        <h1 class="pt-[30px] text-center font-semibold text-xl lg:text-[24px]">
-                                            <?php echo $po['paket_name'] ?>
-                                        </h1>
-                                        <div class="flex items-center flex-col">
-                                            <img src="<?= base_url(); ?>assets/assets/vector/group.svg" class="my-[16px]" />
-                                        </div>
-                                        <div class="flex items-center flex-col">
-                                            <h2 class="text-secondaryTextBlue font-semibold text-base lg:text-[18px] text-center">
-                                                <?php echo $po['copy_num'] ?> eksemplar
-                                            </h2>
-
-                                            <!-- <h2 class="my-[4px] text-[#939393] line-through text-lg lg:text-xl font-normal">
-                                                                Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
-                                                            </h2> -->
-                                            <span class="text-sm font-bold mt-6">Mulai dari </span>
-                                            <h2 class="font-semibold text-[26px] lg:text-[28px] text-center">
-                                                Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
-                                            </h2>
-                                        </div>
-                                    </div>
-                                    <div class="my-6">
-                                        <?php foreach (json_decode($po['service']) as $fas) : ?>
-                                            <div class="flex">
-                                                <img src="<?= base_url() ?>assets/assets/vector/check-circle.svg" class="mx-3" />
-                                                <p class="leading-relaxed lg:text-base text-sm font-normal">
-                                                    <?= $fas->fasilitas ?>
-                                                </p>
+                            <a href="<?= base_url() ?>terbit">
+                                <div class="min-w-[260px]">
+                                    <div class="shadow-md rounded-md px-6 pb-6 bg-white my-3 mx-2 hover:border hover:border-secondary-100">
+                                        <div class="border-b-2 border-[#F5F5F5];">
+                                            <h1 class="pt-[30px] text-center font-semibold text-xl lg:text-[24px] text-primary-100">
+                                                <?php echo $po['paket_name'] ?>
+                                            </h1>
+                                            <div class="flex items-center flex-col">
+                                                <img src="<?= base_url(); ?>assets/assets/vector/books.svg" class="my-[16px]" />
                                             </div>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
+                                            <div class="flex items-center flex-col">
+                                                <h2 class="text-black font-semibold text-base lg:text-[18px] text-center">
+                                                    <?php echo $po['copy_num'] ?> eksemplar
+                                                </h2>
 
-                            </div>
+                                                <!-- <h2 class="my-[4px] text-[#939393] line-through text-lg lg:text-xl font-normal">
+                                                                    Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
+                                                                </h2> -->
+                                                <span class="text-sm font-bold mt-6">Mulai dari </span>
+                                                <h2 class="font-semibold text-[26px] lg:text-[28px] text-center text-primary-100">
+                                                    Rp. <?= number_format($po['harga'], 0, '', '.'); ?>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                        <div class="my-6">
+                                            <?php foreach (json_decode($po['service']) as $fas) : ?>
+                                                <div class="flex justify-center">
+                                                    <!-- <span></span> -->
+                                                    <span class="leading-relaxed lg:text-base text-sm font-normal">
+                                                        <i class="fa-solid fa-check-double text-secondary-100"></i>
+                                                        <?= $fas->fasilitas ?>
+                                                    </span>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </a>
 
                         <?php endforeach; ?>
                     </div>
@@ -416,65 +267,8 @@
                     echo 'Mohon maaf, untuk saat ini tidak ada paket yang tersedia';
                 } ?>
             </div>
+            <a href="<?= base_url() ?>terbit" class="px-6 xl:px-12 py-2 xl:py-3 rounded-lg border lg:border-primaryBtn bg-primary-200 hover:bg-white text-white hover:text-primaryBtn" style="float: right;">Lihat selengkapnya ></a>
         </div>
-
-        <!-- <div class="container mx-auto md:w-[1200px]">
-            <div class="flex flex-wrap justify-evenly">
-                <?php foreach ($pelatihan as $plt) { ?>
-                    <div class="w-[162px] md:w-[324px] bg-white p-2 my-2 md:p-5 md:my-4 border border-gray-200 shadow-md  hover:scale-105 transition-all duration-200 hover:shadow-xl">
-                        <div class="title p-0 h-[50px] md:h-[100px] md:mb-2 flex items-center">
-                            <h1 class="text-sm md:text-3xl font-bold mb-1 md:mb-3 text-black"><?php echo $plt['nama_pelatihan'] ?></h1>
-                        </div>
-                        <a href="#">
-                            <img class="block w-full" src="<?= base_url() ?>assets/image/program/1.svg" alt="" />
-                        </a>
-                        <div class="my-1">
-                            <a href="#">
-                                <h5 class="my-1 text-[12px] md:text-xl font-bold tracking-tight text-[#1089C0]"><?php echo $plt['kategori'] ?></h5>
-                                <p class="my-1 text-[7px] md:text-sm"><?php echo konversi($plt['tanggal_mulai']) ?> - <?php echo konversi($plt['tanggal_selesai']) ?></p>
-                            </a>
-                            <div class="my-1 pricing text-center">
-                                <p class="my-1 text-[10px] md:text-2xl line-through text-[#939393]">Rp 3.000.000</p>
-                                <p class="my-1 text-[16px] md:text-4xl text-[#0F345E] font-bold">Rp <?php echo number_format($plt['harga'], 2, ',', '.') ?></p>
-                            </div>
-                            <a href="<?php echo base_url('AMDA/deskripsi') ?>/<?php echo $plt['id'] ?>" class="inline-block text-center font-semibold text-white text-[10px] md:text-[14px] bg-[#FFA110] w-full my-3 py-3 rounded-lg hover:bg-[#ee8f00] transition-all duration-200">
-                                Selengkapnya
-                            </a>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
-        </div> -->
-
-        <!-- <div class="container mx-auto w-[1200px]">
-                <div class="flex flex-wrap justify-evenly">
-                    <?php foreach ($pelatihan as $plt) { ?>
-                        <div class="w-[324px] bg-white p-5 my-4 border border-gray-200 shadow-md">
-                            <div class="title h-[100px] flex items-center">
-                                <h1 class="text-3xl font-bold mb-3 text-black"><?php echo $plt['nama_pelatihan'] ?></h1>
-                            </div>
-                            <a href="#">
-                                <img class="block w-full" src="<?= base_url() ?>assets/image/program/1.svg" alt="" />
-                            </a>
-                            <div class="my-1">
-                                <a href="#">
-                                    <h5 class="my-1 text-xl font-bold tracking-tight text-[#1089C0]"><?php echo $plt['kategori'] ?></h5>
-                                    <p class="my-1 text-sm"><?php echo $plt['tanggal_mulai'] ?> - <?php echo $plt['tanggal_selesai'] ?></p>
-                                </a>
-                                <div class="my-1 pricing text-center">
-                                    <p class="my-1 text-2xl line-through text-[#939393]">Rp 3.000.000</p>
-                                    <p class="my-1 text-4xl text-[#0F345E] font-bold">Rp <?php echo number_format($plt['biaya'], 2, ',', '.') ?></p>
-                                </div>
-                                <a href="<?php echo base_url('AMDA/deskripsi') ?>/<?php echo $plt['id'] ?>" class="inline-block text-center font-semibold text-white bg-[#FFA110] w-full my-3 py-3 rounded-lg">
-                                    Selengkapnya
-                                </a>
-                            </div>
-                        </div>
-                    <?php } ?>
-                </div>
-            </div> -->
-
-
 
     </div>
 </div>
@@ -588,24 +382,15 @@
 
 <!-- Frequently Asked Question -->
 <div class="my-container flex flex-col lg:flex-col lg:flex-row items-center md:py-24 py-16 gap-6 lg:gap-24">
-    <div class="flex md:hidden flex-col text-center items-center gap-6">
-        <div class="bg-[#FFCAFA] text-[#E906BB] rounded px-3 py-2 lg:py-1 text-sm">
-            Frequently Asked Questions
-        </div>
-        <p>
-            <span class="font-bold text-2xl">Temukan<br />
-                Jawaban dari Pertanyaanmu<br /></span>
-            Pertanyaan yang sering ditanyakan oleh calon peserta
-        </p>
-    </div>
     <div class="flex flex-col text-center md:text-left items-center md:items-start gap-6 flex-grow lg:w-fit">
-        <div class="justify-center hidden md:flex flex-col items-center gap-6">
-            <div class="bg-[#FFCAFA] text-[#E906BB] rounded px-3 py-2 lg:py-1 text-sm">
-                Frequently Asked
+        <div class="justify-center md:flex flex-col items-center gap-6">
+
+            <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+                Frequently Asked Questions
             </div>
+            <span class="font-bold text-2xl text-center">Temukan jawaban dari pertanyaan anda</span>
             <p class="text-center">
-                <span class="font-bold text-2xl text-center">Temukan jawaban dari pertanyaanmu<br /></span>
-                Pertanyaan yang sering ditanyakan oleh calon peserta
+                Pertanyaan yang sering ditanyakan
             </p>
         </div>
     </div>
@@ -625,7 +410,7 @@
 
                         <div class="h-fit w-full flex items-center pr-7 mb-2 lg:mb-5">
                             <h1 class="text-lg font-semibold text-black">
-                                Apakah ini terbuka untuk umum?
+                                Bagaimana cara mengecek progress penerbitan buku ?
                             </h1>
                         </div>
 
@@ -639,8 +424,7 @@
                         <div class="overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-96">
                             <div class="py-[10px]">
                                 <p>
-                                    Tentu saja pelatihan ini terbuka untuk umum, jadi tunggu
-                                    apalagi? Segera daftarkan diri Anda karena KUOTA TERBATAS!
+                                    Cara nya sangat mudah, cukup mengecek di log aktivitas penerbitan untuk mengetahui progress atau kemajuan penerbitan buku anda.
                                 </p>
                             </div>
                         </div>
@@ -653,8 +437,7 @@
 
                         <div class="h-fit w-full flex items-center pr-7 mb-2 lg:mb-5">
                             <h1 class="text-lg font-semibold text-black">
-                                Saya belum memiliki kemampuan dasar digital marketing,
-                                apa bisa mengikuti pelatihan ini?
+                                Butuh waktu berapa lama untuk menerbitkan buku?
                             </h1>
                         </div>
 
@@ -668,7 +451,7 @@
                         <div class="overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-96">
                             <div class="py-[10px]">
                                 <p>
-                                    Bisa, pelatihan ini diperuntukkan bagi Beginner, Intermediate, Advanced, hingga Proficient.
+                                    Penerbitan buku di layanan kami termasuk cepat kak, dengan proses penerbitan jangka waktu 2 minggu atau 14 hari.
                                 </p>
                             </div>
                         </div>
@@ -681,7 +464,7 @@
 
                         <div class="h-fit w-full flex items-center pr-7 mb-2 lg:mb-5">
                             <h1 class="text-lg font-semibold text-black">
-                                Perlukah sertifikasi kompetensi untuk pekerjaan?
+                                Berapa biaya produksi menerbitkan buku?
                             </h1>
                         </div>
 
@@ -695,7 +478,8 @@
                         <div class="overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-96">
                             <div class="py-[10px]">
                                 <p>
-                                    Perlu, karena sertifikasi kompetensi untuk meningkatkan profesionalisme kerja para tenaga kerja maupun perusahaan.
+                                    Penulis bisa memilih sesuai dengan kantong atau bisa berkonsultasi dengan server pelayanan kami untuk menyesuaikan kebutuhan yang diinginkan. Untuk biaya produksi buku tergantung berapa jumlah halaman buku yang dimiliki pelanggan, desain cover, Layout, editing konten, proof reading. <br>
+                                    Apabila jumlah buku halaman Anda melebihi <strong>100 halaman</strong> maka akan ditambahkan dengan penambahan biaya sesuai dengan halaman buku yang ingin anda terbitkan.
                                 </p>
                             </div>
                         </div>
@@ -708,8 +492,7 @@
 
                         <div class="h-fit w-full flex items-center pr-7 mb-2 lg:mb-5">
                             <h1 class="text-lg font-semibold text-black">
-                                Bagaimana sistem pembelajaran pelatihan dan sertifikasi
-                                <br />digital marketing ini?
+                                Apakah jasa penerbitan Penulisan Cerdas Indonesia bagian anggota IKAPI (Ikatan Penerbit Indonesia)?
                             </h1>
                         </div>
 
@@ -723,51 +506,13 @@
                         <div class="overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-96">
                             <div class="py-[10px]">
                                 <p>
-                                    Terdapat 2 sistem pelaksanaan pelatihan dan sertifikasi
-                                    yang dibuka, yakni pelaksanaan secara offline dan
-                                    online. Sedangkan untuk sistem pembelajarannya sebagai
-                                    berikut:</p>
-                                <ul style="list-style: disc;">
-                                    <li>Peserta diberikan materi oleh para Trainer
-                                        profeesional di bidangnya yang akan menunjang uji
-                                        kompetensi peserta</li>
-                                    <li>Peserta mendapat pendampingan dari Tim
-                                        Fasilitator selama proses pelatihan hingga sebelum uji
-                                        kompetensi</li>
-                                    <li>Terdapat Group WhatsApp sebagai media
-                                        berdiskusi dengan Trainer atau Tim Fasilitator</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- collapse menu end -->
-
-                    <!-- collapse menu start -->
-                    <div class="relative w-full overflow-hidden py-3">
-                        <input type="checkbox" class="peer opacity-0 absolute top-0 w-full h-12 z-10 cursor-pointer" />
-
-                        <div class="h-fit w-full flex items-center pr-7 mb-2 lg:mb-5">
-                            <h1 class="text-lg font-semibold text-black">
-                                Apakah pelatihan ini diadakan setiap saat?
-                            </h1>
-                        </div>
-
-                        <!-- arrow icons -->
-                        <img src="<?= base_url() ?>assets/assets/img/index/panah.svg" alt="panah_collapse" class="absolute top-5 right-4 text-blue-900 transition-transform duration-500 rotate-0 peer-checked:rotate-180" />
-                        <div class="mb-0 pb-0">
-                            <img src="<?= base_url() ?>assets/assets/img/index/garis.svg" class="mb-0" />
-                        </div>
-                        <!-- content -->
-
-                        <div class="overflow-hidden transition-all duration-500 max-h-0 peer-checked:max-h-96">
-                            <div class="py-[10px]">
-                                <p>
-                                    Pelatihan dan Sertifikasi Digital Marketing AMD Academy diadakan setiap bulannya. Stay tuned di akun Instagram @amdacademy untuk mendapatkan update informasi terbaru terkait pelaksanaan Pelatihan dan Sertifikasi ya.
+                                    Secara resmi, kami telah menjadi anggota IKAPI sejak 2021 dengan kode anggota IKAPI No. 280/JTI/2021. Oleh karena itu, tidak diragukan lagi bahwa anda dapat menerbitkan buku bersama kami.
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!-- collapse menu end -->
+
                 </div>
             </div>
         </div>
@@ -777,35 +522,25 @@
 <!-- Akhir Frequently Asked Question -->
 
 <!-- Ask More -->
-<div class="my-container flex md:flex-row items-center md:pt-0 md:pb-24 pb-16 pt-0 gap-6 lg:gap-24">
-    <div class="">
-        <div class="flex md:hidden flex-col items-start gap-6">
-            <div class="text-[#036ADF] bg-[#A3CEFF] rounded px-3 py-2 lg:py-1 text-sm font-semibold">
-                Ask More
-            </div>
-            <p class="font-bold text-2xl">
-                Masih ada <br />pertanyaan lain?<br />
-            </p>
-            <div></div>
-        </div>
+<div id="kontak" class="my-container flex md:flex-row items-center md:pt-0 md:pb-24 pb-16 pt-0 gap-6 lg:gap-24">
 
-        <div class="flex flex-col text-center md:text-left items-start md:items-start gap-6 flex-grow lg:w-2/3">
-            <div class="hidden md:flex flex-col items-start gap-6">
-                <div class="text-[#036ADF] bg-[#A3CEFF] rounded px-3 py-2 lg:py-1 text-sm font-semibold">
-                    Ask More
-                </div>
-                <p class="font-bold text-2xl">Masih ada <br />pertanyaan lain?</p>
+
+    <div class="flex flex-col text-center md:text-left items-start md:items-start gap-6 flex-grow lg:w-1/3">
+        <div class="md:flex flex-col items-start gap-6">
+            <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+                Pertanyaan lain?
             </div>
+            <p class="font-bold text-2xl">Masih ada pertanyaan lain?
             <p class="text-start">
-                Klik tombol di bawah untuk konsultasi lebih lanjut dengan Tim kami
+                Klik tombol di bawah untuk menghubungi kami
             </p>
-            <div class="w-[206px] h-[45px] bg-[#1089C0] flex rounded-lg cursor-pointer">
-                <div class="flex w-full items-center">
-                    <img src="<?= base_url() ?>assets/assets/img/index/wa.svg" class="w-1/4 h-[16px] -mr-2" />
-                    <button type="button" class="font-semibold text-white w-3/4" id="tanya">
-                        Tanya Lebih Lanjut
-                    </button>
-                </div>
+        </div>
+        <div class="w-[206px] h-[45px] bg-primary-100 flex rounded-lg cursor-pointer">
+            <div class="flex w-full items-center">
+                <img src="<?= base_url() ?>assets/assets/img/index/wa.svg" class="w-1/4 h-[16px] -mr-2" />
+                <button type="button" class="font-semibold text-white w-3/4 " id="tanya">
+                    Pertanyaan lain ?
+                </button>
             </div>
         </div>
     </div>
@@ -862,7 +597,7 @@
 
     $('#wa').click(function(e) {
         e.preventDefault();
-        var hp = "6289334945635";
+        var hp = "<?= $cs ?>";
         var textEncode = encodeURI(
             "Mau tanya nih min, ..."
         );
@@ -870,7 +605,7 @@
     });
     $('#tanya').click(function(e) {
         e.preventDefault();
-        var hp = "6289334945635";
+        var hp = "<?= $cs ?>";
         var textEncode = encodeURI(
             "Mau tanya nih min, ..."
         );

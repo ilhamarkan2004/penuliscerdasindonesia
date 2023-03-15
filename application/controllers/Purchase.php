@@ -13,11 +13,12 @@ class Purchase extends CI_Controller
         $this->load->model('M_Purchase', 'm_purchase');
 
 
-        if ($this->session->userdata('id_user') == null) {
+        if ($this->session->has_userdata('id_user') == false) {
             redirect('auth');
         }
 
-        if ($this->m_auth->cekUserAktif($this->session->userdata('id_user')) == 0) {
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+        if ($this->m_auth->cekUserAktif($idUserLogin) == 0) {
             $this->session->unset_userdata('id_user');
             redirect('auth');
         }
@@ -63,7 +64,8 @@ class Purchase extends CI_Controller
         if ($currentUser['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
             $query = $this->m_purchase->getBookPublish();
         } else {
-            $query = $this->m_purchase->getBookPublish($this->session->userdata('id_user'));
+            $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+            $query = $this->m_purchase->getBookPublish($idUserLogin);
         }
         $data = [];
 

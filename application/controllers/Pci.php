@@ -20,6 +20,7 @@ class Pci extends CI_Controller
         $data['event'] = $this->m_event->getEventType();
         $data['title'] = 'Home';
         $data['paket'] = $pakets;
+        $data['cs'] = $this->m_auth->getDefaultValue('no_hp')['value'];
         viewUser($this, 'user/pages/home', $data);
     }
 
@@ -29,6 +30,7 @@ class Pci extends CI_Controller
         $data['paket'] = multi_unique_array($this->m_paket->getHargaPaket(null, null, '1')->result_array(), 'paket_id');
         $data['event'] = $this->m_event->getEventType();
         $data['title'] = 'Pilihan Paket';
+        $data['cs'] = $this->m_auth->getDefaultValue('no_hp')['value'];
 
         viewUser($this, 'user/pages/terbit_buku', $data);
     }
@@ -61,7 +63,8 @@ class Pci extends CI_Controller
         $param = $this->input->post();
         // print_r($param);
         // die;
-        $param['user_id'] = $this->session->userdata('id_user');
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+        $param['user_id'] = $idUserLogin;
 
         $rules = [
             [

@@ -12,11 +12,12 @@ class Paket extends CI_Controller
         $this->load->model('M_Paket', 'm_paket');
 
 
-        if ($this->session->userdata('id_user') == null) {
+        if ($this->session->has_userdata('id_user') == false) {
             redirect('auth');
         }
 
-        if ($this->m_auth->cekUserAktif($this->session->userdata('id_user')) == 0) {
+        $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
+        if ($this->m_auth->cekUserAktif($idUserLogin) == 0) {
             $this->session->unset_userdata('id_user');
             redirect('auth');
         }

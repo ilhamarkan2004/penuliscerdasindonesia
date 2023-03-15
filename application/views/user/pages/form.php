@@ -18,13 +18,13 @@
                 <div class="w-fit flex flex-col items-center">
                     <!--Program Pelatihan -->
                     <div class="min-w-[260px] w-fit">
-                        <div class="shadow-md rounded-md lg:px-16 pb-6 bg-white m-4 border">
+                        <div class="shadow-md rounded-md lg:px-16 pb-6 bg-white m-4 border border-primary-100">
                             <div class="border-b-2 border-[#F5F5F5];">
                                 <h1 class="pt-[30px] text-center font-semibold text-xl lg:text-[24px]">
                                     <?= $paket['paket_name'] ?>
                                 </h1>
                                 <div class="flex items-center flex-col">
-                                    <img src="<?= base_url('assets/assets/vector/solo.svg'); ?>" class="my-[16px]" />
+                                    <img src="<?= base_url('assets/assets/vector/books.svg'); ?>" class="my-[16px]" />
                                 </div>
                                 <!-- <div class="flex items-center flex-col">
                                     <h2 class="text-secondaryTextBlue font-semibold text-base lg:text-[18px] text-center">
@@ -36,13 +36,13 @@
 
                             <!-- Fasililtas -->
                             <div class="p-4">
-                                <h1 class="h2-section-lp text-secondaryDetailText mt-6">
+                                <h1 class="h2-section-lp text-secondary-100 mt-6">
                                     Fasilitas yang didapat
                                 </h1>
                                 <div class="gap-4 text-sm my-3">
                                     <?php foreach ($fasilitas as $fs) : ?>
                                         <div class="my-1.5 flex items-center">
-                                            <img src="<?= base_url('assets/assets/vector/double_checklist.svg'); ?>" class="mr-6" />
+                                            <i class="fa-solid fa-check-double text-secondary-100"></i>
                                             <p><?= $fs->fasilitas ?></p>
                                         </div>
                                     <?php endforeach; ?>
