@@ -295,7 +295,7 @@ class Pci extends CI_Controller
                     'message' => [
                         'icon' => 'success',
                         'title' => 'Pendaftaran buku berhasil',
-                        'text' => 'Pantau terus pemrosesan buku anda'
+                        'text' => 'Kirimkan bukti pembayaran kepada Customer Service. Anda akan diarahkan secara otomatis setelah menekan tombol "OK"'
                     ],
                     'id' => $id_order
                 ];

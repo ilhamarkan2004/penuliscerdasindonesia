@@ -63,14 +63,15 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					}).then((result) => {
 						/* Read more about isConfirmed, isDenied below */
-						var hp = "6289683253025";
+						var hp = "6285171670522";
 						var textEncode = encodeURI(
-							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari penerbitan buku saya.`
+							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari pendaftaran buku saya.`
 						);
 						window.location = `https://wa.me/${hp}?text=${textEncode}`;
 						// window.location.href = "dashboard";
 					});
 				} else {
+					$("#progress-bar").width("0%");
 					$("#loader-icon").html(
 						'<p style="color:#EA4335;">Terdapat inputan yang tidak sesuai, mohon cek ulang.</p>'
 					);
