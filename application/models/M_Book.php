@@ -12,10 +12,13 @@ class M_Book extends CI_Model
     private $t_bsp = 'book_sell_publisher';
     private $t_cat = 'book_category';
     private $t_lang = 'book_language';
+    private $t_br = 'book_rating';
+    private $t_bp = 'book_purchase';
+    private $t_bpi = 'book_purchase_item';
 
     public function getBooks($id_book = null, $id_user = null, $uuid = null)
     {
-        $this->db->select('*, books.id as id_b, book_contributors.id as id_bc, order_progress.id as id_op')
+        $this->db->select('*, books.id as id_b, book_contributors.id as id_bc, order_progress.id as id_op, books.created_at as b_created_at, books.update_at as b_update_at')
             ->from($this->t_books)
             ->join($this->t_bc, 'books.id = book_contributors.book_id')
             ->join($this->t_order, 'books.id = order.book_id')
@@ -391,12 +394,15 @@ class M_Book extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    public function getContributorBook($id_buku, $id_role)
+    public function getContributorBook($id_buku, $id_role = null)
     {
         $this->db->select('*')
             ->from('book_contributors')
             ->join('users', 'users.id = book_contributors.user_id')
-            ->where(['book_id' => $id_buku, 'contributor_role_id' => $id_role]);
+            ->where(['book_id' => $id_buku]);
+        if ($id_role != null) {
+            $this->db->where(['contributor_role_id' => $id_role]);
+        }
         return $this->db->get()->result_array();
     }
 
@@ -493,5 +499,158 @@ class M_Book extends CI_Model
             $this->db->where(['book_sell.uuid' => $uuid]);
         }
         return $this->db->get();
+    }
+
+    public function getComment($bs_uuid)
+    {
+        $id_book = $this->getIDFromUUID($bs_uuid)->row_array()['book_id'];
+        $this->db->select('*, users.created_at as u_created_at, book_rating.created_at as br_created_at')
+            ->from($this->t_br)
+            ->join('users', 'book_rating.user_id = users.id')
+            ->where(['book_id' => $id_book]);
+        return $this->db->get()->result_array();
+    }
+
+    public function postComment($param)
+    {
+        $id_book = $this->getIDFromUUID($param['uuid'])->row_array()['book_id'];
+
+        $this->db->trans_start();
+
+        $data = [
+            'book_id' => $id_book,
+            'user_id' => $param['user_id'],
+            'comment' => $param['comment'],
+            'rating' => $param['rating'],
+        ];
+
+        //set id column value as UUID
+        $this->db->set('uuid', 'UUID()', FALSE);
+
+        $this->db->insert($this->t_br, $data);
+
+        $accumulate_rating = (float)array_sum(array_column($this->getComment($param['uuid']), 'rating'));
+
+        $data = [
+            'sum_rating' => $accumulate_rating,
+        ];
+        $this->db->where(['id' => $id_book]);
+        $this->db->update($this->t_books, $data);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal tambah comment'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil tambah comment'
+            ];
+        }
+    }
+
+    //ambil id buku dari tabel book_Sell
+    public function getIDFromUUID($bs_uuid)
+    {
+        $this->db->select('book_id')
+            ->from($this->t_bs)
+            ->where(['uuid' => $bs_uuid]);
+        return $this->db->get();
+    }
+
+    public function getListBookOrder($arr_id_book)
+    {
+        $this->db->select('*')
+            ->from($this->t_books)
+            ->where_in('id', $arr_id_book);
+        return $this->db->get()->result_array();
+    }
+
+    public function getPriceListBookOrder($arr_uuid)
+    {
+        $this->db->select_sum('sell_price')
+            ->from($this->t_bs)
+            ->where_in('uuid', $arr_uuid);
+        return $this->db->get()->row_array();
+    }
+
+    public function getPurchase($id_order = null, $id_user = null)
+    {
+        $this->db->select('*')
+            ->from($this->t_bp);
+        if ($id_order != null) {
+            $this->db->where(['order_id' => $id_order]);
+        }
+        if ($id_user != null) {
+            $this->db->where(['user_id' => $id_user]);
+        }
+        return $this->db->get();
+    }
+
+    public function getPurchaseBook($id_order)
+    {
+        $this->db->select('*')
+            ->from($this->t_bpi)
+            ->join('books', 'books.id = book_purchase_item.book_id')
+            ->where(['bp_order_id' => $id_order]);
+        return $this->db->get()->result_array();
+    }
+
+    public function postPurchase($dataPurchase, $listBookId)
+    {
+        $this->db->trans_start();
+
+        //Masukin ke tabel book_purchase
+        $this->db->insert($this->t_bp, $dataPurchase);
+
+        //Masukkan data ke tabel book_purchase_item
+        foreach ($listBookId as $book_id) {
+            $data = [
+                'bp_order_id' => $dataPurchase['order_id'],
+                'book_id' => $book_id,
+            ];
+            $this->db->insert($this->t_bpi, $data);
+        }
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal ketika menambahkan data ke databse'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil menambahkan data'
+            ];
+        }
+    }
+
+    public function putPurchase($result)
+    {
+        $this->db->trans_start();
+        $dataOrder = [
+            'status_code' => $result['status_code'],
+        ];
+        $this->db->where(['id_order' => $result['order_id']])
+            ->update($this->tableD, $dataOrder);
+
+        if ($this->db->trans_status() === FALSE) {
+            $this->db->trans_rollback();
+            return [
+                'success' => false,
+                'message' => 'Gagal'
+            ];
+        } else {
+            $this->db->trans_complete();
+            return [
+                'success' => true,
+                'message' => 'Berhasil'
+            ];
+        }
     }
 }

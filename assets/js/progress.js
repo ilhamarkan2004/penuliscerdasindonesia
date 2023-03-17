@@ -88,12 +88,36 @@ $(document).ready(function () {
 	$("#formProgressCover").submit(function (e) {
 		e.preventDefault();
 		$.ajax({
+			xhr: function () {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener(
+					"progress",
+					function (evt) {
+						if (evt.lengthComputable) {
+							var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+							$("#progress-bar1").width(percentComplete + "%");
+							$("#progress-bar1").html(percentComplete + "%");
+						}
+					},
+					false
+				);
+				return xhr;
+			},
 			type: "post",
 			url: "aksiCover",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
 			dataType: "json",
+			beforeSend: function () {
+				$("#progress-bar1").width("0%");
+				$("#loader-icon1").show();
+			},
+			error: function () {
+				$("#loader-icon1").html(
+					'<p style="color:#EA4335;">File upload failed, please try again.</p>'
+				);
+			},
 			success: function (response) {
 				if (response.success) {
 					Swal.fire({
@@ -103,7 +127,9 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					});
 					$("#ProgressCoverModal").modal("hide");
+					$("#progressTable").DataTable().ajax.reload();
 				} else {
+					$("#progress-bar1").width("0%");
 					if (response.message.alert_type == "swal") {
 						Swal.fire({
 							// position: 'top-end',
@@ -123,12 +149,36 @@ $(document).ready(function () {
 	$("#formProgressNaskah").submit(function (e) {
 		e.preventDefault();
 		$.ajax({
+			xhr: function () {
+				var xhr = new window.XMLHttpRequest();
+				xhr.upload.addEventListener(
+					"progress",
+					function (evt) {
+						if (evt.lengthComputable) {
+							var percentComplete = parseInt((evt.loaded / evt.total) * 100);
+							$("#progress-bar2").width(percentComplete + "%");
+							$("#progress-bar2").html(percentComplete + "%");
+						}
+					},
+					false
+				);
+				return xhr;
+			},
 			type: "post",
 			url: "aksiNaskah",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
 			dataType: "json",
+			beforeSend: function () {
+				$("#progress-bar2").width("0%");
+				$("#loader-icon2").show();
+			},
+			error: function () {
+				$("#loader-icon2").html(
+					'<p style="color:#EA4335;">File upload failed, please try again.</p>'
+				);
+			},
 			success: function (response) {
 				if (response.success) {
 					Swal.fire({
@@ -138,7 +188,9 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					});
 					$("#ProgressNaskahModal").modal("hide");
+					$("#progressTable").DataTable().ajax.reload();
 				} else {
+					$("#progress-bar2").width("0%");
 					if (response.message.alert_type == "swal") {
 						Swal.fire({
 							// position: 'top-end',

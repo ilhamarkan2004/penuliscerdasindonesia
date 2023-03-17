@@ -15,15 +15,19 @@
     <div class="my-5 flex flex-wrap justify-between">
       <div class="flex flex-wrap items-center w-full lg:w-1/2 pr-12">
         <div class="w-1/3 pr-6 lg:w-fit my-8">
-          <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-14 h-14" alt="">
+          <!-- <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-14 h-14" alt=""> -->
         </div>
-        <p class="leading-relaxed coba w-2/3 lg:w-full text-[12px] lg:text-[16px]">
+        <p class="leading-relaxed w-2/3 lg:w-full text-[12px] lg:text-[16px]">
           Penerbit buku yang mendukung transformasi digital dan telah terintegrasi dengan website.
         </p>
+        <div class="leading-relaxed mt-3 w-2/3 lg:w-full text-[12px] lg:text-[16px]">
+          <p><i class="fa-solid fa-envelope"></i> penuliscerdasindonesia.cs@gmail.com</p>
+          <p><i class="fa-solid fa-location-dot"></i> Jl. Selat Karimata blok E6 No. 1 Sawojajar, Kedungkandang, Malang</p>
+        </div>
       </div>
       <div class="w-full lg:w-1/2 pl-12">
         <div class="w-1/3 pr-6 lg:w-full hidden lg:invisible lg:block my-8">
-          <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-14 h-14 hidden" alt="">
+          <!-- <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-14 h-14 hidden" alt=""> -->
         </div>
         <div class="lg:h-1/2 h-fit flex flex-wrap w-full">
           <div class="grid grid-cols-2 gap-4 items-center w-full lg:w-1/2 py-6">

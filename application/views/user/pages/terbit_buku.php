@@ -1,4 +1,4 @@
-<section class="flex justify-center">
+<section class="flex justify-center pt-16">
     <div class="container">
         <div class="title px-20 max-w-[1400px] text-center my-6 py-6 lg:py-0 mx-auto">
             <?= ($this->session->has_userdata('id_user')) ? '' : '<div class=" w-full flex justify-center"> <p class="rounded-lg bg-red-500 font-bold text-white p-4 my-4 w-fit">Maaf saat ini anda belum bisa mengisi form penerbitan buku, <a class="underline" href="' . site_url('auth') . '">LOGIN</a> terlebih dahulu untuk menerbitkan buku anda</p></div>'; ?>
@@ -91,8 +91,8 @@
                 </div>
             </div>
 
-            <div class="hidden lg:block">
-                <img src="<?= base_url() ?>assets/assets/img/index/bola2.svg" />
+            <div class="hidden lg:block w-2/3">
+                <img class="scale-75" src="<?= base_url() ?>assets/assets/img/index/cs_vector.jpg" />
             </div>
         </div>
         <!-- Akhir Ask More -->

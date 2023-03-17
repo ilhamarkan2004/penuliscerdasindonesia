@@ -279,6 +279,14 @@ $(document).ready(function () {
 									timer: 2000,
 								});
 								$("#paketTable").DataTable().ajax.reload();
+							} else {
+								Swal.fire({
+									// position: 'top-end',
+									icon: "error",
+									text: response.message,
+									showConfirmButton: false,
+									timer: 2000,
+								});
 							}
 						},
 					});

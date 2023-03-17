@@ -152,8 +152,8 @@ class Progress extends CI_Controller
                 'title' => $r['title'],
                 'progress' => $r['status'],
                 'butuh' => $this->statusColorButuh($r['is_cover'], $r['is_kdt']),
-                'upload_at' => date('j M Y', strtotime($r['created_at'])),
-                'update_at' => ($r['update_at'] != null) ? date('j M Y', strtotime($r['update_at'])) : '-',
+                'upload_at' => date('j M Y', strtotime($r['b_created_at'])),
+                'update_at' => ($r['update_at'] != null) ? date('j M Y', strtotime($r['b_update_at'])) : '-',
                 'naskah' => '<button type="button" id="' . $r['id_b'] . '" class="btn btn-success btn-sm edtProgressNaskah">Naskah</button>',
                 'cover' => '<button type="button" id="' . $r['id_b'] . '" class="btn btn-light btn-sm edtProgressCover"><i class="fa-solid fa-image"></i></button>',
                 'action' => '

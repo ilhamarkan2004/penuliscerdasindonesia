@@ -54,5 +54,5 @@
         </ul>
       </div>
       <!-- <a class="list-style-none py-1 px-3 rounded-2 text-white" style="background-color: #D03824; display: inline-block; margin-left: 33px; margin-top: 20px;">Keluar</a> -->
-      <a href="<?= base_url('auth/logout') ?>" class="text-white border-0" style="background-color: #D03824; display: inline-block; border-radius: 12px; padding: 10px; margin-left: 33px; margin-top: 20px; font-size: 14px; font-weight: 400;"><img style="margin-right: 11px;" src="<?= base_url() ?>assets/logo/logout.svg">Keluar</a>
+      <a href="<?= base_url('auth/logout') ?>" class="text-white border-0" style="background-color: #D03824; display: inline-block; border-radius: 12px; padding: 10px; margin-left: 33px; margin-top: 20px; font-size: 14px; font-weight: 400;"><i class="fa-solid fa-power-off"></i> Keluar</a>
     </aside>

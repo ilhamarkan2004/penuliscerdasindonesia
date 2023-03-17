@@ -4,7 +4,7 @@
 <button type="button" class="lg:w-14 w-14" style="position: fixed; right: 40px; bottom: 100px; display: block;" id="wa">
     <img src="<?= base_url() ?>assets/assets/logo/wa.svg" width="60px" alt="">
 </button>
-<div class="text-center lg:text-right lg:flex lg:items-center lg:px-24 lg:pb-24 h-screen">
+<div class="text-center lg:text-right lg:flex lg:items-center lg:px-24 lg:pb-24 h-screen pt-16 lg:pt-0">
     <div class="lg:text-right lg:w-2/5 ">
         <p class="mt-8 md:text-base lg:text-4xl text-primary-100  md:text-4xl text-2xl font-bold ">
             <!-- <span class="block h-4 bg-primary-300 w-full absolute top-1/2"></span> -->
@@ -21,33 +21,7 @@
 
     <div class="my-container mt-12 lg:w-3/5 w-full ">
         <div class="relative">
-            <img class="w-full bg-contain" src="<?= base_url() ?>assets/assets/image/jumbo_home.png" />
-            <div class="learn absolute top-0 right-0 shadow-md bg-white rounded-lg lg:px-8 lg:py-4 p-2 lg:text-base text-xxs font-medium text-primary-400">
-                Learn what you love
-            </div>
-            <div class="break absolute top-0 left-0 shadow-md bg-white rounded-lg lg:pl-8 lg:pr-14 lg:py-4 p-2 lg:text-base text-xxs font-medium text-primary-400">
-                Break Your Limit!
-            </div>
-            <div class="lg:w-10 lg:h-10 lg:p-2 w-6 h-6 p-1 flex items-center justify-center bg-secondary-100 rounded-full absolute top-24 lg:top-32 lg:left-32 left-6">
-                <svg class="w-full" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 8C19.5 8 18.7 9.4 19.1 10.5L15.5 14.1C15.2 14 14.8 14 14.5 14.1L11.9 11.5C12.3 10.4 11.5 9 10 9C8.6 9 7.7 10.4 8.1 11.5L3.5 16C2.4 15.7 1 16.5 1 18C1 19.1 1.9 20 3 20C4.4 20 5.3 18.6 4.9 17.5L9.4 12.9C9.7 13 10.1 13 10.4 12.9L13 15.5C12.7 16.5 13.5 18 15 18C16.5 18 17.3 16.6 16.9 15.5L20.5 11.9C21.6 12.2 23 11.4 23 10C23 8.9 22.1 8 21 8ZM15 9L15.9 6.9L18 6L15.9 5.1L15 3L14.1 5.1L12 6L14.1 6.9L15 9ZM3.5 11L4 9L6 8.5L4 8L3.5 6L3 8L1 8.5L3 9L3.5 11Z" fill="white" />
-                </svg>
-            </div>
-            <div class="lg:w-10 lg:h-10 lg:p-2 w-6 h-6 p-1 flex items-center justify-center p-2 bg-secondary-100 rounded-full absolute top-2 lg:top-6 lg:left-72 left-28">
-                <svg class="w-full" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 3L1 9L12 15L21 10.09V17H23V9L12 3ZM5 13.18V17.18L12 21L19 17.18V13.18L12 17L5 13.18Z" fill="white" />
-                </svg>
-            </div>
-            <div class="lg:w-10 lg:h-10 lg:p-2 w-6 h-6 p-1 flex items-center justify-center p-2 bg-secondary-100 rounded-full absolute lg:top-6 top-0 right-32 lg:right-80">
-                <svg class="w-full" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 6H20V16H4V6ZM20 18C20.5304 18 21.0391 17.7893 21.4142 17.4142C21.7893 17.0391 22 16.5304 22 16V6C22 4.89 21.1 4 20 4H4C2.89 4 2 4.89 2 6V16C2 16.5304 2.21071 17.0391 2.58579 17.4142C2.96086 17.7893 3.46957 18 4 18H0V20H24V18H20Z" fill="white" />
-                </svg>
-            </div>
-            <div class="lg:w-10 lg:h-10 lg:p-2 w-6 h-6 p-1 flex items-center justify-center p-2 bg-secondary-100 rounded-full absolute top-32 right-12">
-                <svg class="w-full" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 5.5C12.9283 5.5 13.8185 5.86875 14.4749 6.52513C15.1313 7.1815 15.5 8.07174 15.5 9C15.5 9.92826 15.1313 10.8185 14.4749 11.4749C13.8185 12.1313 12.9283 12.5 12 12.5C11.0717 12.5 10.1815 12.1313 9.52513 11.4749C8.86875 10.8185 8.5 9.92826 8.5 9C8.5 8.07174 8.86875 7.1815 9.52513 6.52513C10.1815 5.86875 11.0717 5.5 12 5.5V5.5ZM5 8C5.56 8 6.08 8.15 6.53 8.42C6.38 9.85 6.8 11.27 7.66 12.38C7.16 13.34 6.16 14 5 14C4.20435 14 3.44129 13.6839 2.87868 13.1213C2.31607 12.5587 2 11.7956 2 11C2 10.2044 2.31607 9.44129 2.87868 8.87868C3.44129 8.31607 4.20435 8 5 8V8ZM19 8C19.7956 8 20.5587 8.31607 21.1213 8.87868C21.6839 9.44129 22 10.2044 22 11C22 11.7956 21.6839 12.5587 21.1213 13.1213C20.5587 13.6839 19.7956 14 19 14C17.84 14 16.84 13.34 16.34 12.38C17.2 11.27 17.62 9.85 17.47 8.42C17.92 8.15 18.44 8 19 8ZM5.5 18.25C5.5 16.18 8.41 14.5 12 14.5C15.59 14.5 18.5 16.18 18.5 18.25V20H5.5V18.25ZM0 20V18.5C0 17.11 1.89 15.94 4.45 15.6C3.86 16.28 3.5 17.22 3.5 18.25V20H0ZM24 20H20.5V18.25C20.5 17.22 20.14 16.28 19.55 15.6C22.11 15.94 24 17.11 24 18.5V20Z" fill="white" />
-                </svg>
-            </div>
+            <img class="w-full bg-contain scale-75" src="<?= base_url() ?>assets/assets/img/index/read_book.png" />
         </div>
     </div>
 </div>
@@ -277,108 +251,112 @@
 <!-- akhir saat yang tepat  -->
 
 <!-- SLIDER  -->
-<!-- SECTION TRAINER START -->
-<section id="trainer" class="mt-6 my-container pb-16">
+
+<!-- SECTION TESTI START -->
+<section id="testi" class="mt-6 my-container py-16">
+    <div>
+        <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+            Testimoni
+        </div>
+        <p class="font-bold text-xl md:text-2xl text-center mb-4">
+            Bagaimana menurut mereka ?
+        </p>
+        <p class="text-center">
+            Testimoni setelah menerbitkan buku di Penulis Cerdas Indonesia
+        </p>
+    </div>
     <!-- TAMPILAN WEB -->
-    <div class="slider">
+    <div id="testi" class="slider">
         <div class="card-slider">
+
             <!-- CARD1 -->
             <div class="m-3 shadow-md rounded-[10px] p-3">
-                <div class="w-full flex flex-col-reverse lg:flex-row items-center md:py-24 py-16 lg:py-28 gap-6 md:gap-24 my-container">
-                    <div class="order-1 md:hidden self-start">
-                        <div class="text-secondary-100 bg-secondary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                            Success Story AMD for Corporate
+                <div class="w-full flex justify-center my-5">
+                    <img class="rounded-full h-[114px] w-[114px] bg-primary-100" src="<?= base_url() ?>assets/assets/img/index/default.png" alt="Card image cap" />
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex items-center h-fit min-h-[140px]">
+                        <div class="text-secondaryText text-sm font-normal flex flex-col items-center">
+                            <h5 class="font-semibold text-primaryText">
+                                Nama Lorem
+                            </h5>
+                            <p>Pekerjaan Lorem</p>
+                            <!-- <a target="_blank" href="<?= $tr['linkedin'] ?>"><img class="my-9" src="<?= base_url(); ?>assets/assets/vector/linkedin.svg" alt="" /></a> -->
                         </div>
-                        <p class="font-bold text-2xl mt-3">
-                            Kata Corporate untuk AMD Academy
-                        </p>
-                    </div>
-                    <div class="px-6 md:px-12 xl:px-16 flex flex-col items-start gap-6 flex-grow lg:w-1/3">
-                        <div class="order-1 self-start hidden md:block">
-                            <div class="text-secondary-100 bg-secondary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                                Success Story AMD for Corporate
-                            </div>
-                            <p class="font-bold text-2xl mt-3">
-                                Kata Corporate untuk AMD Academy
-                            </p>
-                        </div>
-                        <div class="flex flex-row gap-4 order-2">
-                            <svg class="w-8" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.0037 8.725L20.0087 8.52375V5H18.7587C15.2787 5 12.6262 5.96375 10.8725 7.865C8.51248 10.425 8.74998 13.7125 8.75748 13.75V23.75C8.75748 24.0815 8.88918 24.3995 9.1236 24.6339C9.35802 24.8683 9.67596 25 10.0075 25H18.7575C20.1362 25 21.2575 23.8788 21.2575 22.5V13.75C21.2575 13.4185 21.1258 13.1005 20.8914 12.8661C20.6569 12.6317 20.339 12.5 20.0075 12.5H14.9087C14.9362 11.9975 15.0625 11.36 15.445 10.755C16.0812 9.75375 17.2775 9.07125 19.0037 8.725V8.725Z" fill="black" />
-                                <path d="M22.8436 6.33337H21.8853C17.9147 6.33337 14.9742 7.43123 13.0523 9.51478L22.8436 6.33337ZM22.8436 6.33337V9.53461L22.0729 9.68894L22.1711 10.1792L22.0728 9.68897C19.9897 10.1068 18.4417 10.9505 17.5972 12.2794L17.5966 12.2803C17.0918 13.0788 16.9296 13.9127 16.8943 14.5561L16.8655 15.0834H17.3936H23.3421C23.5963 15.0834 23.8401 15.1843 24.0198 15.3641C24.1995 15.5438 24.3005 15.7875 24.3005 16.0417V26.25C24.3005 27.5824 23.2162 28.6667 21.8838 28.6667H11.6755C11.4213 28.6667 11.1776 28.5657 10.9978 28.386C10.8181 28.2063 10.7171 27.9625 10.7171 27.7084V16.0417V15.9922L10.7129 15.9712C10.7127 15.9681 10.7125 15.9647 10.7123 15.9608C10.7108 15.9353 10.7089 15.8958 10.7075 15.8434C10.7048 15.7387 10.704 15.5844 10.7114 15.3896C10.7264 14.9996 10.7744 14.4504 10.905 13.8126C11.1664 12.5352 11.7546 10.9224 13.0522 9.51488L22.8436 6.33337ZM10.7147 15.9941C10.7147 15.9944 10.7145 15.9923 10.7141 15.9873C10.7145 15.9914 10.7147 15.9939 10.7147 15.9941Z" stroke="#FF0000" />
-                            </svg>
-                            <div class="flex w-1/2 flex-grow flex-col gap-4">
-                                <p class="text-lg font-semibold">
-                                    RSUP. Tadjuddin Chalid Makassar
-                                </p>
-                                <p>
-                                    “Materi yang diajarkan oleh AMD Academy pada Program
-                                    Corporate Training sangat sesuai dengan kebutuhan Tim kami
-                                    di RSUP dan membantu kami dalam mengimprove skill Tim.”
-                                </p>
-                                <p class="text-sm">
-                                    <span class="font-semibold">Rita</span> <br />
-                                    Kepala Divisi IT RSUP. Tadjuddin Chalid Makassar
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="">
-                        <img src="<?= base_url() ?>assets/assets/img/index/testimonial.png" class="md:rounded-r-none rounded-xl w-full" />
                     </div>
                 </div>
             </div>
-            <!-- CARD2 -->
             <div class="m-3 shadow-md rounded-[10px] p-3">
-                <div class="w-full flex flex-col-reverse lg:flex-row items-center md:py-24 py-16 lg:py-28 gap-6 md:gap-24 my-container">
-                    <div class="order-1 md:hidden self-start">
-                        <div class="text-secondary-100 bg-secondary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                            Success Story AMD for Corporate
+                <div class="w-full flex justify-center my-5">
+                    <img class="rounded-full h-[114px] w-[114px] bg-primary-100" src="<?= base_url() ?>assets/assets/img/index/default.png" alt="Card image cap" />
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex items-center h-fit min-h-[140px]">
+                        <div class="text-secondaryText text-sm font-normal flex flex-col items-center">
+                            <h5 class="font-semibold text-primaryText">
+                                Nama Lorem
+                            </h5>
+                            <p>Pekerjaan Lorem</p>
+                            <p class="mt-1"><b class="text-xl">"</b> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam debitis delectus velit itaque laborum ea nihil aliquam impedit qui natus reprehenderit aperiam eos ratione, voluptatum magni, ducimus quam dolore dolorem?<b class="text-xl">"</b></p>
+                            <!-- <a target="_blank" href="<?= $tr['linkedin'] ?>"><img class="my-9" src="<?= base_url(); ?>assets/assets/vector/linkedin.svg" alt="" /></a> -->
                         </div>
-                        <p class="font-bold text-2xl mt-3">
-                            Kata Corporate untuk AMD Academy
-                        </p>
-                    </div>
-                    <div class="px-6 md:px-12 xl:px-16 flex flex-col items-start gap-6 flex-grow lg:w-1/3">
-                        <div class="order-1 self-start hidden md:block">
-                            <div class="text-secondary-100 bg-secondary-200 rounded px-3 py-2 lg:py-1 text-sm">
-                                Success Story AMD for Corporate
-                            </div>
-                            <p class="font-bold text-2xl mt-3">
-                                Kata Corporate untuk AMD Academy
-                            </p>
-                        </div>
-                        <div class="flex flex-row gap-4 order-2">
-                            <svg class="w-8" width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19.0037 8.725L20.0087 8.52375V5H18.7587C15.2787 5 12.6262 5.96375 10.8725 7.865C8.51248 10.425 8.74998 13.7125 8.75748 13.75V23.75C8.75748 24.0815 8.88918 24.3995 9.1236 24.6339C9.35802 24.8683 9.67596 25 10.0075 25H18.7575C20.1362 25 21.2575 23.8788 21.2575 22.5V13.75C21.2575 13.4185 21.1258 13.1005 20.8914 12.8661C20.6569 12.6317 20.339 12.5 20.0075 12.5H14.9087C14.9362 11.9975 15.0625 11.36 15.445 10.755C16.0812 9.75375 17.2775 9.07125 19.0037 8.725V8.725Z" fill="black" />
-                                <path d="M22.8436 6.33337H21.8853C17.9147 6.33337 14.9742 7.43123 13.0523 9.51478L22.8436 6.33337ZM22.8436 6.33337V9.53461L22.0729 9.68894L22.1711 10.1792L22.0728 9.68897C19.9897 10.1068 18.4417 10.9505 17.5972 12.2794L17.5966 12.2803C17.0918 13.0788 16.9296 13.9127 16.8943 14.5561L16.8655 15.0834H17.3936H23.3421C23.5963 15.0834 23.8401 15.1843 24.0198 15.3641C24.1995 15.5438 24.3005 15.7875 24.3005 16.0417V26.25C24.3005 27.5824 23.2162 28.6667 21.8838 28.6667H11.6755C11.4213 28.6667 11.1776 28.5657 10.9978 28.386C10.8181 28.2063 10.7171 27.9625 10.7171 27.7084V16.0417V15.9922L10.7129 15.9712C10.7127 15.9681 10.7125 15.9647 10.7123 15.9608C10.7108 15.9353 10.7089 15.8958 10.7075 15.8434C10.7048 15.7387 10.704 15.5844 10.7114 15.3896C10.7264 14.9996 10.7744 14.4504 10.905 13.8126C11.1664 12.5352 11.7546 10.9224 13.0522 9.51488L22.8436 6.33337ZM10.7147 15.9941C10.7147 15.9944 10.7145 15.9923 10.7141 15.9873C10.7145 15.9914 10.7147 15.9939 10.7147 15.9941Z" stroke="#FF0000" />
-                            </svg>
-                            <div class="flex w-1/2 flex-grow flex-col gap-4">
-                                <p class="text-lg font-semibold">
-                                    RSUP. Tadjuddin Chalid Makassar
-                                </p>
-                                <p>
-                                    “Materi yang diajarkan oleh AMD Academy pada program
-                                    Corporate Training sangat sesuai dengan kebutuhan Tim kami
-                                    di RSUP dan membantu kami dalam mengimprove skill Tim.”
-                                </p>
-                                <p class="text-sm">
-                                    <span class="font-semibold">Rita</span> <br />
-                                    Divisi IT RSUP. Tadjuddin Chalid Makassar
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="">
-                        <img src="<?= base_url() ?>assets/assets/img/index/testimonial.png" class="md:rounded-r-none rounded-xl w-full" />
                     </div>
                 </div>
             </div>
+            <div class="m-3 shadow-md rounded-[10px] p-3">
+                <div class="w-full flex justify-center my-5">
+                    <img class="rounded-full h-[114px] w-[114px] bg-primary-100" src="<?= base_url() ?>assets/assets/img/index/default.png" alt="Card image cap" />
+                </div>
+                <div class="flex justify-center">
+                    <div class="flex items-center h-fit min-h-[140px]">
+                        <div class="text-secondaryText text-sm font-normal flex flex-col items-center">
+                            <h5 class="font-semibold text-primaryText">
+                                Nama Lorem
+                            </h5>
+                            <p>Pekerjaan Lorem</p>
+                            <!-- <a target="_blank" href="<?= $tr['linkedin'] ?>"><img class="my-9" src="<?= base_url(); ?>assets/assets/vector/linkedin.svg" alt="" /></a> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </section>
-<!-- SECTION TRAINER END -->
+<!-- SECTION TESTI END -->
 <!-- Akhir Slider -->
+
+<!-- SECTION MITRA START -->
+<section id="mitra" class="mt-6 my-container py-16">
+    <div>
+        <div class=" w-fit mb-6 md:mb-4 mx-auto rounded px-3 py-2 lg:py-1 text-sm" style="background-color: #ffdeae; color: #f59300;">
+            Kolaborator
+        </div>
+        <p class="font-bold text-xl md:text-2xl text-center mb-4">
+            Mitra & Kolaborator kami
+        </p>
+        <p class="text-center">
+            Beberapa mitra dan kolaborator dari Penulis Cerdas Indonesia
+        </p>
+    </div>
+    <!-- TAMPILAN WEB -->
+    <div id="mitra" class="slider">
+        <div class="card-slider">
+
+            <?php
+            $arr = ['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png', '11.png', '12.png'];
+            foreach ($arr as $a) : ?>
+                <div class="m-3 shadow-md rounded-[10px] p-3">
+                    <div class="w-full flex justify-center my-5">
+                        <img class=" h-[90px] w-[90px] lg:w-[114px] lg:h-[114px] bg-white" src="<?= base_url() ?>assets/assets/mitra/<?= $a ?>" alt="Card image cap" />
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+<!-- SECTION MITRA END -->
 
 <!-- Frequently Asked Question -->
 <div class="my-container flex flex-col lg:flex-col lg:flex-row items-center md:py-24 py-16 gap-6 lg:gap-24">
@@ -399,7 +377,7 @@
             <div class="justify-center flex flex-wrap w-full h-full px-0 lg:pl-0 py-0">
                 <!-- gambar start -->
                 <div class="w-full lg:w-2/5 scale-85 relative lg:scale-100">
-                    <img src="<?= base_url() ?>assets/assets/img/index/bola3.svg" alt="greeen_circle" class="hidden lg:block w-full" />
+                    <img class="scale-110" src="<?= base_url() ?>assets/assets/img/index/information.png" />
                 </div>
                 <!-- gambar end -->
 
@@ -545,8 +523,8 @@
         </div>
     </div>
 
-    <div class="hidden lg:block">
-        <img src="<?= base_url() ?>assets/assets/img/index/bola2.svg" />
+    <div class="hidden lg:block w-2/3">
+        <img class="scale-75" src="<?= base_url() ?>assets/assets/img/index/cs_vector.jpg" />
     </div>
 </div>
 <!-- Akhir Ask More -->

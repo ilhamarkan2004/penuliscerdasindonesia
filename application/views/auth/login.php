@@ -83,7 +83,7 @@
 
 
 
-<div class=" flex justify-center">
+<div class=" flex justify-center pt-16">
   <div class="main flex container flex justify-center py-16 px-9 md:px-16">
 
     <div class="mx-auto border border-2 rounded-lg w-full lg:w-1/3 p-9">
@@ -109,7 +109,7 @@
       <?php endif; ?>
       <div class="p-5">
 
-        <p style="font-size: 21px;">Selamat datang di <br> <a href="<?= base_url() ?>" style="color: #1089C0; font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p>
+        <p style="font-size: 21px;">Selamat datang di <br> <a class="text-primary-100" href="<?= base_url() ?>" style=" font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p>
         <h2 style="font-size: 55px; font-weight: 500; margin-bottom: 35px;">Login</h2>
 
         <form id="f_login">
@@ -127,7 +127,7 @@
           <a href="<?= base_url('auth/forgot') ?>" class="d-block my-1 ms-auto text-end" style="font-size: 13px; text-decoration: none;">Forgot Password?</a>
         </form>
 
-        <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-[#1089C0] hover:bg-sky-700" type="button" id="btnLogin" name="btnLogin">Login</button>
+        <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700" type="button" id="btnLogin" name="btnLogin">Login</button>
         <p class="text-center text-[13px] text-[#808080] mt-3">Belum punya akun? <a class="text-[#4285F4]" id="" href="<?= base_url('auth/registrasi') ?>">Daftar</a></p>
       </div>
 

@@ -56,8 +56,8 @@ class Auth extends RestController
                     'message' => [
                         'title' => 'Gagal login',
                         'text' => 'Kolom email atau password harap dilengkapi',
-                        'icon' => 'error'
-                    ]
+                    ],
+                    'data' => []
                 ],
                 RestController::HTTP_BAD_REQUEST
             );
@@ -85,14 +85,14 @@ class Auth extends RestController
 
 
                     //set session
-                    $this->session->set_userdata('id', $user['uuid']);
+                    $this->session->set_userdata('id_user', $user['uuid']);
                     $output = [
                         'success' => true,
                         'message' => [
                             'title' => 'Berhasil login',
-                            'text' => '',
-                            'icon' => 'success'
+                            'text' => 'Berhasil login',
                         ],
+                        'data' => []
                     ];
                     $this->response($output, 200);
                 } else {
@@ -101,8 +101,8 @@ class Auth extends RestController
                         'message' => [
                             'title' => 'Gagal login',
                             'text' => 'Pastikan email atau password anda benar',
-                            'icon' => 'error'
-                        ]
+                        ],
+                        'data' => []
                     ],  RestController::HTTP_BAD_REQUEST);
                     die;
                 }
@@ -112,8 +112,8 @@ class Auth extends RestController
                     'message' => [
                         'title' => 'Gagal login',
                         'text' => 'Status pengguna belum aktif',
-                        'icon' => 'error'
-                    ]
+                    ],
+                    'data' => []
                 ],  RestController::HTTP_BAD_REQUEST);
                 die;
             }
@@ -123,8 +123,8 @@ class Auth extends RestController
                 'message' => [
                     'title' => 'Gagal login',
                     'text' => 'Pastikan email atau password anda benar',
-                    'icon' => 'error'
-                ]
+                ],
+                'data' => []
             ],  RestController::HTTP_BAD_REQUEST);
             die;
         }
@@ -177,6 +177,9 @@ class Auth extends RestController
             $result = [
                 'success' => false,
                 'message' => [
+                    'text' => 'Kesalahan inputan'
+                ],
+                'data' => [
                     'nama' => strip_tags(form_error('nama')),
                     'email' => strip_tags(form_error('email')),
                     'nohp' => strip_tags(form_error('nohp')),
@@ -190,6 +193,9 @@ class Auth extends RestController
             $result = [
                 'success' => false,
                 'message' => [
+                    'text' => 'Kesalahan inputan'
+                ],
+                'data' => [
                     'nohp' => 'Nomor telepon telah digunakan',
                 ]
             ];
@@ -199,7 +205,10 @@ class Auth extends RestController
             $result = [
                 'success' => false,
                 'message' => [
-                    'nohp' => 'Nomor HP maksimal 13 karakter dan minimal 8 karakter',
+                    'text' => 'Kesalahan inputan'
+                ],
+                'data' => [
+                    'nohp' => 'Nomor HP maksimal 12 karakter dan minimal 8 karakter',
                 ]
             ];
             $this->response($result, RestController::HTTP_BAD_REQUEST);
@@ -282,14 +291,20 @@ class Auth extends RestController
                 if ($prosesEmail['success']) {
                     $result = [
                         'success' => true,
-                        'message' => 'Selamat! Pendaftaran akun berhasil. Silahkan Login!'
+                        'message' => [
+                            'text' => 'Selamat! Pendaftaran akun berhasil. Silahkan Login!'
+                        ],
+                        'data' => []
                     ];
                     $this->response($result, 200);
                     die;
                 } else {
                     $result = [
                         'success' => false,
-                        'message' => 'Terjadi kesalahan saat pengiriman email. Mohon hubungi admin untuk aktivasi akun'
+                        'message' => [
+                            'text' => 'Terjadi kesalahan saat pengiriman email. Mohon hubungi admin untuk aktivasi akun'
+                        ],
+                        'data' => []
                     ];
                     $this->response($result, RestController::HTTP_INTERNAL_ERROR);
                     die;

@@ -1,3 +1,25 @@
+<style>
+    #progress-bar1 {
+        background-color: #12CC1A;
+        color: #FFFFFF;
+        width: 0%;
+        -webkit-transition: width .3s;
+        -moz-transition: width .3s;
+        transition: width .3s;
+        border-radius: 5px;
+    }
+
+    #progress-bar2 {
+        background-color: #12CC1A;
+        color: #FFFFFF;
+        width: 0%;
+        -webkit-transition: width .3s;
+        -moz-transition: width .3s;
+        transition: width .3s;
+        border-radius: 5px;
+    }
+</style>
+
 <!-- Modal Data Progress -->
 <div class="modal fade" id="ProgressModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -92,6 +114,10 @@
                     </div>
 
             </div>
+            <div id="progress-div">
+                <div id="progress-bar1"></div>
+            </div>
+            <div id="loader-icon1" style="display:none;"><img src="LoaderIcon.gif"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 <button type="submit" id="" class="btn btn-primary aksiProgressCover">Tambah</button>
@@ -124,6 +150,10 @@
                     </div>
 
             </div>
+            <div id="progress-div">
+                <div id="progress-bar2"></div>
+            </div>
+            <div id="loader-icon2" style="display:none;"><img src="LoaderIcon.gif"></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
                 <button type="submit" id="" class="btn btn-primary aksiProgressNaskah">Tambah</button>

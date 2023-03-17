@@ -16,6 +16,9 @@ class Auth extends CI_Controller
     //Show View
     public function index()
     {
+        if ($this->session->has_userdata('id_user')) {
+            redirect('dashboard');
+        }
         $data['title'] = 'Login';
         $data['event'] = $this->m_event->getEventType();
         viewUser($this, 'auth/login', $data);
@@ -23,6 +26,9 @@ class Auth extends CI_Controller
 
     public function registrasi()
     {
+        if ($this->session->has_userdata('id_user')) {
+            redirect('dashboard');
+        }
         $data['title'] = 'Registrasi';
         $data['event'] = $this->m_event->getEventType();
         viewUser($this, 'auth/register', $data);

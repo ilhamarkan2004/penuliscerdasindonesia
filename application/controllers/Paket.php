@@ -352,6 +352,11 @@ class Paket extends CI_Controller
                 'success' => false,
                 'message' => 'data tidak ditemukan'
             ];
+        } else if ($this->m_paket->getHargaPaket($this->input->post()['id'])->num_rows() != 0) {
+            $array = [
+                'success' => false,
+                'message' => 'Pastikan harga-harga paket sudah kosong'
+            ];
         } else {
             $id_paket = $this->input->post()['id'];
             $proses = $this->m_paket->deletePaket($id_paket);

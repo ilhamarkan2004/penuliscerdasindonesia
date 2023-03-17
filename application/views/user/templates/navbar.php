@@ -1,5 +1,5 @@
 <body>
-  <nav id="nav" class="relative z-50 w-full top-0 left-0">
+  <nav id="nav" class="relative z-50 w-full top-0 left-0 border" style="position: fixed; background-color: rgba(255, 255, 255, 0.9);">
     <div class=" w-full text-white">
 
       <div class="absolute z-50 shadow-md ml-0 md:ml-20 md:top-0 shadow-primary-100 rounded-b-xl bg-white p-4 lg:p-4">

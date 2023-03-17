@@ -4081,6 +4081,10 @@ textarea.form-control.is-invalid {
 	height: 114px;
 }
 
+.h-\[90px\] {
+	height: 90px;
+}
+
 .h-\[197px\] {
 	height: 197px;
 }
@@ -4186,8 +4190,16 @@ textarea.form-control.is-invalid {
 	width: 114px;
 }
 
+.w-\[90px\] {
+	width: 90px;
+}
+
 .min-w-\[360px\] {
 	min-width: 360px;
+}
+
+.min-h-\[140px\] {
+	min-height: 140px;
 }
 
 .min-w-\[260px\] {
@@ -4215,6 +4227,14 @@ textarea.form-control.is-invalid {
 .scale-75 {
 	--tw-scale-x: 0.75;
 	--tw-scale-y: 0.75;
+	transform: translate(var(--tw-translate-x), var(--tw-translate-y))
+		rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
+		scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.scale-110 {
+	--tw-scale-x: 1.1;
+	--tw-scale-y: 1.1;
 	transform: translate(var(--tw-translate-x), var(--tw-translate-y))
 		rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y))
 		scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -4771,6 +4791,10 @@ textarea.form-control.is-invalid {
 	padding-top: 2.5rem;
 }
 
+.pt-16 {
+	padding-top: 4rem;
+}
+
 .pb-16 {
 	padding-bottom: 4rem;
 }
@@ -5021,6 +5045,10 @@ textarea.form-control.is-invalid {
 
 .opacity-0 {
 	opacity: 0;
+}
+
+.opacity-70 {
+	opacity: 70;
 }
 
 .shadow-md {
@@ -5532,6 +5560,14 @@ textarea.form-control.is-invalid {
 		height: 50%;
 	}
 
+	.lg\:h-\[114px\] {
+		height: 114px;
+	}
+
+	.lg\:w-\[114px\] {
+		width: 114px;
+	}
+
 	.lg\:w-auto {
 		width: auto;
 	}
@@ -5701,6 +5737,10 @@ textarea.form-control.is-invalid {
 
 	.lg\:pt-28 {
 		padding-top: 7rem;
+	}
+
+	.lg\:pt-0 {
+		padding-top: 0rem;
 	}
 
 	.lg\:pb-0 {

@@ -11,7 +11,7 @@
 </style>
 
 <script src="https://cdn.tailwindcss.com"></script>
-<section class="flex justify-center">
+<section class="flex justify-center pt-16">
     <div class="container min-w-[360px]">
         <div class="flex flex-wrap w-full h-full px-9 lg:px-16 py-16">
             <div class="w-full lg:w-2/5 flex justify-center p-10">

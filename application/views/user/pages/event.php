@@ -1,4 +1,4 @@
-<div class="container my-12 mx-auto px-4 md:px-12">
+<div class="container my-12 mx-auto px-4 md:px-12 pt-16">
 
     <div class="p-3">
         <h1 class="text-4xl font-bold mt"><?= $eventDetail['name_type'] ?></h1>

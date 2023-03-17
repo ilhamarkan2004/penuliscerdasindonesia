@@ -82,7 +82,7 @@
 
 
 
-<div class=" flex justify-center">
+<div class=" flex justify-center pt-16">
     <div class="main flex container flex justify-center py-16 px-9 md:px-16">
 
         <div class="mx-auto border border-2 rounded-lg w-full lg:w-1/3 p-9">

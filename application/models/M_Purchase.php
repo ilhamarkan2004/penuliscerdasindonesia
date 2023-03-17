@@ -4,14 +4,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_Purchase extends CI_Model
 {
     private $t_bp = 'book_purchase';
+    private $t_bpi = 'book_purchase_item';
     private $t_bs = 'book_sell';
     private $t_bc = 'book_contributors';
     private $t_books = 'books';
 
     public function getCountPurhase($id_book)
     {
-        $this->db->select('id')
-            ->from($this->t_bp)
+        $this->db->select('bp_order_id')
+            ->from($this->t_bpi)
             ->where(['book_id' => $id_book]);
         return $this->db->get()->num_rows();
     }
