@@ -65,6 +65,8 @@ class Pci extends CI_Controller
         // die;
         $idUserLogin = $this->m_auth->getIdUserFromUUID($this->session->userdata('id_user'))['id'];
         $param['user_id'] = $idUserLogin;
+        $admin = $this->m_auth->getAdmin()->row_array();
+        $emailAdmin = array(0 => $admin['email']);
 
         $rules = [
             [
@@ -87,6 +89,19 @@ class Pci extends CI_Controller
 
         $this->form_validation->set_rules($rules);
 
+        if (count($param['editor']) == 1 && trim($param['editor'][0]) == '') {
+            $param['editor'] = array_replace($param['editor'], $emailAdmin);
+        }
+        if (count($param['designer']) == 1 && trim($param['designer'][0]) == '') {
+            $param['designer'] = array_replace($param['designer'], $emailAdmin);
+        }
+        if (count($param['tata_letak']) == 1 && trim($param['tata_letak'][0]) == '') {
+            $param['tata_letak'] = array_replace($param['designer'], $emailAdmin);
+        }
+
+        // var_dump($param['editor']);
+        // var_dump($emailAdmin);
+        // die;
         if ($this->form_validation->run() == false) {
             $message = [
                 'success' => false,
@@ -401,6 +416,7 @@ class Pci extends CI_Controller
                 $result = false;
             }
         }
+
         foreach ($arrEditor as $editor) {
             $proses = $this->m_auth->cekEmail($editor);
             if ($proses == 0) {

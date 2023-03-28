@@ -131,14 +131,14 @@
                     <small id="passConf_err" class="text-danger"></small>
                 </form>
 
-                <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-[#1089C0] hover:bg-sky-700" type="button" id="btnChangePass" name="btnChangePass">Login</button>
+                <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700" type="button" id="btnChangePass" name="btnChangePass">Ubah !</button>
             </div>
 
         </div>
     </div>
 </div>
 
-<script src="assets/boottrap/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="assets/boottrap/js/bootstrap.bundle.min.js"></script> -->
 
 
 <script>

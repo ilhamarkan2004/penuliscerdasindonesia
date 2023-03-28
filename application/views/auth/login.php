@@ -86,7 +86,7 @@
 <div class=" flex justify-center pt-16">
   <div class="main flex container flex justify-center py-16 px-9 md:px-16">
 
-    <div class="mx-auto border border-2 rounded-lg w-full lg:w-1/3 p-9">
+    <div class="mx-auto rounded-lg w-full lg:w-1/3 p-9">
       <?php if ($this->session->flashdata('message_success')) : ?>
         <label>
           <input type="checkbox" class="alertCheckbox" autocomplete="off" />
@@ -109,33 +109,41 @@
       <?php endif; ?>
       <div class="p-5">
 
-        <p style="font-size: 21px;">Selamat datang di <br> <a class="text-primary-100" href="<?= base_url() ?>" style=" font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p>
-        <h2 style="font-size: 55px; font-weight: 500; margin-bottom: 35px;">Login</h2>
+        <div class="flex justify-center">
+          <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-20" alt="">
+        </div>
+        <p class="my-6 text-center" style="font-size: 16px;">Selamat datang di <br> <a class="text-primary-100" href="<?= base_url() ?>" style=" font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p>
 
         <form id="f_login">
-          <label for="email" class="form-label">Email</label>
-          <input type="text" class="block w-full border border-1 border-gray-300 rounded-lg text-[14px] px-3 py-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500" id="email" name="email" placeholder="Masukkan Email">
+          <div class="mb-6">
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+            <input type="text" name="email" id="email" class="w-full py-3 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block focus:outline-none focus:ring-blue-500 focus:border-blue-500  p-2.5" placeholder="example@gmail.com">
+            <small id="email_err" class="text-danger"></small>
+          </div>
           <small id="emailError" class="text-danger"></small>
-          <label for="password" class="mt-4"> Password</label>
-          <div class="flex mt-2">
-            <input type="password" class="block w-full border border-1 text-[14px] border-gray-300 rounded-bl-lg rounded-tl-lg py-3 px-3 block focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="password" id="password" placeholder="Masukkan Password" />
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900"> Password</label>
+          <div class="input-group flex">
+            <input type="password" id="password" name="password" class=" w-full border border-1 border-gray-300 rounded-bl-lg text-sm rounded-tl-lg py-3 px-3 block focus:outline-none focus:ring-blue-500 focus:border-blue-500" name="password" id="password" placeholder="Masukkan Password" />
             <button class="border px-2 rounded-tr-lg rounded-br-lg border-[#ADADAD] block" type="button" id="btnPw" onclick="change()">
               <i class="fa fa-eye fa-lg"></i>
             </button>
           </div>
-          <small id="passError" class="text-danger"></small>
-          <a href="<?= base_url('auth/forgot') ?>" class="d-block my-1 ms-auto text-end" style="font-size: 13px; text-decoration: none;">Forgot Password?</a>
-        </form>
-
-        <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700" type="button" id="btnLogin" name="btnLogin">Login</button>
-        <p class="text-center text-[13px] text-[#808080] mt-3">Belum punya akun? <a class="text-[#4285F4]" id="" href="<?= base_url('auth/registrasi') ?>">Daftar</a></p>
       </div>
+      <small id="passError" class="text-danger"></small>
+      <div class="my-6">
+        <a href="<?= base_url('auth/forgot') ?>" class="d-block  ms-auto text-end" style="font-size: 12px; text-decoration: none; margin-top: 120px;">Forgot Password?</a>
+      </div>
+      </form>
 
+      <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700" type="button" id="btnLogin" name="btnLogin">Login</button>
+      <p style="font-size: 12px;" class="text-center text-[#808080] mt-3">Belum punya akun? <a class="text-primary-100" id="" href="<?= base_url('auth/registrasi') ?>">Daftar</a></p>
     </div>
+
   </div>
 </div>
+</div>
 
-<script src="assets/boottrap/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="assets/boottrap/js/bootstrap.bundle.min.js"></script> -->
 
 
 

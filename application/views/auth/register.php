@@ -14,10 +14,13 @@
                     <img src="<?= base_url() ?>assets/assets/img/login/jum.svg" alt="">
                 </div>
             </div> -->
-        <div class="mx-auto border border-2 rounded-lg w-full lg:w-1/3 p-9">
+        <div class="mx-auto rounded-lg w-full lg:w-1/3 p-9">
             <div class="p-5">
-                <p class="text-primary-100" style="font-size: 21px;">Selamat datang di <br> <a href="<?= base_url() ?>" style=" font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p>
-                <h2 style="font-size: 55px; font-weight: 500; margin-bottom: 35px;">Register</h2>
+                <div class="flex justify-center">
+                    <img src="<?= base_url('assets/assets/logo/logo.jpeg') ?>" class="w-20" alt="">
+                </div>
+                <!-- <p class="text-primary-100" style="font-size: 21px;">Selamat datang di <br> <a href="<?= base_url() ?>" style=" font-weight: 600; text-decoration: none;">Penulis Cerdas Indonesia</a></p> -->
+                <h2 class="text-center" style="font-size: 25px; font-weight: 500; margin-bottom: 35px;">Register</h2>
 
                 <form action="" method="POST" id="formRegist">
                     <div class="mb-6">
@@ -74,7 +77,7 @@
                 <div class="mt-2">
                     <button class="text-white w-full rounded-lg py-3 px-3 mt-4 bg-primary-100" id="register" type="button">Buat Akun</button>
                 </div>
-                <p class="text-center text-[13px] text-[#808080] mt-5">Sudah punya akun? <a class="text-[#4285F4]" id="" href="<?= base_url('auth') ?>">Login</a></p>
+                <p class="text-center text-[13px] text-[#808080] mt-5">Sudah punya akun? <a class="text-primary-100" id="" href="<?= base_url('auth') ?>">Login</a></p>
             </div>
         </div>
     </div>

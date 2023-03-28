@@ -9,7 +9,7 @@ class M_Event extends CI_Model
 
     public function getEvents($event_id = null, $inisial = null, $is_active = null)
     {
-        $this->db->select('*, event_type.id as et_id, events.id as e_id')
+        $this->db->select('*, event_type.id as et_id, events.id as e_id, events.desc as e_desc')
             ->from($this->t_events)
             ->join($this->t_et, 'event_type.id = events.event_type_id');
         if ($event_id != null) {

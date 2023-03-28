@@ -67,8 +67,8 @@ $(document).ready(function () {
 						var textEncode = encodeURI(
 							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari pendaftaran buku saya.`
 						);
-						window.location = `https://wa.me/${hp}?text=${textEncode}`;
-						// window.location.href = "dashboard";
+						// window.open(`https://wa.me/${hp}?text=${textEncode}`, "_blank");
+						window.location.href = "dashboard";
 					});
 				} else {
 					$("#progress-bar").width("0%");

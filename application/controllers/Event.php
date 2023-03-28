@@ -68,7 +68,7 @@ class Event extends CI_Controller
                 'no' => $key + 1,
                 'event_type' => $r['name_type'],
                 'event_name' => '<a class="text-bold" href="' . base_url() . $r['link'] . '">' . $r['event_name'] . '</a>',
-                'desc' => $this->textLimit($r['desc']),
+                'desc' => $this->textLimit($r['e_desc']),
                 'date' => $r['start_regist'] . ' - ' . $r['end_regist'],
                 'is_active' => $this->textStatus($r['status']),
                 'action' => '

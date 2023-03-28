@@ -120,7 +120,7 @@
                             </div>
                             <small id="kertasErr" class="text-red-500"></small>
                             <input type="text" id="id_kertas" name="id_kertas" value="" hidden>
-                            <small style="font-size: x-small ;">( Klik salah satu untuk memilih ukuran kertas )</small>
+                            <!-- <small style="font-size: x-small ;">( Klik salah satu untuk memilih ukuran kertas )</small> -->
                         </label>
 
                         <label class="block mb-7">
@@ -136,7 +136,7 @@
                             </div>
                             <small id="typeErr" class="text-red-500"></small>
                             <input type="hidden" id="id_jk" name="id_jk" value="">
-                            <small style="font-size: x-small ;">( Klik salah satu untuk memilih jenis kertas )</small>
+                            <!-- <small style="font-size: x-small ;">( Klik salah satu untuk memilih jenis kertas )</small> -->
                         </label>
 
                         <label class="block mb-7">
@@ -144,6 +144,7 @@
                                 Upload Naskah
                             </span>
                             <input type="file" id="berkas" name="berkas" class="block w-full text-sm text-slate-500  file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-500 file:text-green-50 hover:file:bg-green-600" />
+                            <small style="font-size: x-small ;">Format file yang dapat diupload adalah pdf, doc, docx, ppt, dan pptx</small>
                             <small id="berkasErr" class="text-red-500"></small>
                         </label>
                         <!-- ================== DESAIN COVER ========================== -->
@@ -196,7 +197,7 @@
                         <div id="list_writer mt-7">
                             <!-- per Nomor -->
                             <div id="per_writer" class="flex items-end w-full mt-6">
-                                <label class="block mb-2 w-full pr-2">
+                                <div class="block mb-2 w-full pr-2">
                                     <div class="flex items-center justify-between">
                                         <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 block pr-2">
                                             Penulis
@@ -214,7 +215,7 @@
                                                 </svg> -->
                                         </div>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div id="d_writer">
 
@@ -224,9 +225,9 @@
                         <div id="list_editor">
                             <!-- per Nomor -->
                             <div id="per_editor" class="flex items-end w-full mt-6">
-                                <label class="block mb-2 w-full pr-2">
+                                <div class="block mb-2 w-full pr-2">
                                     <div class="flex items-center justify-between">
-                                        <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 block pr-2">
+                                        <span class=" block text-sm font-medium text-slate-700 block pr-2">
                                             Editor
                                         </span>
                                         <button id="add_editor" class="bg-green-500 rounded-xl text-white py-2 px-3">
@@ -241,7 +242,7 @@
                                                 </svg> -->
                                         </div>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div id="d_editor">
 
@@ -251,9 +252,9 @@
                         <div id="list_designer">
                             <!-- per Nomor -->
                             <div id="per_designer" class="flex items-end w-full mt-6">
-                                <label class="block mb-2 w-full pr-2">
+                                <div class="block mb-2 w-full pr-2">
                                     <div class="flex items-center justify-between">
-                                        <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 block pr-2">
+                                        <span class=" block text-sm font-medium text-slate-700 block pr-2">
                                             Desain Cover
                                         </span>
                                         <small id="designerErr" class="text-red-500"></small>
@@ -269,7 +270,7 @@
                                                 </svg> -->
                                         </div>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div id="d_designer">
 
@@ -279,9 +280,9 @@
                         <div id="list_tata_letak">
                             <!-- per Nomor -->
                             <div id="per_tata_letak" class="flex items-end w-full mt-6">
-                                <label class="block mb-2 w-full pr-2">
+                                <div class="block mb-2 w-full pr-2">
                                     <div class="flex items-center justify-between">
-                                        <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-700 block pr-2">
+                                        <span class=" block text-sm font-medium text-slate-700 block pr-2">
                                             Tata Letak
                                         </span>
                                         <button id="add_tata_letak" class="bg-green-500 rounded-xl text-white py-2 px-3">
@@ -296,7 +297,7 @@
                                                 </svg> -->
                                         </div>
                                     </div>
-                                </label>
+                                </div>
                             </div>
                             <div id="d_tata_letak">
 
@@ -322,7 +323,7 @@
                         <span class=" block text-sm font-medium text-slate-700">
                             Alamat pengiriman
                         </span>
-                        <div class="flex flex-wrap mt-1 pt-2">
+                        <div class="flex flex-wrap mt-1 pt-2 gap-4">
                             <label class="block mb-7 text-sm font-medium text-slate-700">Provinsi
                                 <select id="prov_id" name="provinsi_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
                                     <?php

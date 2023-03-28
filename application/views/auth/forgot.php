@@ -115,7 +115,7 @@
                         <small id="emailError" class="text-danger"></small>
                     </form>
 
-                    <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-[#1089C0] hover:bg-sky-700 my-3" type="button" id="btnForgot" name="btnForgot">Verifikasi Ubah Password</button>
+                    <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700 my-3" type="button" id="btnForgot" name="btnForgot">Verifikasi Ubah Password</button>
                 </div>
             </div>
 

@@ -21,7 +21,10 @@ class Auth extends CI_Controller
         }
         $data['title'] = 'Login';
         $data['event'] = $this->m_event->getEventType();
-        viewUser($this, 'auth/login', $data);
+        // viewUser($this, 'auth/login', $data);
+        $this->load->view('user/templates/header', $data);
+        $this->load->view('auth/login', $data);
+        $this->load->view('user/templates/footer', $data);
     }
 
     public function registrasi()
@@ -31,7 +34,9 @@ class Auth extends CI_Controller
         }
         $data['title'] = 'Registrasi';
         $data['event'] = $this->m_event->getEventType();
-        viewUser($this, 'auth/register', $data);
+        $this->load->view('user/templates/header', $data);
+        $this->load->view('auth/register', $data);
+        $this->load->view('user/templates/footer', $data);
     }
 
     public function forgot()
@@ -46,7 +51,7 @@ class Auth extends CI_Controller
         if ($token == null) {
             redirect('custom404');
         } else {
-            if ($this->m_auth->cekPassReset(null, $token) == 0) {
+            if ($this->m_auth->cekPassReset(null, $token, 1) == 0) {
                 redirect('custom404');
             } else {
                 $data['token'] = $token;
@@ -77,7 +82,7 @@ class Auth extends CI_Controller
                     'message' => [
                         'icon' => 'error',
                         'title' => 'Tidak aktif',
-                        'text' => 'Akun belum diaktifkan. Cek email dari kami mengenai aktivasi akun'
+                        'text' => 'Akun belum diaktifkan. Cek email dari kami mengenai aktivasi akun ketika pendaftaran'
                     ]
                 ];
             } else {
@@ -87,7 +92,8 @@ class Auth extends CI_Controller
 
                 $data = [
                     'user_id' => $this->m_auth->getIdFromEmail($param['email'])['id'],
-                    'token' => $token
+                    'token' => $token,
+                    'is_active' => 1 // Mengaktifkan token
                 ];
 
                 if ($this->m_auth->cekPassReset($data['user_id']) == 0) {
@@ -112,7 +118,7 @@ class Auth extends CI_Controller
                         </html>
                         ";
 
-                    $proses = sendEmail($this, $param['email'], $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
+                    $proses = sendEmail($param['email'], $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
                     if ($proses['success']) {
                         $result = [
                             'success' => true,
@@ -124,7 +130,7 @@ class Auth extends CI_Controller
                             'message' => [
                                 'icon' => 'error',
                                 'title' => 'Tidak terkirim',
-                                'text' => 'Link untuk mengubah password gagal terkirim. Coba ulangi beberapa saat lagi'
+                                'text' => $proses['message']
                             ]
                         ];
                     }
@@ -158,7 +164,7 @@ class Auth extends CI_Controller
                 ]
             ];
         } else {
-            if ($this->m_auth->cekPassReset(null, $token) == 0) {
+            if ($this->m_auth->cekPassReset(null, $token, 1) == 0) {
                 $result = [
                     'success' => false,
                     'message' => [
@@ -426,11 +432,23 @@ class Auth extends CI_Controller
 						</html>
 						";
 
-                $prosesEmail = sendEmail($this, $this->input->post('email'), $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
-                $result = [
-                    'success' => true,
-                    'message' => 'Selamat! Pendaftaran akun berhasil. Silahkan Login!' . $prosesEmail['success']
-                ];
+
+                $proses = sendEmail($this->input->post('email'), $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
+                if ($proses['success']) {
+                    $result = [
+                        'success' => true,
+                        'message' => 'Selamat! Pendaftaran akun berhasil. Cek email anda untuk aktivasi akun'
+                    ];
+                } else {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'icon' => 'error',
+                            'title' => 'Tidak terkirim',
+                            'text' => $proses['message']
+                        ]
+                    ];
+                }
             } else {
                 $this->db->trans_rollback();
                 $result = [

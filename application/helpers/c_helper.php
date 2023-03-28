@@ -1,5 +1,14 @@
 <?php
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+
+require APPPATH . '/libraries/phpmailer/phpmailer/src/PHPMailer.php';
+require APPPATH . 'libraries/phpmailer/phpmailer/src/Exception.php';
+require APPPATH . 'libraries/phpmailer/phpmailer/src/SMTP.php';
+
 function viewUser($c_name, $content, $data)
 {
     $c_name->load->view('user/templates/header', $data);
@@ -16,99 +25,142 @@ function viewAdmin($c_name, $content, $data)
     $c_name->load->view('admin/templates/footer', $data);
 }
 
-function sendEmail($c_name, $emailto, $message, $subject, $smpt_user, $smpt_pass)
+function sendEmail($emailto, $message, $subject, $smpt_user, $smpt_pass)
 {
 
-    //set up email
-    $config = array(
-        // 'protocol' => 'mail',
-        'charset' => 'utf-8',
-        'protocol' => 'smtp',
-        'smtp_crypto' => 'ssl',
-        'srlf' => "\r\n",
-        'newline' => "\r\n",
-        'smtp_host' => 'smtp.gmail.com',
-        'smtp_port' => 465,
-        'smtp_user' => $smpt_user, // change it to yours
-        'smtp_pass' => $smpt_pass, // change it to yours
-        'mailtype' => 'html',
-        'wordwrap' => TRUE
-    );
+    // Recipient Email Address
+    $to = $emailto;
+    // Email Subject
+    $subject = $subject;
 
-    $c_name->load->library('email', $config);
+    // Gmail SMTP Server Details
+    $smtpHost = "smtp.gmail.com";
+    $smtpPort = 587;
+    $smtpUsername = $smpt_user;
+    $smtpPassword = $smpt_pass;
 
-    // $c_name->email->initialize($config);
-    $c_name->email->set_newline("\r\n");
-    $c_name->email->from($config['smtp_user']);
-    $c_name->email->to($emailto);
-    $c_name->email->subject($subject);
-    $c_name->email->message($message);
+    // Create a new PHPMailer instance
+    $mail = new PHPMailer(true);
 
-    //sending email
-    if ($c_name->email->send()) {
+    try {
+        // Set SMTP options
+        $mail->isSMTP();
+        $mail->Host = $smtpHost;
+        $mail->Port = $smtpPort;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Username = $smtpUsername;
+        $mail->Password = $smtpPassword;
+
+        // Set email content
+        $mail->setFrom($smtpUsername);
+        $mail->addAddress($to);
+        $mail->Subject = $subject;
+        $mail->Body = $message;
+        $mail->AltBody = 'This is the plain text version of the email';
+        $mail->isHTML(true);
+
+        // Send email
+        $mail->send();
         $result = [
             'success' => true,
             'message' => 'Berhasil mengirimkan email'
         ];
-    } else {
+    } catch (Exception $e) {
         $result = [
             'success' => false,
-            'message' => $c_name->email->print_debugger()
+            'message' => "Mailer Error: " . $mail->ErrorInfo
         ];
     }
     return $result;
+
+    // //set up email
+    // $config = array(
+    //     'protocol' => 'smtp',
+    //     'smtp_host' => 'smtp.gmail.com',
+    //     'smtp_port' => 487,
+    //     'smtp_user' => $smpt_user,
+    //     'smtp_pass' => $smpt_pass,
+    //     'mailtype'  => 'html',
+    //     'charset'   => 'iso-8859-1'
+    // );
+
+    // $c_name->load->library('email', $config);
+
+    // // $c_name->email->initialize($config);
+    // $c_name->email->set_newline("\r\n");
+    // $c_name->email->from($config['smtp_user']);
+    // $c_name->email->to($emailto);
+    // $c_name->email->subject($subject);
+    // $c_name->email->message($message);
+
+    // $send = $c_name->email->send();
+
+    // //sending email
+    // if ($send) {
+    //     $result = [
+    //         'success' => true,
+    //         'message' => 'Berhasil mengirimkan email'
+    //     ];
+    // } else {
+    //     $result = [
+    //         'success' => false,
+    //         'message' => $c_name->email->print_debugger()
+    //     ];
+    // }
+    // return $result;
 }
-function sendEmailChangePass($c_name, $email, $password, $uuid, $code, $smpt_user, $smpt_pass)
-{
+// function sendEmailChangePass($c_name, $email, $password, $uuid, $code, $smpt_user, $smpt_pass)
+// {
 
-    //set up email
-    $config = array(
-        'protocol' => 'mail',
-        'smtp_host' => 'smtp.gmail.com',
-        'smtp_port' => 465,
-        'smtp_user' => $smpt_user, // change it to yours
-        'smtp_pass' => $smpt_pass, // change it to yours
-        'mailtype' => 'html',
-        'wordwrap' => TRUE
-    );
+//     //set up email
+//     $config = array(
+//         'protocol' => 'smtp',
+//         'smtp_host' => 'smtp.gmail.com',
+//         'smtp_port' => 487,
+//         'smtp_user' => $smpt_user,
+//         'smtp_pass' => $smpt_pass,
+//         'mailtype'  => 'html',
+//         'charset'   => 'iso-8859-1'
+//     );
 
-    $message =     "
-						<html>
-						<head>
-							<title>Verification Code</title>
-						</head>
-						<body>
-							<h2>Thank you for Registering.</h2>
-							<p>Your Account:</p>
-							<p>Email: " . $email . "</p>
-							<p>Password: " . $password . "</p>
-							<p>Please click the link below to activate your account.</p>
-							<h4><a href='" . base_url() . "auth/activate/" . $uuid . "/" . $code . "'>Activate My Account</a></h4>
-						</body>
-						</html>
-						";
+//     $message =     "
+// 						<html>
+// 						<head>
+// 							<title>Verification Code</title>
+// 						</head>
+// 						<body>
+// 							<h2>Thank you for Registering.</h2>
+// 							<p>Your Account:</p>
+// 							<p>Email: " . $email . "</p>
+// 							<p>Password: " . $password . "</p>
+// 							<p>Please click the link below to activate your account.</p>
+// 							<h4><a href='" . base_url() . "auth/activate/" . $uuid . "/" . $code . "'>Activate My Account</a></h4>
+// 						</body>
+// 						</html>
+// 						";
 
-    $c_name->load->library('email', $config);
-    $c_name->email->set_newline("\r\n");
-    $c_name->email->from($config['smtp_user']);
-    $c_name->email->to($email);
-    $c_name->email->subject('Signup Verification Email');
-    $c_name->email->message($message);
+//     $c_name->load->library('email', $config);
+//     $c_name->email->set_newline("\r\n");
+//     $c_name->email->from($config['smtp_user']);
+//     $c_name->email->to($email);
+//     $c_name->email->subject('Signup Verification Email');
+//     $c_name->email->message($message);
 
-    //sending email
-    if ($c_name->email->send()) {
-        $result = [
-            'success' => true,
-            'message' => 'Berhasil mengirimkan email'
-        ];
-    } else {
-        $result = [
-            'success' => false,
-            'message' => $c_name->email->print_debugger()
-        ];
-    }
-    return $result;
-}
+//     //sending email
+//     if ($c_name->email->send()) {
+//         $result = [
+//             'success' => true,
+//             'message' => 'Berhasil mengirimkan email'
+//         ];
+//     } else {
+//         $result = [
+//             'success' => false,
+//             'message' => $c_name->email->print_debugger()
+//         ];
+//     }
+//     return $result;
+// }
 
 
 function multi_unique_array($arr, $key)

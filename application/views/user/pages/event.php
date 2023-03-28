@@ -22,7 +22,7 @@
 
                     <header class="flex items-center justify-between leading-tight p-2 md:p-4 my-3">
                         <h1 class="text-lg font-bold">
-                            <a class="no-underline hover:underline text-black" href="<?= $bt['link'] ?>">
+                            <a target='_blank' class="no-underline hover:underline text-black" href="<?= $bt['link'] ?>">
                                 <?= $bt['event_name'] ?>
                             </a>
                         </h1>
@@ -33,10 +33,10 @@
 
                     <div class="px-3">
                         <p class="pb-2">
-                            <?= $bt['desc'] ?>
+                            <?= $bt['e_desc'] ?>
                         </p>
                         <footer class="flex items-center justify-between leading-none">
-                            <a class="flex items-center no-underline hover:underline text-black" href="<?= $bt['link'] ?>">
+                            <a target='_blank' class="flex items-center no-underline hover:underline text-black" href="<?= $bt['link'] ?>">
                                 <p class="ml-2 text-sm" style="color: #c4c4c4;">
                                     Pendaftaran mulai dari <?= date('j M Y', strtotime($bt['start_regist']))  ?> - <?= date('j M Y', strtotime($bt['end_regist']))  ?>
                                 </p>

@@ -150,11 +150,17 @@ class M_Auth extends CI_Model
     public function putPass($param)
     {
         $this->db->trans_start();
-        $data = [
+        $data1 = [
             'password' => password_hash($param['newPass'], PASSWORD_DEFAULT)
         ];
         $this->db->where('id', $param['user_id']);
-        $this->db->update('users', $data);
+        $this->db->update('users', $data1);
+
+        $data2 = [
+            'is_active' => '0'
+        ];
+        $this->db->where('user_id', $param['user_id']);
+        $this->db->update('password_resets', $data2);
 
         if ($this->db->trans_status() === FALSE) {
             $this->db->trans_rollback();
@@ -250,7 +256,8 @@ class M_Auth extends CI_Model
     {
         $this->db->trans_start();
         $arr = [
-            'token' => $data['token']
+            'token' => $data['token'],
+            'is_active' => $data['is_active']
         ];
         $this->db->where(['user_id' => $data['user_id']]);
         $this->db->update('password_resets', $arr);
@@ -269,7 +276,7 @@ class M_Auth extends CI_Model
         }
     }
 
-    public function cekPassReset($user_id = null, $token = null)
+    public function cekPassReset($user_id = null, $token = null, $is_active = null)
     {
         $this->db->select('id')
             ->from('password_resets');
@@ -279,12 +286,15 @@ class M_Auth extends CI_Model
         if ($token != null) {
             $this->db->where(['token' => $token]);
         }
+        if ($is_active != null) {
+            $this->db->where(['is_active' => 1]);
+        }
         return $this->db->get()->num_rows();
     }
 
     public function getUserToken($token)
     {
-        $this->db->select('users.id as u_id, users.password, password_resets.token')
+        $this->db->select('users.id as u_id, users.password, password_resets.token, ')
             ->from('password_resets')
             ->join($this->_table, 'password_resets.user_id = users.id')
             ->where(['password_resets.token' => $token]);
@@ -297,5 +307,17 @@ class M_Auth extends CI_Model
             ->from($this->_table)
             ->where(['uuid' => $uuid]);
         return $this->db->get()->row_array();
+    }
+
+    public function getAdmin()
+    {
+        $role_admin = $this->getIDRole('Admin')['id'];
+        $this->db->select('name, email, phone')
+            ->from($this->_table)
+            ->where([
+                'is_active' => '1',
+                'role_id' => $role_admin
+            ]);
+        return $this->db->get();
     }
 }
