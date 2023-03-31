@@ -83,7 +83,7 @@ class Transaksi extends Auth
     // uuid => hrs login dulu biar dapet session berupa uuid user
     // id_order => id order dari pembelian buku
 
-    //Tujuan : Ambil llist buku sesuai id_order
+    //Tujuan : Ambil list buku sesuai id_order
     public function buyBooks_get($id_order = null)
     {
         $param['id_order'] = $id_order;

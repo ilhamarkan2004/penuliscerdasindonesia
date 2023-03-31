@@ -107,10 +107,10 @@ class Book extends Auth
     //Butuh parameter : 
     // comment => Ambil dari inputan
     // rating => Ambil dari inputan 
-    // uuid => Ambil dari url
+    // uuid => Ambil dari url/ inputan
 
     // Butuh session, jadi hrs login dulu
-    public function comment_post()
+    public function postcomment_post()
     {
         // Note : 
         // $param['uuid'] ==> UUID Penjualan Buku
@@ -235,12 +235,22 @@ class Book extends Auth
         }
     }
 
-    public function comment_get()
+    public function getcomment_get($uuid = null)
     {
         //pake uuid book_sell
-        $param = $this->get();
+        $param['uuid'] = $uuid;
         // $param['uuid'] = 'fea9d68f-b3fc-11ed-b26d-f469d5ccb232';
         if (!array_key_exists("uuid", $param)) {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'Identitas buku tidak ditemukan'
+                ],
+                'data' => []
+            ];
+            $this->response($result, RestController::HTTP_BAD_REQUEST);
+            die;
+        } elseif ($param['uuid'] == null) {
             $result = [
                 'success' => false,
                 'message' => [

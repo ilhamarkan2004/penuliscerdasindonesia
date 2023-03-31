@@ -1,4 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
 
 use chriskacerguis\RestServer\RestController;
 
@@ -9,7 +11,7 @@ class Snap extends Auth
 	public function __construct()
 	{
 		parent::__construct();
-		$params = array('server_key' => 'your_server_key', 'production' => false);
+		$params = array('server_key' => 'SB-Mid-server-l1_o-AknBILcvLDM7GO7k9bA', 'production' => false);
 		$this->load->library('midtrans');
 		$this->midtrans->config($params);
 		$this->load->helper('url');
