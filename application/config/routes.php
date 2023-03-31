@@ -55,3 +55,12 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['form'] = 'pci/form';
 $route['terbit'] = 'pci/terbit';
+
+//API
+$route['api/login'] = 'Api/auth/login'; // POST
+$route['api/register'] = 'Api/auth/register'; // POST
+$route['api/book/(:any)'] = 'Api/book/index/$1'; // GET
+$route['api/comment'] = 'Api/book/comment'; //POST & GET
+
+$route['api/transaksi'] = 'Api/transaksi/index'; // GET
+$route['api/buybook/(:any)'] = 'Api/transaksi/buyBooks/$1'; // GET
