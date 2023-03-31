@@ -15,10 +15,12 @@ class Book extends Auth
         $this->load->helper('c_helper');
     }
 
-    public function index_get()
+    //Catatan: 
+    // Kalo mau ambil detail buku perlu nambahin uuid 
+    public function index_get($id = null)
     {
         //ini uuid dari table book_sell
-        $uuid = $this->get('id');
+        $uuid = $id;
         if ($uuid == null) {
             $raw = $this->m_book->getBookSell()->result_array();
         } else {
@@ -101,6 +103,13 @@ class Book extends Auth
         }
     }
 
+
+    //Butuh parameter : 
+    // comment => Ambil dari inputan
+    // rating => Ambil dari inputan 
+    // uuid => Ambil dari url
+
+    // Butuh session, jadi hrs login dulu
     public function comment_post()
     {
         // Note : 

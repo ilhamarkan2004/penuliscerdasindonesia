@@ -13,9 +13,12 @@ class Transaksi extends Auth
         $this->load->helper('c_helper');
     }
 
+    //Butuh : 
+    // uuid => hrs login dulu biar dapet session berupa uuid user
+
+    //Tujuan : Ambil data transaksi dari yg login
     public function index_get()
     {
-
         // $param = $this->get();
         if (!$this->session->has_userdata('id_user')) {
             $result = [
@@ -76,9 +79,14 @@ class Transaksi extends Auth
         }
     }
 
-    public function buyBooks_get()
+    //Butuh : 
+    // uuid => hrs login dulu biar dapet session berupa uuid user
+    // id_order => id order dari pembelian buku
+
+    //Tujuan : Ambil llist buku sesuai id_order
+    public function buyBooks_get($id_order = null)
     {
-        $param = $this->get();
+        $param['id_order'] = $id_order;
         if (!$this->session->has_userdata('id_user')) {
             $result = [
                 'success' => false,
@@ -106,6 +114,16 @@ class Transaksi extends Auth
                 $id_user = $id_user['id'];
 
                 if (!array_key_exists('order_id', $param)) {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'text' => 'id order tidak didapatkan'
+                        ],
+                        'data' => []
+                    ];
+                    $this->response($result, RestController::HTTP_BAD_REQUEST);
+                    die;
+                } elseif (trim($param['order_id']) == null) {
                     $result = [
                         'success' => false,
                         'message' => [
