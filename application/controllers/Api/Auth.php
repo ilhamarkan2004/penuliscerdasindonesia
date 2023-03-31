@@ -44,9 +44,12 @@ class Auth extends RestController
         return $randomString;
     }
 
+    // Butuh Parameter: 
+    // email => ambil dari inputan
+    // password => ambil dari inputan
     public function login_post()
     {
-        $space = '0e!7l8S';
+        // $space = '0e!7l8S';
         $param = $this->post();
 
         if (trim($param['email']) === '' || trim($param['password']) === '') {
@@ -66,8 +69,6 @@ class Auth extends RestController
             $user = $this->m_auth->login($param['email'])->row_array();
             if ($user['is_active'] == 1) {
                 if (password_verify($param['password'], $user['password'])) {
-
-
 
                     // $exp = time() + 360;
                     // $token = array(
@@ -130,6 +131,12 @@ class Auth extends RestController
         }
     }
 
+    // Butuh Parameter: 
+    // nama => ambil dari inputan
+    // email => ambil dari inputan
+    // password => ambil dari inputan
+    // passConf => ambil dari inputan
+    // nohp => ambil dari inputan
     public function regist_post()
     {
         $rules = [
@@ -317,6 +324,32 @@ class Auth extends RestController
                 ];
                 $this->response($result, RestController::HTTP_INTERNAL_ERROR);
             }
+        }
+    }
+
+    public function logout_post()
+    {
+        $proses = $this->m_auth->logout();
+        if ($proses === true) {
+            $result = [
+                'success' => true,
+                'message' => [
+                    'text' => 'Berhasil logout'
+                ],
+                'data' => []
+            ];
+            $this->response($result, 200);
+            die;
+        } else {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'Gagal logout'
+                ],
+                'data' => []
+            ];
+            $this->response($result, RestController::HTTP_INTERNAL_ERROR);
+            die;
         }
     }
 
