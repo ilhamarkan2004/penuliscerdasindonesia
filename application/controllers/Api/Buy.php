@@ -91,7 +91,28 @@ class Buy extends Auth
                     'gross_amount' => $total
                 ];
 
-                $this->m_book->postPurchase($dataPurchase, $listBookId);
+                $proses = $this->m_book->postPurchase($dataPurchase, $listBookId);
+                if ($proses['success']) {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'text' => 'data berhasil ditambahkan'
+                        ],
+                        'data' => []
+                    ];
+                    $this->response($result, RestController::HTTP_OK);
+                    die;
+                } else {
+                    $result = [
+                        'success' => false,
+                        'message' => [
+                            'text' => 'data gagal ditambahkan'
+                        ],
+                        'data' => []
+                    ];
+                    $this->response($result, RestController::HTTP_INTERNAL_ERROR);
+                    die;
+                }
             }
         }
     }
