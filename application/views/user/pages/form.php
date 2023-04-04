@@ -323,9 +323,10 @@
                         <span class=" block text-sm font-medium text-slate-700">
                             Alamat pengiriman
                         </span>
-                        <div class="flex flex-wrap mt-1 pt-2 gap-4">
-                            <label class="block mb-7 text-sm font-medium text-slate-700">Provinsi
-                                <select id="prov_id" name="provinsi_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
+                        <div class="flex-col flex lg:flex-row  mt-1 pt-2 w-full">
+                            <div class="lg:w-1/2 w-full mr-1">
+                                <label class="block mb-7 text-sm font-medium text-slate-700">Provinsi</label>
+                                <select id="prov_id" name="provinsi_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
                                     <?php
                                     // $selected_prov = $data_member['provinsi_id'];
                                     ?>
@@ -336,10 +337,12 @@
 
                                     <?php endforeach; ?>
                                 </select>
-                            </label>
+                            </div>
 
-                            <label class="block mb-7 text-sm font-medium text-slate-700 ">Kabupaten
-                                <select id="kab_id" name="kabupaten_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
+
+                            <div class="lg:w-1/2 w-full ml-1">
+                                <label class="block mb-7 text-sm font-medium text-slate-700 ">Kabupaten</label>
+                                <select id="kab_id" name="kabupaten_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
                                     <?php if (isset($data_member)) : ?>
                                         <?php
                                         // $selected_kab = $data_member['kabupaten_id'];
@@ -352,7 +355,8 @@
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </select>
-                            </label>
+                            </div>
+
                         </div>
                         <label class="block mb-7 text-sm font-medium text-slate-700">
                             <input type="text" id="alamat" name="alamat" class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" placeholder="Masukkan alamat pengiriman hasil cetak" />
@@ -369,7 +373,7 @@
 
 
                         <!-- Metode Pembayaran -->
-                        <div class="min-w-[360px] mt-6">
+                        <div class="text-xs lg:text-base md:text-base mt-6">
                             <!-- <h1 class="h1-section-lp">Pembayaran</h1> -->
                             <div>
                                 <!-- control -->
@@ -383,15 +387,15 @@
                                 </div>
                                 <div class="rounded-lg bg-white rounded-t-lg shadow-[0px_25px_90px_10px_rgba(130,130,130,0.23)] mx-2 py-3 px-3 border-x border-b">
                                     <div class="flex w-full py-1 justify-between">
-                                        <span for="n_program">Pembayaran atas nama </span>
-                                        <span class=""><b><?= $currentUser['name'] ?></b></span>
+                                        <span class="w-1/2" for="n_program">Pembayaran atas nama </span>
+                                        <span class="w-1/2 text-right"><b><?= $currentUser['name'] ?></b></span>
                                     </div>
                                     <div class="flex w-full py-1 justify-between">
-                                        <span for="n_program"><?= $paket['paket_name'] ?> - <span id="ukuran">(Jumlah eksemplar)</span> </span>
-                                        <span class="" id="biaya">Rp. 0,00</span>
+                                        <span class="w-1/2" for="n_program"><?= $paket['paket_name'] ?> - <span id="ukuran">(Jumlah eksemplar)</span> </span>
+                                        <span class="w-1/2 text-right" id="biaya">Rp. 0,00</span>
                                     </div>
                                     <div class="flex w-full py-1 justify-between">
-                                        <span for="n_program">Jumlah pointmu</span>
+                                        <span class="w-1/2" for="n_program">Jumlah pointmu</span>
 
                                         <div class="w-fit h-fit">
                                             <span>- </span>

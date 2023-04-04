@@ -60,8 +60,12 @@ $route['terbit'] = 'pci/terbit';
 $route['api/login'] = 'Api/auth/login'; // POST
 $route['api/register'] = 'Api/auth/register'; // POST
 $route['api/logout'] = 'Api/auth/logout'; // POST
+
 $route['api/book/(:any)'] = 'Api/book/index/$1'; // GET
 $route['api/getcomment/(:any)'] = 'Api/book/getcomment/$1'; //GET
 $route['api/postcomment'] = 'Api/book/comment'; //POST 
+
 $route['api/transaksi'] = 'Api/transaksi/index'; // GET
 $route['api/buybook/(:any)'] = 'Api/transaksi/buyBooks/$1'; // GET
+
+$route['api/purchase'] = 'Api/buy/index'; // POST

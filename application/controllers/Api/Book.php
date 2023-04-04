@@ -148,7 +148,7 @@ class Book extends Auth
                         $comment_err = 'Komentar tidak boleh kosong';
                     }
                     if (array_key_exists('rating', $param)) {
-                        $comment_err = 'Rating tidak boleh kosong';
+                        $rating_err = 'Rating tidak boleh kosong';
                     }
                     if (array_key_exists('uuid', $param)) {
                         $uuid_err = 'UUID penjualan buku kosong';

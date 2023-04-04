@@ -51,6 +51,11 @@ $(document).ready(function () {
 			},
 			success: function (response) {
 				if (response.success) {
+					var hp = "6285171670522";
+					var textEncode = encodeURI(
+						`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari pendaftaran buku saya.`
+					);
+					window.open(`https://wa.me/${hp}?text=${textEncode}`, "_blank");
 					$("#daftar")[0].reset();
 					$("#loader-icon").html(
 						'<p style="color:#28A74B;">File has uploaded successfully!</p>'
@@ -63,11 +68,7 @@ $(document).ready(function () {
 						showConfirmButton: true,
 					}).then((result) => {
 						/* Read more about isConfirmed, isDenied below */
-						var hp = "6285171670522";
-						var textEncode = encodeURI(
-							`*ID Order : ${response.id}*\nBerikut adalah bukti pembayaran dari pendaftaran buku saya.`
-						);
-						// window.open(`https://wa.me/${hp}?text=${textEncode}`, "_blank");
+
 						window.location.href = "dashboard";
 					});
 				} else {

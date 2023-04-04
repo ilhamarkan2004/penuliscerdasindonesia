@@ -85,7 +85,7 @@ class Snap extends Auth
 						'price' => $details['sell_price'],
 						'quantity' => 1,
 					];
-					$listBookId[] = $param['book_id'];
+					$listBookId[] = $details['book_id'];
 				}
 
 				// Optional
