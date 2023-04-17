@@ -1,6 +1,7 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Notification extends CI_Controller {
+class Notification extends CI_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -20,26 +21,37 @@ class Notification extends CI_Controller {
 
 
 	public function __construct()
-    {
-        parent::__construct();
-        $params = array('server_key' => 'your_server_key', 'production' => false);
+	{
+		parent::__construct();
+		$params = array('server_key' => 'SB-Mid-server-l1_o-AknBILcvLDM7GO7k9bA', 'production' => false);
 		$this->load->library('veritrans');
+		$this->load->helper('c_helper');
 		$this->veritrans->config($params);
 		$this->load->helper('url');
-		
-    }
+		$this->load->model('M_Book', ' m_book');
+		$this->load->model('M_Auth', ' m_auth');
+	}
 
 	public function index()
 	{
 		echo 'test notification handler';
 		$json_result = file_get_contents('php://input');
-		$result = json_decode($json_result);
-
-		if($result){
-		$notif = $this->veritrans->status($result->order_id);
+		$result = json_decode($json_result, 'true');
+		//update data di table order
+		$this->m_daftar->putOrder($result, 'midtrans');
+		//ambil id user
+		$id_user = $this->m_book->getPurchase($result['order_id'])->row_array()['user_id'];
+		$data = $this->m_auth->getUsers($id_user)->row_array();
+		// Kalo statusnya 200 bakal
+		if ($result['status_code'] == 200) {
+			$message = 'Pembelian buku dengan id pembelian ' . $result['order_id'] . ' telah berhasil. Sekarang anda dapat membaca buku tersebut di website kami.';
+			$subject = 'Notifikasi Status Pembelian';
+		} else {
+			$message = 'Pembelian buku dengan id pembelian ' . $result['order_id'] . ' gagal dilakukan. Kemungkinan terjadi masalah pada pembayaran anda. Anda dapat menghubungi admin apabila mengalami kesulitan';
+			$subject = 'Notifikasi Status Pembelian';
 		}
 
-		error_log(print_r($result,TRUE));
+		sendEmail($data['email'], $message, $subject, $this->m_auth->getDefaultValue('email')['value'], $this->m_auth->getDefaultValue('email_pass')['value']);
 
 		//notification handler sample
 
@@ -75,6 +87,5 @@ class Notification extends CI_Controller {
 		  // TODO set payment status in merchant's database to 'Denied'
 		  echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
 		}*/
-
 	}
 }

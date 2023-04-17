@@ -51,57 +51,91 @@ class Auth extends RestController
     {
         // $space = '0e!7l8S';
         $param = $this->post();
+        if (!array_key_exists('email', $param) || !array_key_exists('password', $param)) {
+            $email_err = '';
+            $password_err = '';
 
-        if (trim($param['email']) === '' || trim($param['password']) === '') {
-            $this->response(
-                [
-                    'success' => false,
-                    'message' => [
-                        'title' => 'Gagal login',
-                        'text' => 'Kolom email atau password harap dilengkapi',
-                    ],
-                    'data' => []
+            if (!array_key_exists('email', $param)) {
+                $email_err = 'email tidak boleh kosong';
+            }
+            if (!array_key_exists('password', $param)) {
+                $password_err = 'password tidak boleh kosong';
+            }
+
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'Kesalahan inputan'
                 ],
-                RestController::HTTP_BAD_REQUEST
-            );
+                'data' => [
+                    'email' => $email_err,
+                    'password' => $password_err,
+                ]
+            ];
+            $this->response($result, RestController::HTTP_BAD_REQUEST);
             die;
-        } elseif ($this->m_auth->login($param['email'])->row_array()) {
-            $user = $this->m_auth->login($param['email'])->row_array();
-            if ($user['is_active'] == 1) {
-                if (password_verify($param['password'], $user['password'])) {
-
-                    // $exp = time() + 360;
-                    // $token = array(
-                    //     "iss" => 'apprestservice',
-                    //     "aud" => 'pengguna',
-                    //     "iat" => time(),
-                    //     "nbf" => time() + 10,
-                    //     "exp" => $exp,
-                    //     "data" => array(
-                    //         'data' => $user['uuid'] . $space . $user['password']
-                    //     )
-                    // );
-
-                    // $jwt = JWT::encode($token, $this->configToken()['secretkey'], 'HS256');
-
-
-                    //set session
-                    $this->session->set_userdata('id_user', $user['uuid']);
-                    $output = [
-                        'success' => true,
+        } else {
+            if (trim($param['email']) === '' || trim($param['password']) === '') {
+                $this->response(
+                    [
+                        'success' => false,
                         'message' => [
-                            'title' => 'Berhasil login',
-                            'text' => 'Berhasil login',
+                            'title' => 'Gagal login',
+                            'text' => 'Kolom email atau password harap dilengkapi',
                         ],
                         'data' => []
-                    ];
-                    $this->response($output, 200);
+                    ],
+                    RestController::HTTP_BAD_REQUEST
+                );
+                die;
+            } elseif ($this->m_auth->login($param['email'])->row_array()) {
+                $user = $this->m_auth->login($param['email'])->row_array();
+                if ($user['is_active'] == 1) {
+                    if (password_verify($param['password'], $user['password'])) {
+
+                        // $exp = time() + 360;
+                        // $token = array(
+                        //     "iss" => 'apprestservice',
+                        //     "aud" => 'pengguna',
+                        //     "iat" => time(),
+                        //     "nbf" => time() + 10,
+                        //     "exp" => $exp,
+                        //     "data" => array(
+                        //         'data' => $user['uuid'] . $space . $user['password']
+                        //     )
+                        // );
+
+                        // $jwt = JWT::encode($token, $this->configToken()['secretkey'], 'HS256');
+
+
+                        //set session
+                        $this->session->set_userdata('id_user', $user['uuid']);
+                        $output = [
+                            'success' => true,
+                            'message' => [
+                                'title' => 'Berhasil login',
+                                'text' => 'Berhasil login',
+                            ],
+                            'data' => []
+                        ];
+                        $this->response($output, 200);
+                    } else {
+                        $this->response([
+                            'success' => false,
+                            'message' => [
+                                'title' => 'Gagal login',
+                                'text' => 'Pastikan email atau password anda benar',
+                            ],
+                            'data' => []
+                        ],  RestController::HTTP_BAD_REQUEST);
+                        die;
+                    }
                 } else {
                     $this->response([
                         'success' => false,
                         'message' => [
                             'title' => 'Gagal login',
-                            'text' => 'Pastikan email atau password anda benar',
+                            'text' => 'Status pengguna belum aktif',
                         ],
                         'data' => []
                     ],  RestController::HTTP_BAD_REQUEST);
@@ -112,22 +146,12 @@ class Auth extends RestController
                     'success' => false,
                     'message' => [
                         'title' => 'Gagal login',
-                        'text' => 'Status pengguna belum aktif',
+                        'text' => 'Pastikan email atau password anda benar',
                     ],
                     'data' => []
                 ],  RestController::HTTP_BAD_REQUEST);
                 die;
             }
-        } else {
-            $this->response([
-                'success' => false,
-                'message' => [
-                    'title' => 'Gagal login',
-                    'text' => 'Pastikan email atau password anda benar',
-                ],
-                'data' => []
-            ],  RestController::HTTP_BAD_REQUEST);
-            die;
         }
     }
 

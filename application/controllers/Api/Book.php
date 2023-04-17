@@ -283,4 +283,141 @@ class Book extends Auth
             die;
         }
     }
+
+    //hrs login dulu
+    public function listBookBuy_get()
+    {
+        // 1. Ambil id user dari session uuid
+        // 2. Setelah dapet id user, ambil data buku dari 
+        //     - JOIN tabel book_purchase & book_purchase_item [id_order]
+        //     - JOIN tabel book_purchase_item & book [book_id]
+        // 3. Dari sini bakal dapet :
+        //     - data buku
+        //     - id_order
+        //     - uuid buku
+
+        if (!$this->session->has_userdata('id_user')) {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'Perlu login untuk akses data'
+                ],
+                'data' => [$this->session->userdata('id_user')]
+            ];
+            $this->response($result, RestController::HTTP_UNAUTHORIZED);
+            die;
+        } else {
+            $uuid_user = $this->session->userdata('id_user');
+            $id_user = $this->m_auth->getIdUserFromUUID($uuid_user);
+            if ($id_user == []) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'text' => 'Identitas tidak ditemukan'
+                    ],
+                    'data' => []
+                ];
+                $this->response($result, RestController::HTTP_BAD_REQUEST);
+                die;
+            } else {
+                $id_user = $id_user['id'];
+                $proses = $this->m_book->getListBuyBook($id_user)->result_array();
+                foreach ($proses as $p) {
+                    $data[] = [
+                        'judul' => $p['title'],
+                        'cover' => base_url() . $p['cover'],
+                        'isbn' => $p['isbn'],
+                        'description' => $p['description'],
+                        'order_id' => $p['order_id'],
+                        'uuid' => $p['b_uuid'],
+                    ];
+                }
+                $result = [
+                    'success' => true,
+                    'message' => [
+                        'text' => 'Berhasil'
+                    ],
+                    'data' => $data
+                ];
+                $this->response($result, RestController::HTTP_BAD_REQUEST);
+                die;
+            }
+        }
+    }
+
+    //hrs login dulu
+    public function viewBook_get($id_order = null, $bookUuid = null)
+    {
+        // QUERY : 
+        //     - JOIN tabel book_purchase & book_purchase_item [id_order]
+        //     - JOIN tabel book_purchase_item & book [book_id]
+        //     - WHERE book_purchase.id_order sekian && book.uuid sekian
+
+        // 1. Ambil id user dari session uuid
+        // 2. Cek apakah ada bukunya query[num_rows]
+        // 3. Kalo ada, query[row_array]
+        //     
+        // 3. Dari sini bakal dapet :
+        //     - url buku
+
+        if (!$this->session->has_userdata('id_user')) {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'Perlu login untuk akses data'
+                ],
+                'data' => [$this->session->userdata('id_user')]
+            ];
+            $this->response($result, RestController::HTTP_UNAUTHORIZED);
+            die;
+        } elseif ($id_order == null || $bookUuid == null) {
+            $result = [
+                'success' => false,
+                'message' => [
+                    'text' => 'parameter id order atau UUID buku bernilai null'
+                ],
+                'data' => [$this->session->userdata('id_user')]
+            ];
+            $this->response($result, RestController::HTTP_UNAUTHORIZED);
+            die;
+        } else {
+            $uuid_user = $this->session->userdata('id_user');
+            $id_user = $this->m_auth->getIdUserFromUUID($uuid_user);
+            if ($id_user == []) {
+                $result = [
+                    'success' => false,
+                    'message' => [
+                        'text' => 'Identitas tidak ditemukan'
+                    ],
+                    'data' => []
+                ];
+                $this->response($result, RestController::HTTP_BAD_REQUEST);
+                die;
+            } else {
+                $id_user = $id_user['id'];
+                $param = [
+                    'id_order' => $id_order,
+                    'b_uuid' => $bookUuid
+                ];
+                $proses = $this->m_book->getListBuyBook($id_user, $param)->result_array();
+                $data = [];
+                foreach ($proses as $p) {
+                    $data[] = [
+                        'judul' => $p['title'],
+                        'isbn' => $p['isbn'],
+                        'buku' => $p['naskah'],
+                    ];
+                }
+                $result = [
+                    'success' => true,
+                    'message' => [
+                        'text' => 'Berhasil'
+                    ],
+                    'data' => $data
+                ];
+                $this->response($result, RestController::HTTP_OK);
+                die;
+            }
+        }
+    }
 }

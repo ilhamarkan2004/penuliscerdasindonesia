@@ -53,10 +53,10 @@ class Buy extends Auth
                 $arrId_err = '';
 
                 if (array_key_exists('order_id', $param)) {
-                    $order_id_err = 'Komentar tidak boleh kosong';
+                    $order_id_err = 'id order tidak boleh kosong';
                 }
                 if (array_key_exists('arrId', $param)) {
-                    $arrId_err = 'Komentar tidak boleh kosong';
+                    $arrId_err = 'List id buku tidak boleh kosong';
                 }
 
                 $result = [

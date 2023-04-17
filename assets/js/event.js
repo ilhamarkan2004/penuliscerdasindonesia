@@ -72,7 +72,7 @@ $(document).ready(function () {
 				$("#end_regist").val(response.end_regist);
 				$("#status").val(response.status);
 				$("#link").val(response.link);
-				$("#desc").val(response.desc);
+				$("#desc").val(response.e_desc);
 
 				$("#EventModal").modal("show");
 			},

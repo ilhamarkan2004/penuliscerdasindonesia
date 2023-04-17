@@ -44,7 +44,7 @@ class Dashboard extends CI_Controller
                         'bg-color' => '#92D248'
                     ],
                     [
-                        'isi' => $this->m_book->getBooks(null, $idUserLogin)->num_rows() . ' buku',
+                        'isi' => count(multi_unique_array($this->m_book->getBooks(null, $idUserLogin)->result_array(), 'book_id')) . ' buku',
                         'titleCard' => 'Jumlah buku terupload',
                         'icon' => 'fa-solid fa-book',
                         'bg-color' => '#3F7856'
@@ -66,7 +66,7 @@ class Dashboard extends CI_Controller
                         'bg-color' => '#92D248'
                     ],
                     [
-                        'isi' => $this->m_book->getBooks()->num_rows() . ' buku',
+                        'isi' => count(multi_unique_array($this->m_book->getBooks()->result_array(), 'book_id')) . ' buku',
                         'titleCard' => 'Jumlah buku',
                         'icon' => 'fa-solid fa-book',
                         'bg-color' => '#3F7856'

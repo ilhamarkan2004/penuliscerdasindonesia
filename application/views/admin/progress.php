@@ -171,7 +171,10 @@
                                     <p class="card-text"><b>ISBN : </b>${isbn}</p>
                                     <p class="card-text mt-4"><small class="text-muted" style="font-style: italic">${note_admin}</small></p>
                                 </div>
-                                ${showButtonEdit(value.contributor_role_id,<?= $idPJ ?>, value.id_b, value.status_progres)}
+
+                                    ${showButtonEdit(value.contributor_role_id,<?= $idPJ ?>, value.id_b, value.status_progres)}
+                                    ${showButtonPreview(value.progress_id, value.naskah)}
+                                
                                 <button class="btn btn-dark float-end" id="progress" id_book="${value.book_id}">Progress</button>
                             </div>
                         </div>
@@ -227,8 +230,16 @@
     function showButtonEdit(contributor_id, role, id_b, status_progress) {
         if (contributor_id == role && status_progress != <?= $success ?>) {
             return `<form action="<?= base_url() . 'progress/editBuku' ?>" method="post">
-                                    <button type="submit" class="btn btn-dark" name="id" value="${id_b}"></button>
+                                    <button type="submit" class="btn btn-dark" name="id" value="${id_b}">Edit</button>
                                 </form>`;
+        } else {
+            return '';
+        }
+    }
+
+    function showButtonPreview(progress_id, naskah) {
+        if (progress_id == <?= $publish ?>) {
+            return `<a href="<?= base_url() ?>${naskah}" class="btn btn-warning float-end mx-2" target="_blank">Preview</a>`;
         } else {
             return '';
         }

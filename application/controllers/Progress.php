@@ -3,6 +3,7 @@
 class Progress extends CI_Controller
 {
     private $success = '2';
+
     public function __construct()
     {
         parent::__construct();
@@ -58,6 +59,7 @@ class Progress extends CI_Controller
             $data['idPJ'] = $this->m_book->getContributor('PJ')->row_array()['id'];
             $data['lastProgress'] = $this->m_book->getLastProgress()['id'];
             $data['success'] = $this->success;
+            $data['publish'] = $this->m_book->getIDProgress('Publish')['id'];
             $view_page = 'admin/progress';
         } else {
             redirect('dashboard');

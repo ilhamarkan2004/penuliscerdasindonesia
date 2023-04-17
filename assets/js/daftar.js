@@ -72,7 +72,7 @@ $(document).ready(function () {
 						window.location.href = "dashboard";
 					});
 				} else {
-					$("#progress-bar").width("0%");
+					$("#progress-bar").width("0px");
 					$("#loader-icon").html(
 						'<p style="color:#EA4335;">Terdapat inputan yang tidak sesuai, mohon cek ulang.</p>'
 					);

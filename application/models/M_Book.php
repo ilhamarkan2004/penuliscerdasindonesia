@@ -313,7 +313,7 @@ class M_Book extends CI_Model
 
 
     //private
-    private function getIDProgress($nama_progress)
+    public function getIDProgress($nama_progress)
     {
         $this->db->select('id')
             ->from('order_progress')
@@ -652,5 +652,24 @@ class M_Book extends CI_Model
                 'message' => 'Berhasil'
             ];
         }
+    }
+
+    //param['id_order] && param['b_uuid]
+    public function getListBuyBook($id_user, $param = null)
+    {
+        $this->db->select('*, books.uuid as b_uuid')
+            ->from($this->t_bp)
+            ->join($this->t_bpi, 'book_purchase_item.bp_order_id = book_purchase.order_id')
+            ->join($this->t_books, 'book_purchase_item.book_id = books.id')
+            ->where(['book_purchase.user_id' => $id_user]);
+
+        if ($param != null) {
+            $this->db->where([
+                'book_purchase.order_id' => $param['id_order'],
+                'books.uuid' => $param['b_uuid'],
+                'book_purchase.status_code' => '200'
+            ]);
+        }
+        return $this->db->get();
     }
 }

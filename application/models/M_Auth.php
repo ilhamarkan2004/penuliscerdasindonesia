@@ -31,12 +31,15 @@ class M_Auth extends CI_Model
         return $this->db->get()->row_array();
     }
 
-    public function getUsers()
+    public function getUsers($id_user = null)
     {
         $id_role_user = $this->getIDRole('User')['id'];
         $this->db->select('*')
             ->from($this->_table)
             ->where(['role_id' => $id_role_user]);
+        if ($id_user != null) {
+            $this->db->where(['id' => $id_user]);
+        }
         return $this->db->get();
     }
 

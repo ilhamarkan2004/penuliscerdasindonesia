@@ -2,11 +2,12 @@
     #progress-bar {
         background-color: #12CC1A;
         color: #FFFFFF;
+        text-align: end;
+        border-radius: 10px;
         width: 0%;
         -webkit-transition: width .3s;
         -moz-transition: width .3s;
         transition: width .3s;
-        border-radius: 5px;
     }
 </style>
 
@@ -341,7 +342,7 @@
 
 
                             <div class="lg:w-1/2 w-full ml-1">
-                                <label class="block mb-7 text-sm font-medium text-slate-700 ">Kabupaten</label>
+                                <label class="block mb-7 text-sm font-medium text-slate-700 ">Kota/Kabupaten</label>
                                 <select id="kab_id" name="kabupaten_id" class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block mx-1 mb-3 p-2.5 w-full">
                                     <?php if (isset($data_member)) : ?>
                                         <?php
@@ -425,7 +426,7 @@
                                     <button type="submit" id="b_confirm" class=" bg-green-500 text-white rounded-lg py-4 font-bold w-full hover:ring-primaryDetailText ring-2">
                                         Konfirmasi Pembayaran
                                     </button>
-                                    <div id="progress-div">
+                                    <div id="progress-div" class="mt-6">
                                         <div id="progress-bar"></div>
                                     </div>
                                     <div id="loader-icon" style="display:none;"><img src="LoaderIcon.gif"></div>
