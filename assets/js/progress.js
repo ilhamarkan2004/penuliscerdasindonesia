@@ -1,7 +1,8 @@
 $(document).ready(function () {
 	table2 = $("#progressTable").DataTable({
 		responsive: true,
-		ajax: "getAllBooks",
+		ordering: false,
+		ajax: "progress/getAllBooks",
 		columns: [
 			{
 				data: "title",
@@ -36,7 +37,7 @@ $(document).ready(function () {
 		var id = $(this).attr("id");
 		$.ajax({
 			type: "post",
-			url: "detailBookAdmin",
+			url: "progress/detailBookAdmin",
 			data: {
 				id: id,
 			},
@@ -61,7 +62,7 @@ $(document).ready(function () {
 		// console.log(data);
 		$.ajax({
 			type: "POST",
-			url: "aksiProgress",
+			url: "progress/aksiProgress",
 			data: data,
 			dataType: "JSON",
 			success: function (response) {
@@ -104,7 +105,7 @@ $(document).ready(function () {
 				return xhr;
 			},
 			type: "post",
-			url: "aksiCover",
+			url: "progress/aksiCover",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -165,7 +166,7 @@ $(document).ready(function () {
 				return xhr;
 			},
 			type: "post",
-			url: "aksiNaskah",
+			url: "progress/aksiNaskah",
 			data: new FormData(this),
 			processData: false,
 			contentType: false,
@@ -227,7 +228,7 @@ $(document).ready(function () {
 						data: {
 							id: data,
 						},
-						url: "deleteBuku",
+						url: "progress/deleteBuku",
 						dataType: "JSON",
 						success: function (response) {
 							if (response.success) {

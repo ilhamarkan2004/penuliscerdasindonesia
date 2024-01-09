@@ -116,8 +116,8 @@ $(document).ready(function () {
 				return false;
 			}
 
-			if ($(this).val().length < 5) {
-				peringatan.push("List materi setidaknya terdapat 5 karakter");
+			if ($(this).val().length < 2) {
+				peringatan.push("List materi setidaknya terdapat 2 karakter");
 				$(this).focus();
 				return false;
 			}
@@ -201,6 +201,7 @@ $(document).ready(function () {
 			dataType: "JSON",
 			success: function (data) {
 				// console.log(data);
+
 				Swal.fire({
 					// position: 'top-end',
 					icon: data.icon,
@@ -208,7 +209,9 @@ $(document).ready(function () {
 					showConfirmButton: false,
 					timer: 2000,
 				});
-				$("#FasilitasModal").modal("hide");
+				if (data.success) {
+					$("#FasilitasModal").modal("hide");
+				}
 			},
 		});
 	});

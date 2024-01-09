@@ -12,6 +12,7 @@ class Pci extends CI_Controller
         $this->load->model('M_Daftar', 'm_daftar');
         $this->load->model('M_Event', 'm_event');
         $this->load->helper('c_helper');
+        $this->load->library('form_validation');
     }
 
     public function index()
@@ -34,6 +35,41 @@ class Pci extends CI_Controller
 
         viewUser($this, 'user/pages/terbit_buku', $data);
     }
+    public function katalog(){
+
+          $data['event'] = $this->m_event->getEventType();
+        $data['title'] = 'Katalog';
+        $this->db->order_by('tanggal_terbit', 'desc');
+        $data['buku'] = $this->db->get('katalogbuku')->result_array();
+        viewUser($this, 'user/pages/katalog',$data);
+    }
+
+    public function baca($id = null)
+    {
+         if (!$id) {
+        redirect('katalog'); // Redirect ke halaman katalog jika ID tidak diberikan
+    }
+        $data['event'] = $this->m_event->getEventType();
+        $data['title'] = 'Baca';
+
+        $buku = $this->db->get_where('katalogbuku', ['id' => $id])->row_array();
+        $penulis = $this->db->get_where('penulis', ['buku_id' => $id])->result_array();
+        $editor = $this->db->get_where('editor', ['buku_id' => $id])->result_array();
+        $designcover = $this->db->get_where('designcover', ['buku_id' => $id])->result_array();
+        $layout = $this->db->get_where('layout', ['buku_id' => $id])->result_array();
+
+        if ($buku) {
+            $data['buku'] = $buku;
+            $data['penulis'] = $penulis;
+            $data['editor'] = $editor;
+            $data['designcover'] = $designcover;
+            $data['layout'] = $layout;
+            viewUser($this, 'user/pages/baca', $data);
+        } else {
+            redirect('katalog'); // Redirect ke halaman katalog jika ID buku tidak ditemukan
+        }
+    }
+
 
     public function form()
     {

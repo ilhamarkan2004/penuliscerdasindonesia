@@ -37,22 +37,9 @@ class Book extends Auth
             $language = $listLanguage[array_search($r['language_id'], array_column($listLanguage, "id"))]['language'];
             $publisher = $listPublisher[array_search($r['publisher_id'], array_column($listPublisher, "id"))]['publisher'];
 
+            $contributors = [];
             //disini datanya pake dari tabel book_sell
-            $data[] = [
-                'uuid' => $r['bs_uuid'],
-                'title' => $r['title'],
-                'description' => $r['description'],
-                'category' => $category,
-                'language' => $language,
-                'publisher' => $publisher,
-                'num_page' => $r['num_page'],
-                'cover' => base_url() . $r['cover'],
-                'isbn' => $r['isbn'],
-                'rating' => $r['sum_rating'],
-                'publish_at' => $r['publish_at'],
-                'price' => $r['sell_price']
 
-            ];
             if ($uuid != null) {
                 $id_book  = $r['book_id'];
                 // $
@@ -69,13 +56,32 @@ class Book extends Auth
                                 'uuid' => $rc['uuid'],
                             ];
                         }
+                        // array_push($data[]['contributors'][strtolower(str_replace(' ', '', $c['role_name']))], $list_ct);
 
-                        $data['contributors'][strtolower(str_replace(' ', '', $c['role_name']))] = $list_ct;
+                        $contributors[strtolower(str_replace(' ', '', $c['role_name']))] = $list_ct;
                     } else {
-                        $data['contributors'][strtolower(str_replace(' ', '', $c['role_name']))] = [];
+                        $contributors[strtolower(str_replace(' ', '', $c['role_name']))] = [];
+                        // $data[]['contributors'][strtolower(str_replace(' ', '', $c['role_name']))] = [];
+                        // array_push($data[]['contributors'][strtolower(str_replace(' ', '', $c['role_name']))], "item baru");
                     }
                 }
             }
+
+            $data[] = [
+                'uuid' => $r['bs_uuid'],
+                'title' => $r['title'],
+                'description' => $r['description'],
+                'category' => $category,
+                'language' => $language,
+                'publisher' => $publisher,
+                'num_page' => $r['num_page'],
+                'cover' => base_url() . $r['cover'],
+                'isbn' => $r['isbn'],
+                'rating' => $r['sum_rating'],
+                'publish_at' => $r['publish_at'],
+                'price' => $r['sell_price'],
+                'contributors' => $contributors
+            ];
         }
 
         if ($data) {
@@ -140,7 +146,7 @@ class Book extends Auth
                 die;
             } else {
                 $id_user = $id_user['id'];
-                if (array_key_exists('comment', $param) || array_key_exists('rating', $param) || array_key_exists('uuid', $param)) {
+                if (!array_key_exists('comment', $param) || !array_key_exists('rating', $param) || !array_key_exists('uuid', $param)) {
                     $comment_err = '';
                     $rating_err = '';
                     $uuid_err = '';

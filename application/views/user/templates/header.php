@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/js/sweetalert2.min.css'); ?>" />
     <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/stylecontact.css"> -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="<?= base_url('assets/js/fontawesome/all.js') ?>" crossorigin="anonymous"></script>
     <script src="<?= base_url('assets/js/jquery-3.4.1.min.js'); ?>"></script>
 

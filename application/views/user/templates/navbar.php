@@ -17,7 +17,7 @@
           </div>
           <div id="nav_menu" class="absolute hidden top-full w-full left-0 cursor-pointer">
             <div class="flex flex-col text-start bg-primary-200">
-              <a href="<?= site_url() ?>" class="px-4 pt-5 w-full mt-10 text-white">Home</a>
+              <a href="<?= base_url() ?>" class="px-4 pt-5 w-full mt-10 text-white">Home</a>
 
 
               <!-- START DROP PROGRAM -->
@@ -44,6 +44,7 @@
               <!-- END DROP PROGRAM -->
 
               <a class="px-4 mt-2 w-full hover:opacity-75" href="<?= base_url() ?>pci/terbit" class="p-2.5 text-blog">Terbitkan buku</a>
+              <a class="px-4 mt-2 w-full hover:opacity-75" href="<?= base_url() ?>katalog" class="p-2.5 text-blog">Katalog</a>
               <!-- <a class="px-4 mt-2 w-full hover:opacity-75" href="#contact" class="p-2.5">Contact</a> -->
               <a class="px-4 py-2 mt-2 w-[97%] text-center rounded-lg mb-2 self-center border-white border" href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>"><?= ($this->session->has_userdata('id_user') ? 'Dashboard' : 'Login') ?></a>
             </div>
@@ -53,7 +54,7 @@
       <div class="my-container hidden md:flex py-3 gap-5 xl:gap-16 h-[84px] justify-end items-center">
         <div class="flex flex-row items-center gap-2 xl:gap-5">
 
-          <a href="<?= site_url() ?>" class="p-2.5 relative text-blog">
+          <a href="<?= base_url() ?>" class="p-2.5 relative text-blog">
             Home
             <!-- <span class="rounded absolute block h-1 w-full bg-secondary-100 left-0 top-15"></span> -->
           </a>
@@ -139,7 +140,7 @@
           <!-- <a href="#" class="p-2.5 ">AMD for Corporate</a>
           <a href="#" class="p-2.5">About</a> -->
           <a href="<?= base_url() ?>terbit" class="p-2.5 text-blog" style="z-index: 9;">Terbitkan buku</a>
-          <!-- <a href="" class="p-2.5 text-kontak">Contact</a> -->
+          <a href="<?= base_url() ?>katalog" class="p-2.5 text-kontak">Katalog</a>
         </div>
         <div class="flex flex-row items-center font-semibold gap-4">
           <a href="<?= ($this->session->has_userdata('id_user') ? base_url('dashboard') : base_url('auth')) ?>" class="px-6 xl:px-12 py-2 xl:py-3 rounded-lg border lg:border-primaryBtn bg-primary-200 hover:bg-white text-white hover:text-primaryBtn">

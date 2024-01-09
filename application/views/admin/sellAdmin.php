@@ -97,7 +97,7 @@
     <div class="card-body px-0 pt-0 pb-2">
         <div class="table-responsive" style="margin:10px;">
             <button style="float: left;" type="button" class="btn btn-primary" id="addSell">
-                <i class="fa fa-lg fa-fw fa-plus" aria-hidden="true"></i>Jual Buku
+                <i class="fa fa-lg fa-fw fa-plus" aria-hidden="true"></i>Publikasi Buku
             </button>
             <table class="table table-hover table-striped align-middle" id="sellTable" style="width: 100%;max-width:100%;">
                 <thead class="">

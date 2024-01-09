@@ -9,6 +9,35 @@
         -moz-transition: width .3s;
         transition: width .3s;
     }
+
+    .hovertext {
+        position: relative;
+        border-bottom: 1px dotted black;
+    }
+
+    .hovertext:before {
+        content: attr(data-hover);
+        visibility: hidden;
+        opacity: 0;
+        width: max-content;
+        max-width: 500%;
+        background-color: #12CC1A;
+        color: #fff;
+        text-align: center;
+        border-radius: 5px;
+        padding: 5px 5px;
+        transition: opacity 1s ease-in-out;
+
+        position: absolute;
+        z-index: 1;
+        left: 0;
+        top: 110%;
+    }
+
+    .hovertext:hover:before {
+        opacity: 1;
+        visibility: visible;
+    }
 </style>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -307,8 +336,11 @@
 
                         <p class="font-bold text-2xl mx-4 pt-10 border-b">Lainnya</p>
 
-                        <div class="text-center">
-                            <div class="w-full flex justify-center my-6 mt-7">
+                        <div class="">
+                            <span class="hovertext" style="font-size: small; margin-left: 5px;" data-hover="KDT adalah sebuah deskripsi bibliografis yang dihasilkan dari pengolahan data yang diberikan untuk dicantumkan pada halaman balik halaman judul (halaman verso / copyright) sebagai kelengkapan penerbitan">
+                                <b style="color: #12CC1A;"> Info KDT !</b>
+                            </span>
+                            <div class="w-full flex justify-center my-6 mt-7 text-center">
                                 <button id="butuh_kdt1" name="butuh_kdt" class="bg-green-300 rounded-l-full text-white py-3 px-3">
                                     Saya <b>butuh</b> KDT
                                 </button>
@@ -317,7 +349,8 @@
                                 </button>
                                 <input type="text" id="is_kdt" name="is_kdt" value="" hidden>
                             </div>
-                            <small style="font-size: x-small ;">( Klik salah satu )</small>
+
+
                             <small id="is_kdtErr" class="text-red-500"></small>
                         </div>
 

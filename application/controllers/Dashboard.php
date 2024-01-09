@@ -163,7 +163,7 @@ class Dashboard extends CI_Controller
                             'success' => false,
                             'message' => [
                                 'alert_type' => 'swal',
-                                'message' => 'Tipe file yang dapat diupload adalah jpg, jpeg, png'
+                                'img_err' => 'Tipe file yang dapat diupload adalah jpg, jpeg, png'
                             ]
                         ];
                         echo json_encode($array);

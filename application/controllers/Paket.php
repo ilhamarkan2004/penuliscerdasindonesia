@@ -416,14 +416,16 @@ class Paket extends CI_Controller
                 if (strlen(trim($am, " ")) == 0) {
                     $array = [
                         'success' => false,
-                        'message' => 'Tidak dapat diisi hanya dengan spasi'
+                        'message' => 'Tidak dapat diisi hanya dengan spasi',
+                        'icon' => 'warning'
                     ];
                     echo json_encode($array);
                     die;
-                } elseif (strlen($am) < 5 || strlen($am) > 255) {
+                } elseif (strlen($am) < 2 || strlen($am) > 255) {
                     $array = [
                         'success' => false,
-                        'message' => 'List materi setidaknya terdapat 5 karakter dan paling banyak 255 karakter'
+                        'message' => 'List materi setidaknya terdapat 2 karakter dan paling banyak 255 karakter',
+                        'icon' => 'warning'
                     ];
                     echo json_encode($array);
                     die;

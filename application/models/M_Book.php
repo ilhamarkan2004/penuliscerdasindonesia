@@ -20,6 +20,7 @@ class M_Book extends CI_Model
     {
         $this->db->select('*, books.id as id_b, book_contributors.id as id_bc, order_progress.id as id_op, books.created_at as b_created_at, books.update_at as b_update_at')
             ->from($this->t_books)
+            ->order_by("books.update_at", "desc")
             ->join($this->t_bc, 'books.id = book_contributors.book_id')
             ->join($this->t_order, 'books.id = order.book_id')
             ->join($this->t_op, 'order_progress.id = order.progress_id');
@@ -32,6 +33,7 @@ class M_Book extends CI_Model
         if ($uuid != null) {
             $this->db->where(['books.uuid' => $uuid]);
         }
+        $this->db->order_by("books.update_at", "desc");
         return $this->db->get();
     }
 

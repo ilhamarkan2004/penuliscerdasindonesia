@@ -40,7 +40,7 @@ class Sell extends CI_Controller
 
         $data['title'] = 'Jual buku';
         $data['url'] = 'sell';
-        $data['sub_title'] = 'Daftar Buku yang Dijual';
+        $data['sub_title'] = 'Daftar Buku yang Dipublikasi';
         $data['menu'] = $menu;
         $data['user'] = $currentUser;
         $data['idPeserta'] = $this->m_auth->getIDRole('User')['id'];

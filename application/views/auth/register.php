@@ -30,7 +30,6 @@
                     </div>
                     <div class="mb-6">
                         <label for="nomorHp" class="block mb-2 text-sm font-medium text-gray-900">Nomor HP </label>
-                        <span class="text-green-500 text-[12px]">* Pastikan nomor Anda aktif!</span>
                         <div class="flex">
                             <span class="flex items-center mx-2 py-3 px-3 font-semibold text-sm text-white bg-primary-100 border border-gray-300 border-gray-300 rounded-lg">
                                 +62
@@ -43,6 +42,7 @@
                     </div>
                     <div class="mb-6">
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                        <span class="text-green-500 text-[12px]">* Pastikan email Anda aktif!</span>
                         <input type="text" name="email" id="email" class="w-full py-3 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block focus:outline-none focus:ring-blue-500 focus:border-blue-500  p-2.5" placeholder="example@gmail.com">
                         <small id="email_err" class="text-danger"></small>
                     </div>
@@ -65,17 +65,17 @@
                     <small id="passConf_err" class="text-danger"></small>
 
 
-                    <div class="mb-6 mt-6">
+                    <!-- <div class="mb-6 mt-6">
                         <label for="referral" class="block mb-2 text-sm font-medium text-gray-900">Kode Referral</label>
                         <input type="text" name="referral" id="referral" class="w-full py-3 px-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block focus:outline-none focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Kode referral">
                         <small id="referral_err" class="text-danger"></small>
-                    </div>
+                    </div> -->
 
 
                 </form>
 
                 <div class="mt-2">
-                    <button class="text-white w-full rounded-lg py-3 px-3 mt-4 bg-primary-100" id="register" type="button">Buat Akun</button>
+                    <button class="text-white w-full rounded-lg py-3 px-3 mt-4 bg-[#0e8f8f] hover:bg-white hover:text-[#0e8f8f]" id="register" type="button">Buat Akun</button>
                 </div>
                 <p class="text-center text-[13px] text-[#808080] mt-5">Sudah punya akun? <a class="text-primary-100" id="" href="<?= base_url('auth') ?>">Login</a></p>
             </div>

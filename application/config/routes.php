@@ -56,6 +56,34 @@ $route['translate_uri_dashes'] = FALSE;
 $route['form'] = 'pci/form';
 $route['terbit'] = 'pci/terbit';
 
+// Katalog
+$route['katalog'] = 'pci/katalog';
+
+// baca detail buku
+$route['baca'] = 'pci/baca';
+
+// create buku
+$route['addkatalog'] = 'auth/create';
+$route['addkontributor'] = 'auth/addkontributor';
+
+$route['daftarbuku'] = 'auth/daftarbuku';
+
+$route['delete'] = 'auth/delete';
+
+$route['edit/(:num)'] = 'auth/edit/$1';
+
+$route['view/(:num)'] = 'auth/view/$1';
+
+$route['editcontributor/(:num)'] = 'auth/editcontributor/$1';
+
+$route['auth/deletecontributor/(:any)'] = 'auth/deletecontributor/$1';
+
+
+
+
+// $route['viewer'] = 'viewer/view_file';
+
+
 //API
 $route['api/login'] = 'Api/auth/login'; // POST
 $route['api/register'] = 'Api/auth/regist'; // POST
@@ -65,7 +93,7 @@ $route['api/book/(:any)'] = 'Api/book/index/$1'; // GET
 $route['api/listbook'] = 'Api/book/listBookBuy'; // GET
 $route['api/viewbook/(:any)/(:any)'] = 'Api/book/viewBook/$1/$2'; // GET
 $route['api/getcomment/(:any)'] = 'Api/book/getcomment/$1'; //GET
-$route['api/postcomment'] = 'Api/book/comment'; //POST 
+$route['api/postcomment'] = 'Api/book/postcomment'; //POST 
 
 $route['api/transaksi'] = 'Api/transaksi/index'; // GET
 $route['api/buybook/(:any)'] = 'Api/transaksi/buyBooks/$1'; // GET

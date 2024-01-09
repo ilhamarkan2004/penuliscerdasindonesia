@@ -7,7 +7,7 @@ class Auth extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        // $this->load->library('form_validation');
+        $this->load->library('form_validation');
         $this->load->model('M_Auth', 'm_auth');
         $this->load->model('M_Event', 'm_event');
         $this->load->helper('c_helper');
@@ -523,4 +523,403 @@ class Auth extends CI_Controller
         $kabupaten = $this->m_auth->kabupaten($prov_id);
         echo json_encode($kabupaten);
     }
+    public function addkontributor() {
+    // Mengambil daftar event dan buku
+    $data['event'] = $this->m_event->getEventType();
+    $data['buku'] = $this->db->get('katalogbuku')->result_array();
+
+    // Mengambil data pengguna yang sedang login
+    $userData = $this->m_auth->getCurrentUser();
+
+    if ($userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        // User adalah admin, izinkan proses tambah kontributor baru
+
+        $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+        $this->form_validation->set_rules('buku_id', 'Buku_id', 'required|trim');
+        $this->form_validation->set_rules('kontributor', 'Kontributor', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Tambah Kontributor';
+            viewUser($this, 'user/pages/createkontributor', $data);
+        } else {
+            $nama = htmlspecialchars($this->input->post('nama', true));
+            $buku_id = htmlspecialchars($this->input->post('buku_id', true));
+            $kontributor = $this->input->post('kontributor');
+
+            // Memutuskan tabel berdasarkan tipe kontributor
+            $table = '';
+            if ($kontributor === 'penulis') {
+                $table = 'penulis';
+            } elseif ($kontributor === 'editor') {
+                $table = 'editor';
+            } elseif ($kontributor === 'designcover') {
+                $table = 'designcover';
+            } elseif ($kontributor === 'layout') {
+                $table = 'layout';
+            }
+
+            if ($table !== '') {
+                // Menyiapkan data untuk disimpan
+                $data = [
+                    'nama' => $nama,
+                    'buku_id' => $buku_id,
+                ];
+
+                // Menyimpan data ke tabel yang sesuai
+                $this->db->insert($table, $data);
+
+                $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Berhasil menambahkan kontributor baru </div>');
+                redirect('daftarbuku');
+            } else {
+                // Tipe kontributor tidak valid, lakukan penanganan kesalahan
+            }
+        }
+    } else {
+        redirect('auth');
+    }
+}
+
+public function editcontributor($id, $kategori) {
+     $userData = $this->m_auth->getCurrentUser();
+
+    if (!$userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        redirect('auth');
+    }
+    $data['event'] = $this->m_event->getEventType();
+
+    // Mendapatkan tipe kontributor berdasarkan kategori
+    $table = '';
+    if ($kategori === 'penulis') {
+        $table = 'penulis';
+    } elseif ($kategori === 'editor') {
+        $table = 'editor';
+    } elseif ($kategori === 'designcover') {
+        $table = 'designcover';
+    } elseif ($kategori === 'layout') {
+        $table = 'layout';
+    }
+
+    if ($table !== '') {
+        $contributor = $this->db->get_where($table, ['id' => $id])->row_array();
+
+        if ($contributor) {
+            $data['contributor'] = $contributor;
+            $data['kategori'] = $kategori;
+
+            $this->form_validation->set_rules('nama', 'Nama', 'required|trim');
+
+            if ($this->form_validation->run() == false) {
+                $data['title'] = 'Edit Kontributor';
+                viewUser($this, 'user/pages/editcontributor', $data);
+            } else {
+                $nama = htmlspecialchars($this->input->post('nama', true));
+
+                // Menyiapkan data untuk diperbarui, hanya nama yang ingin diupdate
+                $dataToUpdate = [
+                    'nama' => $nama,
+                ];
+
+                // Memperbarui data kontributor di tabel yang sesuai
+                $this->db->where('id', $id);
+                $this->db->update($table, $dataToUpdate);
+
+                $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Berhasil memperbarui kontributor </div>');
+                redirect('daftarbuku');
+            }
+        } else {
+            redirect('daftarbuku');
+        }
+    } else {
+        redirect('daftarbuku');
+    }
+}
+
+
+
+
+public function view($id = null){
+    $userData = $this->m_auth->getCurrentUser();
+
+    if (!$userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        redirect('auth');
+    }
+   if (!$id) {
+        redirect('tabel'); // Redirect ke halaman tabel jika ID tidak diberikan
+    }
+        $data['event'] = $this->m_event->getEventType();
+        $data['title'] = 'Baca';
+
+        $buku = $this->db->get_where('katalogbuku', ['id' => $id])->row_array();
+        $penulis = $this->db->get_where('penulis', ['buku_id' => $id])->result_array();
+        $editor = $this->db->get_where('editor', ['buku_id' => $id])->result_array();
+        $designcover = $this->db->get_where('designcover', ['buku_id' => $id])->result_array();
+        $layout = $this->db->get_where('layout', ['buku_id' => $id])->result_array();
+
+        if ($buku) {
+            $data['buku'] = $buku;
+            $data['penulis'] = $penulis;
+            $data['editor'] = $editor;
+            $data['designcover'] = $designcover;
+            $data['layout'] = $layout;
+            viewUser($this, 'user/pages/listcontributor', $data);
+        } else {
+            redirect('tabel'); // Redirect ke halaman katalog jika ID buku tidak ditemukan
+        }
+}
+
+public function daftarbuku() {
+    $userData = $this->m_auth->getCurrentUser();
+
+    if ($userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        // User adalah admin, izinkan akses ke fungsi tabel
+        $data['event'] = $this->m_event->getEventType();
+        $data['title'] = 'Daftar Buku';
+        $this->db->order_by('tanggal_terbit', 'desc');
+        $data['buku'] = $this->db->get('katalogbuku')->result_array();
+        viewUser($this, 'user/pages/listbook', $data);
+    } else {
+        // User bukan admin, tampilkan pesan akses ditolak atau lakukan aksi lainnya
+        // Contoh: redirect('home');
+        redirect('auth');
+    }
+}
+
+
+public function edit($id = null) {
+    $data['event'] = $this->m_event->getEventType();
+    $userData = $this->m_auth->getCurrentUser();
+
+    if ($userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        // User adalah admin, izinkan proses edit buku
+
+        // Load existing data
+       $buku = $this->db->get_where('katalogbuku', ['id' => $id])->row_array();
+
+        if(!$buku){
+            redirect('daftarbuku');
+        }
+
+        $data['existing_buku'] = $buku;
+
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('halaman', 'Halaman', 'required|trim|numeric');
+        $this->form_validation->set_rules('tanggal_terbit', 'Tanggal Terbit', 'required');
+        $this->form_validation->set_rules('bahasa', 'Bahasa', 'required|trim');
+        $this->form_validation->set_rules('penerbit', 'Penerbit', 'required|trim');
+        $this->form_validation->set_rules('flipbook', 'ISBN', 'trim');
+        $this->form_validation->set_rules('isbn', 'ISBN', 'required|trim');
+        $this->form_validation->set_rules('berat', 'Berat', 'required|trim|numeric');
+        $this->form_validation->set_rules('lebar', 'Lebar', 'required|trim|numeric');
+        $this->form_validation->set_rules('panjang', 'Panjang', 'required|trim|numeric');
+        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Update Buku';
+            viewUser($this, 'user/pages/editbook', $data);
+        } else {
+            // Proses edit buku
+            $data = [
+                'judul' => htmlspecialchars($this->input->post('judul', true)),
+                'halaman' => htmlspecialchars($this->input->post('halaman', true)),
+                'tanggal_terbit' => htmlspecialchars($this->input->post('tanggal_terbit', true)),
+                'bahasa' => htmlspecialchars($this->input->post('bahasa', true)),
+                'penerbit' => htmlspecialchars($this->input->post('penerbit', true)),
+                'flipbook' => htmlspecialchars($this->input->post('flipbook', true)),
+                'isbn' => htmlspecialchars($this->input->post('isbn', true)),
+                'berat' => htmlspecialchars($this->input->post('berat', true)),
+                'lebar' => htmlspecialchars($this->input->post('lebar', true)),
+                'panjang' => htmlspecialchars($this->input->post('panjang', true)),
+                'deskripsi' => htmlspecialchars($this->input->post('deskripsi', true))
+            ];
+
+            // Check if a new image is uploaded
+            $buku = $_FILES['fotobuku'];
+            if (!empty($buku['name'])) {
+                $upload_path = './public/uploads/buku'; // Ganti dengan jalur folder penyimpanan yang sesuai
+                $uploaded_file = $this->upload_image($buku, $upload_path);
+
+                if ($uploaded_file) {
+                    // Delete the old image from storage and database
+                    $old_image_path = $upload_path . '/' . $data['existing_buku']['fotobuku'];
+                    if (file_exists($old_image_path)) {
+                        unlink($old_image_path);
+                    }
+                    $data['fotobuku'] = $uploaded_file['file_name'];
+                } else {
+                    $data['upload_error'] = 'Terjadi kesalahan saat mengunggah foto buku.';
+                    viewUser($this, 'user/pages/editbook', $data);
+                    return;
+                }
+            }
+
+            $this->db->where('id', $id);
+            $this->db->update('katalogbuku', $data);
+            $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Berhasil mengedit buku </div>');
+            redirect('daftarbuku');
+        }
+    } else {
+        // User bukan admin, redirect atau lakukan aksi lainnya sesuai kebutuhan
+        // Misalnya, tampilkan pesan akses ditolak atau redirect ke halaman lain
+        redirect('daftarbuku'); // Ganti dengan URL atau route yang sesuai
+    }
+}
+ public function deleteContributor()
+    {
+        $userData = $this->m_auth->getCurrentUser();
+        $kategori =  $this->input->post('kategori');
+
+    if (!$userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        redirect('auth');
+    }
+    if (empty($kategori)) {
+        redirect('daftarbuku'); // Ganti 'halaman_lain' dengan URL tujuan
+    }
+
+        $contributor_id = $this->input->post('buku_id');
+
+        // Lakukan proses penghapusan kontributor berdasarkan ID dan kategori
+        $table = '';
+        if ($kategori === 'penulis') {
+            $table = 'penulis';
+        } elseif ($kategori === 'designcover') {
+            $table = 'designcover';
+        } elseif ($kategori === 'editor') {
+            $table = 'editor';
+        } elseif ($kategori === 'layout') {
+            $table = 'layout';
+        }
+
+        if ($table !== '') {
+            // Lakukan proses penghapusan berdasarkan ID di tabel yang sesuai
+            $this->db->where('id', $contributor_id);
+            $this->db->delete($table);
+
+            $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Kontributor berhasil dihapus </div>');
+        } else {
+            $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 role="alert"> Terjadi kesalahan saat menghapus kontributor </div>');
+        }
+
+        redirect('daftarbuku');
+    }
+ public function delete() {
+        $id = $this->input->post('buku_id');
+
+        // Perform deletion logic
+        // Get the image file name from the database
+        $query = $this->db->select('fotobuku')->get_where('katalogbuku', ['id' => $id]);
+        $result = $query->row_array();
+        $imageFileName = $result['fotobuku'];
+
+        // Delete the image file from storage
+        $imagePath = FCPATH . 'public/uploads/buku/' . $imageFileName;
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        // Delete the entry from the database
+        $this->db->where('id', $id);
+        $this->db->delete('katalogbuku');
+
+        $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Berhasil menghapus buku </div>');
+
+        // Redirect to index or any appropriate page after deletion
+        redirect('daftarbuku');
+    }
+
+public function create()
+{
+      $data['event'] = $this->m_event->getEventType();
+    $userData = $this->m_auth->getCurrentUser();
+
+    if ($userData['role_id'] == $this->m_auth->getIDRole('Admin')['id']) {
+        // User adalah admin, izinkan proses tambah buku baru
+
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('halaman', 'Halaman', 'required|trim|numeric');
+        $this->form_validation->set_rules('tanggal_terbit', 'Tanggal Terbit', 'required');
+        $this->form_validation->set_rules('bahasa', 'Bahasa', 'required|trim');
+        $this->form_validation->set_rules('penerbit', 'Penerbit', 'required|trim');
+        $this->form_validation->set_rules('flipbook', 'Flipbook', 'trim');
+        $this->form_validation->set_rules('isbn', 'ISBN', 'required|trim');
+        $this->form_validation->set_rules('berat', 'Berat', 'required|trim|numeric');
+        $this->form_validation->set_rules('lebar', 'Lebar', 'required|trim|numeric');
+        $this->form_validation->set_rules('panjang', 'Panjang', 'required|trim|numeric');
+        $this->form_validation->set_rules('deskripsi', 'Deskripsi', 'required|trim');
+        $this->form_validation->set_rules('fotobuku', 'Foto Buku', 'callback_upload_check');
+
+        if ($this->form_validation->run() == false) {
+            $data['title'] = 'Tambah Buku';
+            viewUser($this, 'user/pages/createbook', $data);
+        } else {
+            // Proses tambah buku baru
+            $buku = $_FILES['fotobuku'];
+            $upload_path = './public/uploads/buku'; // Ganti dengan jalur folder penyimpanan yang sesuai
+            $uploaded_file = $this->upload_image($buku, $upload_path);
+
+            if ($uploaded_file) {
+                $data = [
+                    'judul' => htmlspecialchars($this->input->post('judul', true)),
+                    'halaman' => htmlspecialchars($this->input->post('halaman', true)),
+                    'tanggal_terbit' => htmlspecialchars($this->input->post('tanggal_terbit', true)),
+                    'bahasa' => htmlspecialchars($this->input->post('bahasa', true)),
+                    'penerbit' => htmlspecialchars($this->input->post('penerbit', true)),
+                    'flipbook' => htmlspecialchars($this->input->post('flipbook', true)),
+                    'isbn' => htmlspecialchars($this->input->post('isbn', true)),
+                    'berat' => htmlspecialchars($this->input->post('berat', true)),
+                    'lebar' => htmlspecialchars($this->input->post('lebar', true)),
+                    'panjang' => htmlspecialchars($this->input->post('panjang', true)),
+                    'deskripsi' => htmlspecialchars($this->input->post('deskripsi', true)),
+                    'fotobuku' => $uploaded_file['file_name']
+                ];
+                $this->db->insert('katalogbuku', $data);
+                $this->session->set_flashdata('message', '<div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 role="alert"> Berhasil menambahkan buku baru </div>');
+                redirect('addkontributor');
+            } else {
+                $data['title'] = 'Tambah Buku';
+                $data['upload_error'] = 'Terjadi kesalahan saat mengunggah foto buku.';
+                viewUser($this, 'user/pages/createbook', $data);
+            }
+        }
+    } else {
+        // User bukan admin, redirect atau lakukan aksi lainnya sesuai kebutuhan
+        // Misalnya, tampilkan pesan akses ditolak atau redirect ke halaman lain
+        redirect('daftarbuku'); 
+    }
+}
+
+// Add this callback function to your controller
+public function upload_check($str)
+{
+    if (!empty($_FILES['fotobuku']['name'])) {
+        $config['upload_path'] = './public/uploads/buku/';
+        $config['allowed_types'] = 'gif|jpg|jpeg|png';
+        $config['max_size'] = 4096; // Maximum file size in KB
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('fotobuku')) {
+            $this->form_validation->set_message('upload_check', $this->upload->display_errors());
+            return false;
+        } else {
+            return true;
+        }
+    } else {
+        return true;
+    }
+}
+
+// Add this function to your controller
+private function upload_image($file, $upload_path)
+{
+    $config['upload_path'] = $upload_path;
+    $config['allowed_types'] = 'gif|jpg|jpeg|png';
+    $config['max_size'] = 2048; // Maximum file size in KB
+    $this->load->library('upload', $config);
+
+    if ($this->upload->do_upload('fotobuku')) {
+        return $this->upload->data();
+    } else {
+        return false;
+    }
+}
+
 }

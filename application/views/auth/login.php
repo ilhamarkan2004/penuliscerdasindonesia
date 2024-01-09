@@ -135,7 +135,7 @@
       </div>
       </form>
 
-      <button class="text-white rounded-lg w-full py-3 px-3 mt-4 bg-primary-100 hover:bg-sky-700" type="button" id="btnLogin" name="btnLogin">Login</button>
+      <button class="text-white w-full rounded-lg py-3 px-3 mt-4 bg-[#0e8f8f] hover:bg-white hover:text-[#0e8f8f]" type="button" id="btnLogin" name="btnLogin">Login</button>
       <p style="font-size: 12px;" class="text-center text-[#808080] mt-3">Belum punya akun? <a class="text-primary-100" id="" href="<?= base_url('auth/registrasi') ?>">Daftar</a></p>
     </div>
 
